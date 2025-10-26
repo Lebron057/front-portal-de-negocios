@@ -1,59 +1,41 @@
-# PortalDeNegocios
+# 🚀 Projeto: Portal de Negócios Locais e Serviços Digitais
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
+## 🎯 O Problema Atual
 
-## Development server
+Muitos pequenos negócios e prestadores de serviços em Pompeia enfrentam dificuldades em alcançar um público maior, devido à:
 
-To start a local development server, run:
+* Falta de presença digital estruturada.
+* Baixa visibilidade em plataformas online.
+* Dificuldade em competir com grandes varejistas online.
+* Limitação geográfica para atrair novos clientes.
 
-```bash
-ng serve
-```
+## 💡 A Solução Proposta
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Desenvolver um portal intuitivo e fácil de usar que sirva como um diretório digital para os comércios e serviços locais, oferecendo:
 
-## Code scaffolding
+* Perfis detalhados para cada negócio (fotos, descrição, horário de funcionamento).
+* Integração com WhatsApp para contato direto.
+* Localização geográfica e rotas via mapa.
+* Formulários simples para solicitação de orçamentos/agendamentos.
+* Ferramenta de busca e filtragem por categoria.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+> ## 📈 Eixo Principal: Smart Economy
+>
+> Este projeto é fundamental para fortalecer a *Smart Economy* local, promovendo o comércio, o empreendedorismo e a geração de renda na cidade.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🛠️ Ferramentas Utilizadas
 
-```bash
-ng generate --help
-```
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-## Building
+---
 
-To build the project run:
+## 👥 Membros
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Iago Lebron
+* Leonardo Ricci
+* Hadryan
+* Raul de Carvalho
