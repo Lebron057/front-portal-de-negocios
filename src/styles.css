@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --cor-azul_corporativo:#005A9C;
+    --cor-titulo:#0F1729;
+    --cor-cinza_texto:#808080;
+    --cor-categorias:#70BFA1;
+    --cor-icones:#336EEC;
+    --cor-fundo_home:linear-gradient(to bottom, #E6F9F3 0%, #EFFAFB 100%);
+
+    --cor-botao:#f77a00;
+    --cor-botao_hover:#D46600;
+    --cor-botao_active:#008A70;
+
+
+}
