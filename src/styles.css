@@ -11,10 +11,19 @@
     --cor-categorias:#70BFA1;
     --cor-icones:#336EEC;
     --cor-fundo_home:linear-gradient(to bottom, #E6F9F3 0%, #EFFAFB 100%);
+    --cor-borda_input:#E1E7EF;
+    --cor-titulo_login_cadastro:#666464;
 
     --cor-botao:#f77a00;
     --cor-botao_hover:#D46600;
     --cor-botao_active:#008A70;
+    --cor-botao_esmeralda:#008A70;
+
+    --cor-fundo_geral:linear-gradient(to bottom, #e6f9f3 0%,#f7f9fb 50% #f2c27e 100%);
 
 
+}
+html{
+    font-size: 16px;
+    font-weight: 100;
 }

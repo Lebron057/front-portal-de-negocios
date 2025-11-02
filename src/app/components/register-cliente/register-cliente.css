@@ -1,0 +1,144 @@
+body{
+    background-image:linear-gradient(to bottom, #e6f9f3 0%,#f7f9fb 50%, #f2c27e 100%);
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+aside{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-left: 3rem;
+}
+
+figure{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.cadastro-empresa{
+    width: 288px;
+    height: 40px;
+    background-color: var(--cor-botao_esmeralda);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+h1{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--cor-titulo_login_cadastro);
+    margin-bottom: 20px;
+}
+
+.cadastro_cliente {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 10rem;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 2px solid var(--cor-borda_input);
+    border-radius: 16px ; 
+    width: 560px;
+    height: 700px;
+    
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 1.5rem ;
+    font-weight: 500;
+    color: var(--cor-cinza_texto);
+    
+}
+
+input{
+    width: 480px;
+    height: 60px;
+    border: 2px solid var(--cor-borda_input);
+    border-radius: 16px;
+    margin-top: 0px;
+    font-size: 1rem;
+}
+
+label{
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: 550;
+    color: var(--cor-cinza_texto);
+}
+
+figure{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+button{
+    width: 481px;
+    height: 60px;
+    background-color: var(--cor-botao);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover{
+    background-color: var(--cor-botao_hover);
+    transform: scale(1.02);
+    transition: 0.7s;
+
+}
+
+button:active{
+    background-color: var(--cor-botao_active);
+    transform: scale(0.98);
+    transition: 0.1s;
+}
+
+a{
+    text-decoration: none;
+    color: var(--cor-icones);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+p{
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--cor-cinza_texto);
+}
