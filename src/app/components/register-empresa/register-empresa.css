@@ -1,112 +1,145 @@
-body{
-    background-image:linear-gradient(to bottom, #e6f9f3 0%,#f7f9fb 50%, #f2c27e 100%);
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
+/* NOTA: Suas variáveis CSS (ex: var(--cor-botao_esmeralda)) não foram fornecidas.
+   Assumimos que elas estão definidas em outro lugar (como em :root {}).
+   O layout funcionará, mas as cores podem não aparecer sem essas variáveis. */
+
+/* === Configuração Global === */
+* {
+    /* Isso torna o cálculo de largura e altura mais fácil, incluindo padding e borda */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-aside{
+body {
+    background-image: linear-gradient(to bottom, #e6f9f3 0%, #f7f9fb 50%, #f2c27e 100%);
+    display: flex;
+    /* Mín-height garante que o corpo ocupe pelo menos a altura da tela, 
+       mas permite que ele cresça (role) se o conteúdo for maior. */
+    min-height: 100vh;
+    width: 100%;
+    /* Permite rolagem vertical se o conteúdo for grande (especialmente no celular),
+       mas esconde a rolagem horizontal. */
+    overflow-x: hidden;
+    align-items: center;
+    justify-content: center; /* Centraliza os filhos (aside e form) */
+    font-family: 'Poppins', sans-serif;
+    /* Adiciona espaço entre os itens e permite que eles "quebrem" para a próxima linha */
+    flex-wrap: wrap;
+    gap: 2rem; /* Espaçamento entre o 'aside' e o 'cadastro_cliente' */
+    padding: 1rem; /* Adiciona um pequeno preenchimento ao redor do corpo */
+}
+
+aside {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
-    margin-left: 3rem;
+    /* Removemos a margem fixa para permitir que o flexbox centralize */
+    /* margin-left: 3rem; */
+    flex: 1; /* Permite que o 'aside' cresça e encolha */
+    min-width: 300px; /* Largura mínima antes de quebrar */
 }
 
-figure{
+figure {
     display: flex;
     width: 100%;
-    height: 100%;
+    /* Altura removida para ser automática */
     align-items: center;
     justify-content: center;
-
 }
 
-.cadastro-empresa{
-    width: 288px;
+/* === Nova regra para a imagem === */
+.img_cadastro {
+    width: 100%; /* Faz a imagem ser fluida */
+    max-width: 450px; /* Define um limite máximo de tamanho */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+.entrar_consumidor {
+    /* Define uma largura máxima, mas permite que encolha */
+    max-width: 300px;
+    width: 300px;
     height: 40px;
     background-color: var(--cor-botao_esmeralda);
     border: none;
     border-radius: 20px;
     color: white;
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
 }
 
-h1{
+h1 {
     font-size: 2.5rem;
     font-weight: 600;
     color: var(--cor-titulo_login_cadastro);
     margin-bottom: 20px;
+    text-align: center; /* Centraliza o título */
 }
 
-.cadastro_cliente {
+.cadastro_empresa {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-left: 10rem;
+    /* Removemos a margem fixa */
+    /* margin-left: 10rem; */
+    flex: 1; /* Permite que o 'cadastro_cliente' cresça e encolha */
+    min-width: 320px; /* Largura mínima (bom para celulares) */
 }
 
-.info{
+.info {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: white;
     border: 2px solid var(--cor-borda_input);
-    border-radius: 16px ; 
-    width: 560px;
-    height: 700px;
-    
+    border-radius: 16px;
+    /* === MUDANÇA PRINCIPAL === */
+    /* Define uma largura máxima, mas permite que seja menor */
+    max-width: 560px;
+    width: 100%; /* Ocupa 100% do seu contêiner pai (.cadastro_cliente) */
+    /* A altura deve ser automática para se ajustar ao conteúdo */
+    height: auto;
+    /* Adiciona preenchimento interno para que os inputs não colem nas bordas */
+    padding: 2rem;
 }
 
 
-form{
+form {
     display: flex;
     flex-direction: column;
     align-items: start;
-    font-size: 1.5rem ;
+    font-size: 1.5rem;
     font-weight: 500;
     color: var(--cor-cinza_texto);
-    
+    width: 100%; /* Faz o formulário ocupar todo o espaço do .info */
 }
 
-input{
-    width: 480px;
+input {
+    /* === MUDANÇA PRINCIPAL === */
+    width: 100%; /* Ocupa 100% do seu contêiner pai (form) */
     height: 60px;
     border: 2px solid var(--cor-borda_input);
     border-radius: 16px;
     margin-top: 0px;
     font-size: 1rem;
-    font-weight: 400;
-    
+    padding: 0 1rem; /* Adiciona preenchimento interno */
 }
 
-label{
+label {
     margin-top: 10px;
     font-size: 1.5rem;
     font-weight: 550;
     color: var(--cor-cinza_texto);
 }
 
-figure{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-
-}
-
-button{
-    width: 481px;
+button {
+    /* === MUDANÇA PRINCIPAL === */
+    width: 100%; /* Ocupa 100% do seu contêiner pai (form) */
     height: 60px;
     background-color: var(--cor-botao);
     border: none;
@@ -118,20 +151,19 @@ button{
     margin-top: 10px;
 }
 
-button:hover{
+button:hover {
     background-color: var(--cor-botao_hover);
     transform: scale(1.02);
     transition: 0.7s;
-
 }
 
-button:active{
+button:active {
     background-color: var(--cor-botao_active);
     transform: scale(0.98);
     transition: 0.1s;
 }
 
-a{
+a {
     text-decoration: none;
     color: var(--cor-icones);
     font-size: 1.5rem;
@@ -139,8 +171,151 @@ a{
     margin-top: 10px;
 }
 
-p{
+p {
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--cor-cinza_texto);
+}
+
+/* === MEDIA QUERY PARA RESPONSIVIDADE === */
+/* Essas regras serão aplicadas quando a tela for 1024px ou menor */
+
+@media (max-width: 1024px) {
+    body {
+        /* Empilha os itens verticalmente em telas menores */
+        flex-direction: column;
+        justify-content: flex-start; /* Alinha ao topo */
+        /* Permite que o corpo cresça automaticamente */
+        height: auto;
+        padding: 1rem; /* Reduz o preenchimento em telas menores */
+    }
+
+    aside {
+        /* Remove o comportamento flex '1' para empilhar corretamente */
+        flex: none;
+        margin-left: 0;
+        width: 100%; /* Ocupa a largura total */
+    }
+
+    .cadastro_cliente {
+        flex: none;
+        margin-left: 0;
+        width: 100%; /* Ocupa a largura total */
+    }
+
+    .info {
+        /* Reduz o preenchimento em telas pequenas para dar mais espaço */
+        padding: 1.5rem;
+    }
+
+    /* Reduz um pouco o tamanho das fontes em telas menores */
+    h1 {
+        font-size: 2rem;
+    }
+
+    label, p, a {
+        font-size: 1.2rem;
+    }
+
+    input, button {
+        height: 50px; /* Inputs e botões ligeiramente menores */
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Adicione este código ao final do seu arquivo register-cliente.css */
+
+/* Define as regras para telas com largura máxima de 768px (tamanho comum para tablets e celulares) */
+@media (max-width: 768px) {
+    
+    body {
+        /* Muda a organização do body para vertical (um item em cima do outro) */
+        flex-direction: column;
+        
+        /* Permite que o usuário role a página para cima e para baixo */
+        overflow-y: auto; 
+        overflow-x: hidden; /* Evita a rolagem lateral */
+        
+        /* Remove a altura fixa para permitir o scroll */
+        height: auto; 
+        
+        /* Alinha os itens ao topo */
+        justify-content: flex-start; 
+    }
+
+    /* 1. FAZ A IMAGEM DESAPARECER */
+    /* Selecionamos a 'figure' que está dentro do 'aside' e a escondemos */
+    aside figure {
+        display: none;
+    }
+
+    /* 2. MOVE O BOTÃO PARA O FINAL */
+    
+    /* O 'aside' agora só contém o botão. Usamos 'order' do flexbox 
+       para mudar a ordem visual dos elementos no 'body' */
+    aside {
+        order: 2; /* Manda o <aside> para o final */
+        margin: 0; /* Remove a margem lateral */
+        width: 100%; /* Faz ocupar a largura total */
+        padding: 1rem 0; /* Adiciona um espaço para o botão não colar no fim da tela */
+    }
+    
+    /* O 'cadastro_cliente' (que contém o formulário) vem primeiro */
+    .cadastro_cliente {
+        order: 1; 
+        margin: 1rem 0; /* Remove a margem lateral e adiciona margem vertical */
+        width: 100%;
+    }
+
+    /* --- Ajustes Adicionais para o layout móvel --- */
+
+    .info {
+        /* Faz o card do formulário se ajustar à tela */
+        width: 90vw; /* Ocupa 90% da largura da tela */
+        height: auto; /* A altura se ajusta ao conteúdo */
+        padding: 1rem;
+        box-sizing: border-box; /* Garante que o padding não "estoure" a largura */
+    }
+
+    form {
+        /* Alinha o formulário dentro do card */
+        width: 100%;
+        align-items: center; /* Centraliza os itens do formulário */
+    }
+
+    /* Faz os inputs e o botão de submit ocuparem a largura total */
+    input,
+    form button[type="submit"] {
+        width: 100%;
+        box-sizing: border-box; /* Inclui padding/border na largura */
+    }
+
+    /* Ajusta o botão "Cadastre sua empresa" */
+    .cadastro-empresa {
+        width: 90%; /* Ocupa 90% do 'aside' */
+    }
+
+    /* Reduz o tamanho das fontes para telas menores */
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    label, p, a {
+        font-size: 1.2rem;
+    }
+
+    form button[type="submit"],
+    .cadastro-empresa {
+        font-size: 1.2rem;
+    }
+
+    p {
+        text-align: center;
+    }
 }
