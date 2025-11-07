@@ -72,7 +72,7 @@ figure {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     font-weight: 600;
     color: var(--cor-titulo_login_cadastro);
     margin-bottom: 20px;
@@ -133,7 +133,7 @@ input {
 
 label {
     margin-top: 10px;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 550;
     color: var(--cor-cinza_texto);
 }

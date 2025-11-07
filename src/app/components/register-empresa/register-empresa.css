@@ -71,7 +71,7 @@ figure {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     font-weight: 600;
     color: var(--cor-titulo_login_cadastro);
     margin-bottom: 20px;
@@ -113,7 +113,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: start;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 500;
     color: var(--cor-cinza_texto);
     width: 100%; /* Faz o formulário ocupar todo o espaço do .info */
@@ -132,7 +132,7 @@ input {
 
 label {
     margin-top: 10px;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 550;
     color: var(--cor-cinza_texto);
 }
