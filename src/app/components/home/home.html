@@ -1,15 +1,27 @@
 <header><app-navbar></app-navbar></header>
 <main>
-    <section>
+    <section class="home-pesquisa">
         <h2>Encontre negócios Locais</h2>
         <h3>Conectamos você com empresas verificadas da sua região. Avalie, comente e descubra novos serviços.</h3>
-        <input type="text" placeholder="Pesquise o estabelecimento ou serviço">
+        <div class="input-pesquisa">
+            <img class="input-icon" src="lupa_icon.png" alt="lupa">
+            <input type="text" placeholder="Pesquise o estabelecimento ou serviço">
+        </div>
         <div class="filtros">
             <!-- Categoria -->
+            <button class="botao_filtro">Categoria</button>
+
             <!-- serviços -->
+            <button class="botao_filtro">Serviços</button>
+
             <!-- Aberto agora -->
+            <button class="botao_filtro">Aberto</button>
+            
             <!-- + Avaliados -->
+            <button class="botao_filtro">+ Avaliados</button>
+            
             <!-- Ofertas -->
+            <button class="botao_filtro">Ofertas</button>
         </div>
     </section>
 </main>
