@@ -1,0 +1,123 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.home-pesquisa {
+    padding: 40px 0px;
+    background-image: url("/background_filtro.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+}
+
+h2 {
+    font-weight: 800;
+    font-size: 64px;
+    color: var(--preto_azulado);
+    font-family: var(--texto_principal);
+}
+
+h4 {
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--preto_azulado);
+    font-family: var(--texto_principal);
+    width: 592px;
+    text-align: center;
+}
+
+
+.input-pesquisa {
+    position: relative;
+    width: 50%;
+    display: flex;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none; 
+    opacity: 0.6; /* adionei para ficar mais suave */
+}
+
+.input-pesquisa input {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    border: 1px solid #B9BEC5;
+    border-radius: 10px;
+    outline: none;
+    
+    font-size: 16px;
+    font-family: var(--texto_secundario);
+    font-weight: 300;
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 40%;
+    margin-bottom: 65px;
+}
+
+.botao_filtro {
+    background-color: var(--laranja);
+    color: #fff;
+    font-family: var(--texto_secundario);
+    font-weight: 700;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+
+    width: 134px;
+    height: 60px;
+    cursor: pointer;
+}
+
+.botao_filtro:hover {
+    background-color: #e66e00;
+}
+.botao_filtro:active {
+    background-color: #cc5c00;
+}
+
+.home-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    margin: 35px 0;
+}
+
+.texto-destaque {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+
+    color: var(--preto_azulado);
+    font-family: var(--texto_principal);
+}
+
+h3 {
+    font-weight: 800;
+    font-size: 40px;
+}
+
+h5 {
+    font-weight: 600;
+    font-size: 16px;
+    width: 600px;
+}
+

@@ -1,0 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--azul_claro);
+    font-family: var(--texto_secundario);
+    padding: 1rem 2rem;
+}
+
+.link__home {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.titulo-logo {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--azul_escuro);
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background-color: var(--azul_escuro);
+    color: var(--branco_soft);
+    border: none;
+    font-size: 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 130px;
+    height: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
