@@ -1,0 +1,148 @@
+<body>
+    <div class="container-voltar" >
+            <a class="voltar" href="#"><img src="/seta.png" alt=""><button class="btn-voltar">Voltar</button></a>
+    </div>
+    <aside>
+        <figure>
+            @if (tipoCadastro === 'consumidor') {
+            <img  class="img_cadastro" src="/img_login&cadastro_cliente.png" alt="">}
+            @else if (tipoCadastro === 'empresa')  {
+            <img  class="img_cadastro" src="/img_login&cadastro_empresa.png" alt="">}
+        </figure>
+    </aside>
+
+    <div class="cadastro_container">
+        <div class="info">
+            <h1>Cadastre-se</h1>
+
+                <!-- 
+      O :host é usado para centralizar o componente na tela 
+      para fins de demonstração.
+    -->
+    <div class="custom-toggle-container">
+      <!-- Este é o "slider" azul que se move -->
+      <div class="slider-background" 
+           [style.transform]="tipoCadastro === 'empresa' ? 'translateX(calc(100% + 4px))' : 'translateX(0)'">
+      </div>
+      
+      <!-- Opção 1: Consumidor -->
+      <div class="option" 
+           [class.active]="tipoCadastro === 'consumidor'" 
+           (click)="tipoCadastro=('consumidor')">
+        Consumidor
+      </div>
+
+      <!-- Opção 2: Empresa -->
+      <div class="option" 
+           [class.active]="tipoCadastro === 'empresa'" 
+           (click)="tipoCadastro=('empresa')">
+        Empresa
+      </div>
+    </div>
+            <div id="successMessage" *ngIf="isSuccessVisible">
+                {{ successMessage }}
+            </div>
+
+
+            <form 
+                *ngIf="tipoCadastro === 'consumidor'" 
+                (ngSubmit)="cadastrarConsumidor()">
+                
+                <label for="nomeConsumidor">Nome</label>
+                <input 
+                    id="nomeConsumidor" 
+                    name="nome" 
+                    type="text" 
+                    [(ngModel)]="consumidorModel.nome" 
+                    required>
+                
+                <label for="emailConsumidor">Email</label>
+                <input 
+                    id="emailConsumidor" 
+                    name="email" 
+                    type="email" 
+                    [(ngModel)]="consumidorModel.email" 
+                    required>
+                
+                <label for="telefoneConsumidor">Telefone</label>
+                <input 
+                    id="telefoneConsumidor" 
+                    name="telefone" 
+                    type="text" 
+                    [value]="consumidorModel.telefone"
+                    (input)="formatarTelefone($event)" 
+                    required>
+                
+                <label for="senhaConsumidor">Senha</label>
+                <input 
+                    id="senhaConsumidor" 
+                    name="senha" 
+                    type="password" 
+                    [(ngModel)]="consumidorModel.senha" 
+                    required>
+                
+                <label for="confirmarSenhaConsumidor">Confirmar Senha</label>
+                <input 
+                    id="confirmarSenhaConsumidor" 
+                    name="confirmar_senha" 
+                    type="password" 
+                    [(ngModel)]="consumidorModel.confirmarSenha" 
+                    required>
+                
+                <button class="submit" type="submit">Cadastrar</button>
+            </form>
+
+
+            <form 
+                *ngIf="tipoCadastro === 'empresa'" 
+                (ngSubmit)="cadastrarEmpresa()">
+                
+                <label for="cnpj">CNPJ</label>
+                <input 
+                    id="cnpj" 
+                    name="cnpj" 
+                    type="text" 
+                    [value]="empresaModel.cnpj"
+                    (input)="formatarCNPJ($event)" 
+                    required>
+                
+                <label for="nomeEmpresa">Nome da Empresa</label>
+                <input 
+                    id="nomeEmpresa" 
+                    name="nome_empresa" 
+                    type="text" 
+                    [(ngModel)]="empresaModel.nomeEmpresa" 
+                    required>
+                
+                <label for="nomeResponsavel">Nome do Responsável</label>
+                <input 
+                    id="nomeResponsavel" 
+                    name="nome_responsavel" 
+                    type="text" 
+                    [(ngModel)]="empresaModel.nomeResponsavel" 
+                    required 
+                    placeholder="">
+                
+                <label for="senhaEmpresa">Senha</label>
+                <input 
+                    id="senhaEmpresa" 
+                    name="senha" 
+                    type="password" 
+                    [(ngModel)]="empresaModel.senha" 
+                    required>
+                
+                <label for="confirmarSenhaEmpresa">Confirmar Senha</label>
+                <input 
+                    id="confirmarSenhaEmpresa" 
+                    name="confirmar_senha" 
+                    type="password" 
+                    [(ngModel)]="empresaModel.confirmarSenha" 
+                    required>
+                
+                <button class="submit" type="submit">Cadastrar</button>
+            </form>
+
+        </div>
+        <p>Já possui conta? <a href="/login">Entrar</a></p>
+    </div>
+</body>
