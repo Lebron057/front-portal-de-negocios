@@ -1,8 +1,18 @@
-section {
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.home-pesquisa {
+    padding: 40px 0px;
+    background-image: url("/background_filtro.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     gap: 35px;
 }
 
@@ -13,7 +23,7 @@ h2 {
     font-family: var(--texto_principal);
 }
 
-h3 {
+h4 {
     font-weight: 800;
     font-size: 20px;
     color: var(--preto_azulado);
@@ -22,18 +32,6 @@ h3 {
     text-align: center;
 }
 
-.home-pesquisa {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 0px;
-
-    background-image: url("/background_filtro.png");
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    width: 100%;
-}
 
 .input-pesquisa {
     position: relative;
@@ -70,7 +68,7 @@ h3 {
     justify-content: center;
     gap: 1.5rem;
     width: 40%;
-    margin-bottom: 75px;
+    margin-bottom: 65px;
 }
 
 .botao_filtro {
@@ -90,3 +88,36 @@ h3 {
 .botao_filtro:hover {
     background-color: #e66e00;
 }
+.botao_filtro:active {
+    background-color: #cc5c00;
+}
+
+.home-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    margin: 35px 0;
+}
+
+.texto-destaque {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+
+    color: var(--preto_azulado);
+    font-family: var(--texto_principal);
+}
+
+h3 {
+    font-weight: 800;
+    font-size: 40px;
+}
+
+h5 {
+    font-weight: 600;
+    font-size: 16px;
+    width: 600px;
+}
+
