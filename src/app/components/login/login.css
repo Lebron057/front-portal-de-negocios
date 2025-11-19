@@ -127,7 +127,7 @@ label {
 .submit { /* Alterado de .submit para button */
     /* === MUDANÇA PRINCIPAL === */
     width: 100%; /* Ocupa 100% do seu contêiner pai (form) */
-    height: 60px;
+    height: 3rem;
     background-color: var(--cor-botao);
     border: none;
     border-radius: 16px;
@@ -166,7 +166,7 @@ p {
 
 .container-voltar{
     position:absolute;
-    width: 100%;
+    width: 90%;
     bottom:90%;
     display:flex;
     justify-content: flex-start;
