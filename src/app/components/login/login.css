@@ -59,8 +59,8 @@ figure {
 h1 {
     font-size: 2.25rem;
     font-weight: 600;
-    color: var(--preto_azulado);
-    margin-bottom: 20px;
+    color: var(--cor-titulo_login_cadastro);
+    margin-bottom: 0.5rem;
     text-align: center; /* Centraliza o título */
 }
 
@@ -93,6 +93,7 @@ h1 {
     height: auto;
     /* Adiciona preenchimento interno para que os inputs não colem nas bordas */
     padding: 2rem;
+    gap: 2rem
 }
 
 
@@ -103,7 +104,8 @@ form {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--cor-cinza_texto);
-    width: 100%; /* Faz o formulário ocupar todo o espaço do .info */
+    width: 100%; 
+    gap:2rem;/* Faz o formulário ocupar todo o espaço do .info */
 }
 
 input {
@@ -124,10 +126,27 @@ label {
     color: var(--cor-cinza_texto);
 }
 
+.infoConsumidorEmpresa{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    
+}
+
+.senha{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    
+}
+
+
 .submit { /* Alterado de .submit para button */
     /* === MUDANÇA PRINCIPAL === */
     width: 100%; /* Ocupa 100% do seu contêiner pai (form) */
-    height: 3rem;
+    height: 3.7rem;
     background-color: var(--laranja);
     border: none;
     border-radius: 16px;
@@ -136,6 +155,7 @@ label {
     font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
+    margin-bottom: 1rem;
 }
 
 .submit:hover {
@@ -153,13 +173,13 @@ label {
 a {
     text-decoration: none;
     color: var(--cor-icones);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 600;
     margin-top: 10px;
 }
 
 p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: var(--cor-cinza_texto);
 }
@@ -218,6 +238,11 @@ p {
       --text-inactive: #6D727A; /* Tom de cinza similar ao da imagem */
     }
 
+    .container-toggle{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
     .custom-toggle-container {
       width: 330px;
       height: 40px;
@@ -368,6 +393,8 @@ p {
     /* --- Ajustes Adicionais para o layout móvel --- */
 
     .info {
+        border: none;
+        background: none;;
         /* Faz o card do formulário se ajustar à tela */
         width: 90vw; /* Ocupa 90% da largura da tela */
         height: auto; /* A altura se ajusta ao conteúdo */

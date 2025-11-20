@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterModule, Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
+    RouterModule,
     CommonModule,
     FormsModule
-  ],
+],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -33,7 +35,7 @@ export class Login {
   isSuccessVisible = false;
   successMessage = '';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   /**
    * Alterna entre os formulários de consumidor e empresa.
@@ -68,6 +70,11 @@ export class Login {
 
     // Reseta o formulário
     this.resetFormConsumidor();
+
+    // Redireciona para a home
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 1000); // Pequeno delay para ver a mensagem de sucesso
   }
 
   /**
@@ -87,6 +94,11 @@ export class Login {
 
     // Reseta o formulário
     this.resetFormEmpresa();
+
+    // Redireciona para a home
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 1000); // Pequeno delay para ver a mensagem de sucesso
   }
 
   // --- Funções Auxiliares ---
