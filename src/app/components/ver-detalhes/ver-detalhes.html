@@ -1,0 +1,136 @@
+<app-navbar></app-navbar>
+
+<main class="detalhes">
+  <div class="detalhes-wrapper">
+    <div class="barra-voltar">
+      <a class="voltar" href="#">
+        <span class="seta">&#8592;</span>
+        <span>Voltar</span>
+      </a>
+    </div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <button class="hero-nav prev" type="button">&#8249;</button>
+        <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="hero-slide d-flex align-items-center justify-content-center">
+                <span>Backgroud-img</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="hero-nav next" type="button">&#8250;</button>
+      </div>
+    </section>
+
+    <section class="grid-layout">
+      <div class="col-esquerda">
+        <div class="card painel card-empresa">
+          <div class="topo-empresa">
+            <div class="logo-col">
+              <div class="logo">LOGO</div>
+              <div class="redes">
+                <a
+                  *ngFor="let social of company.socials"
+                  class="icone"
+                  [ngClass]="getSocialClass(social)"
+                  [href]="social.href"
+                  aria-label="{{ social.type }}"
+                >
+                  {{ social.label }}
+                </a>
+              </div>
+            </div>
+            <div class="conteudo-empresa">
+              <h2 class="titulo-empresa">{{ company.name }}</h2>
+              <div class="badges">
+                <span class="badge">{{ company.category }}</span>
+                <div class="rating-badge">
+                  <span class="estrela">&#9733;</span>
+                  <span class="valor">{{ company.rating | number:'1.1-1' }}</span>
+                </div>
+                <span class="avaliacoes">{{ company.ratingCount }} avaliações</span>
+              </div>
+              <p class="descricao-empresa">
+                {{ company.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card painel card-servicos">
+          <div class="servicos-head">
+            <h3>Serviços Oferecidos</h3>
+          </div>
+          <div class="chips chips-servicos">
+            <span class="chip" *ngFor="let service of services">{{ service }}</span>
+          </div>
+        </div>
+
+        <div class="card painel card-avaliacoes">
+          <h3>Avaliações Clientes</h3>
+          <div class="avaliacao" *ngFor="let review of reviews">
+            <div class="avatar laranja">{{ review.userInitial }}</div>
+            <div class="conteudo-avaliacao">
+              <div class="cabecalho-avaliacao">
+                <div>
+                  <p class="nome-usuario">{{ review.userName }}</p>
+                  <p class="data-avaliacao">{{ review.date }}</p>
+                </div>
+                <div class="estrelas">
+                  <span
+                    *ngFor="let star of starRange; let i = index"
+                    class="estrela"
+                    [class.off]="i + 1 > review.rating"
+                    >&#9733;</span
+                  >
+                </div>
+              </div>
+              <p class="texto-avaliacao">
+                {{ review.text }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-direita">
+        <div class="card painel card-info">
+          <h3>Informações da empresa</h3>
+          <div class="info-linha">
+            <div class="icone-info local">&#128205;</div>
+            <div class="texto-info">
+              <p class="titulo-info">Endereço</p>
+              <p class="valor-info">{{ contact.address }}</p>
+            </div>
+          </div>
+          <div class="info-linha">
+            <div class="icone-info telefone">&#128222;</div>
+            <div class="texto-info">
+              <p class="titulo-info">Telefone</p>
+              <p class="valor-info">{{ contact.phone }}</p>
+            </div>
+          </div>
+          <div class="info-linha">
+            <div class="icone-info cnpj"></div>
+            <div class="texto-info">
+              <p class="titulo-info">CNPJ</p>
+              <p class="valor-info">{{ contact.cnpj }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card painel card-horarios">
+          <h3>Horários de atendimento</h3>
+          <ul class="lista-horarios">
+            <li *ngFor="let item of schedule">
+              <span>{{ item.day }}</span><span>{{ item.hours }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
