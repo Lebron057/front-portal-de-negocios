@@ -1,93 +1,76 @@
 <body>
-    <div class="container-voltar" >
-            <a class="voltar" href="#"><img src="/seta.png" alt=""><button class="btn-voltar">Voltar</button></a>
+    <div class="container-voltar">
+        <a class="voltar" href="#"><img src="/seta.png" alt=""><button class="btn-voltar">Voltar</button></a>
     </div>
     <aside>
         <figure>
             @if (tipoLogin === 'consumidor') {
-            <img  class="img_cadastro" src="/img_login&cadastro_cliente.png" alt="">}
-            @else if (tipoLogin === 'empresa')  {
-            <img  class="img_cadastro" src="/img_login&cadastro_empresa.png" alt="">}
+            <img class="img_cadastro" src="/img_login&cadastro_cliente.png" alt="">}
+            @else if (tipoLogin === 'empresa') {
+            <img class="img_cadastro" src="/img_login&cadastro_empresa.png" alt="">}
         </figure>
     </aside>
 
     <div class="cadastro_container">
         <div class="info">
-            <h1>Login</h1>
+            <h1>Entrar</h1>
 
-                <!-- 
+            <!-- 
       O :host é usado para centralizar o componente na tela 
       para fins de demonstração.
-    -->
-    <div class="custom-toggle-container">
-      <!-- Este é o "slider" azul que se move -->
-      <div class="slider-background" 
-           [style.transform]="tipoLogin === 'empresa' ? 'translateX(calc(100% + 4px))' : 'translateX(0)'">
-      </div>
-      
-      <!-- Opção 1: Consumidor -->
-      <div class="option" 
-           [class.active]="tipoLogin === 'consumidor'" 
-           (click)="tipoLogin=('consumidor')">
-        Consumidor
-      </div>
+    -->     <div class="container-toggle">
+                <div class="custom-toggle-container">
+                    <!-- Este é o "slider" azul que se move -->
+                    <div class="slider-background"
+                        [style.transform]="tipoLogin === 'empresa' ? 'translateX(calc(100% + 4px))' : 'translateX(0)'">
+                    </div>
 
-      <!-- Opção 2: Empresa -->
-      <div class="option" 
-           [class.active]="tipoLogin === 'empresa'" 
-           (click)="tipoLogin=('empresa')">
-        Empresa
-      </div>
-    </div>
-            <div id="successMessage" *ngIf="isSuccessVisible">
-                {{ successMessage }}
+                    <!-- Opção 1: Consumidor -->
+                    <div class="option" [class.active]="tipoLogin === 'consumidor'" (click)="tipoLogin=('consumidor')">
+                        Consumidor
+                    </div>
+
+                    <!-- Opção 2: Empresa -->
+                    <div class="option" [class.active]="tipoLogin === 'empresa'" (click)="tipoLogin=('empresa')">
+                        Empresa
+                    </div>
+                </div>
             </div>
 
+            <!-- mensagem de sucesso -->
+            <!-- <div id="successMessage" *ngIf="isSuccessVisible">
+                {{ successMessage }}
+            </div> -->
 
-            <form 
-                *ngIf="tipoLogin === 'consumidor'" 
-                (ngSubmit)="loginConsumidor()">
-                
-                <label for="emailTelefoneConsumidor">Email ou Telefone</label>
-                <input 
-                    id="emailTelefoneConsumidor" 
-                    name="emailTelefone" 
-                    type="text" 
-                    [(ngModel)]="consumidorModel.emailTelefone" 
-                    required>
-                
-                <label for="senhaConsumidor">Senha</label>
-                <input 
-                    id="senhaConsumidor" 
-                    name="senha" 
-                    type="password" 
-                    [(ngModel)]="consumidorModel.senha" 
-                    required>
-                
+            
+            <form *ngIf="tipoLogin === 'consumidor'" (ngSubmit)="loginConsumidor()">
+                <div class="infoConsumidorEmpresa">
+                    <label for="emailTelefoneConsumidor">Email ou Telefone</label>
+                    <input id="emailTelefoneConsumidor" name="emailTelefone" type="text"
+                        [(ngModel)]="consumidorModel.emailTelefone" required>
+                </div>
+
+                <div class="senha">
+                    <label for="senhaConsumidor">Senha</label>
+                    <input id="senhaConsumidor" name="senha" type="password" [(ngModel)]="consumidorModel.senha" required>
+                </div>
+
                 <button class="submit" type="submit">Entrar</button>
             </form>
 
 
-            <form 
-                *ngIf="tipoLogin === 'empresa'" 
-                (ngSubmit)="loginEmpresa()">
-                
-                <label for="cnpjEmail">CNPJ ou Email</label>
-                <input 
-                    id="cnpjEmail" 
-                    name="cnpjEmail" 
-                    type="text" 
-                    [(ngModel)]="empresaModel.cnpjEmail" 
-                    required>
-                
-                <label for="senhaEmpresa">Senha</label>
-                <input 
-                    id="senhaEmpresa" 
-                    name="senha" 
-                    type="password" 
-                    [(ngModel)]="empresaModel.senha" 
-                    required>
-                
+            <form *ngIf="tipoLogin === 'empresa'" (ngSubmit)="loginEmpresa()">
+
+                <div class="infoConsumidorEmpresa">
+                    <label for="cnpjEmail">CNPJ ou Email</label>
+                    <input id="cnpjEmail" name="cnpjEmail" type="text" [(ngModel)]="empresaModel.cnpjEmail" required>
+                </div>
+
+                <div class="senha">
+                    <label for="senhaEmpresa">Senha</label>
+                    <input id="senhaEmpresa" name="senha" type="password" [(ngModel)]="empresaModel.senha" required>
+                </div>
+
                 <button class="submit" type="submit">Entrar</button>
             </form>
 
