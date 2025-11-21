@@ -1,42 +1,58 @@
-<div class="card">
+<div class="cards">
+    @for (empresa of empresas; track empresas) {
 
-    <!-- Imagem do topo -->
-    <div class="card__image-container">
-        <img class="card__image" src="jacto.png" alt="Imagem da empresa">
-    </div>
-
-    <!-- Título (Nome da empresa) -->
-    <h2 class="card__title">Nome empresa</h2>
-
-    <!-- Descrição -->
-    <p class="card__description">Descrição da empresa com detalhes sobre o negócio.</p>
-
-    <!-- Informações -->
-    <div class="card__info">
-        <div class="card__info-item">
-            <img class="card__icon" src="localizacao_icon.svg" alt="Ícone de localização">
-            <span class="card__text">Av. Principal, 456 - Jardins, São Paulo - SP</span>
+    <div class="card">
+    
+        <!-- Imagem do topo -->
+        <div class="card__image-container">
+            <img class="card__image" src="fotos_empresa/{{ empresa.imagem_url }}" alt="Imagem da empresa">
         </div>
-        
-        <div class="card__info-item">
-            <img class="card__icon" src="telefone_icon.svg" alt="tel">
-            <span class="card__text">(11) 97654-3210</span>
+    
+        <!-- Título (Nome da empresa) -->
+        <h2 class="card__title">{{ empresa.nome }}</h2>
+    
+        <!-- Descrição -->
+        <p class="card__description">{{ empresa.descricao }}</p>
+    
+        <!-- Informações -->
+        <div class="card__info">
+            <div class="card__info-item">
+                <img class="card__icon" src="localizacao_icon.svg" alt="Ícone de localização">
+                <span class="card__text">{{ empresa.endereco }}</span>
+            </div>
+    
+            <div class="card__info-item">
+                <img class="card__icon" src="telefone_icon.svg" alt="tel">
+                <span class="card__text">{{ empresa.telefone }}</span>
+            </div>
+    
+            <div class="card__info-item">
+                <img class="card__icon" src="relogio_icon.svg" alt="Ícone de horário">
+                <span class="card__text">{{ empresa.status }} hoje: {{ empresa.horario }}</span>
+            </div>
         </div>
-
-        <div class="card__info-item">
-            <img class="card__icon" src="relogio_icon.svg" alt="Ícone de horário">
-            <span class="card__text">Aberto hoje: 11:00 - 15:00, 18:00 - 22:00</span>
+    
+        <!-- Categorias -->
+        <div class="card__categories">
+            @for (tipo of empresa.categoria; track $index; let i = $index) {
+                @if (empresa.categoria.length < 3 || i < 2) {
+                    <span class="card__category">{{ tipo }}</span>
+                }
+            }
+            @if (empresa.categoria.length > 2) {
+                <span class="card__category card__category--more">+{{ empresa.categoria.length - 2 }}</span>
+            }
         </div>
+    
+        <!-- Botão -->
+        <button class="card__button">Ver detalhes</button>
     </div>
-
-    <!-- Categorias -->
-    <div class="card__categories">
-        <span class="card__category">Categoria</span>
-        <span class="card__category">Categoria</span>
-        <span class="card__category">Categoria</span>
-        <span class="card__category card__category--more">+1</span>
-    </div>
-
-    <!-- Botão -->
-    <button class="card__button">Ver detalhes</button>
+    }
 </div>
+
+    <!-- <div class="card__categories">
+            <span class="card__category">Categoria</span>
+            <span class="card__category">Categoria</span>
+            <span class="card__category">Categoria</span>
+            <span class="card__category card__category--more">+1</span>
+        </div> -->
