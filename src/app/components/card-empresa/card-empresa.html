@@ -1,15 +1,42 @@
 <div class="card">
-    <img class="card-img" src="jacto.png" alt="">
-    <div>
-        <h3>Nome empresa</h3>
-        <p>descrição da empresa</p>
 
-        <ul>
-            <li>Endereço: </li>
-            <li>Telefone: </li>
-            <li>Horário: </li>
-        </ul>
-
-        <button>Ver detalhes</button>
+    <!-- Imagem do topo -->
+    <div class="card__image-container">
+        <img class="card__image" src="jacto.png" alt="Imagem da empresa">
     </div>
+
+    <!-- Título (Nome da empresa) -->
+    <h2 class="card__title">Nome empresa</h2>
+
+    <!-- Descrição -->
+    <p class="card__description">Descrição da empresa com detalhes sobre o negócio.</p>
+
+    <!-- Informações -->
+    <div class="card__info">
+        <div class="card__info-item">
+            <img class="card__icon" src="localizacao_icon.svg" alt="Ícone de localização">
+            <span class="card__text">Av. Principal, 456 - Jardins, São Paulo - SP</span>
+        </div>
+        
+        <div class="card__info-item">
+            <img class="card__icon" src="telefone_icon.svg" alt="tel">
+            <span class="card__text">(11) 97654-3210</span>
+        </div>
+
+        <div class="card__info-item">
+            <img class="card__icon" src="relogio_icon.svg" alt="Ícone de horário">
+            <span class="card__text">Aberto hoje: 11:00 - 15:00, 18:00 - 22:00</span>
+        </div>
+    </div>
+
+    <!-- Categorias -->
+    <div class="card__categories">
+        <span class="card__category">Categoria</span>
+        <span class="card__category">Categoria</span>
+        <span class="card__category">Categoria</span>
+        <span class="card__category card__category--more">+1</span>
+    </div>
+
+    <!-- Botão -->
+    <button class="card__button">Ver detalhes</button>
 </div>

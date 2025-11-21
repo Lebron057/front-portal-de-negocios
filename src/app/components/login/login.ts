@@ -101,7 +101,7 @@ export class Login {
     }, 1000); // Pequeno delay para ver a mensagem de sucesso
   }
 
-  // --- Funções Auxiliares ---
+  // --- Funções Auxiliares --
 
   private mostrarSucesso(mensagem: string) {
     this.successMessage = mensagem;
