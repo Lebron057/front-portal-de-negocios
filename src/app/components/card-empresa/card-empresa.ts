@@ -47,7 +47,6 @@ export class CardEmpresa {
       status: 'Fechado',
       horario: '11:00 - 14:00',
       categoria: ['Restaurante', 'Self-service', 'Comida Brasileira']
-    },
-
+    }
   ];
 }
