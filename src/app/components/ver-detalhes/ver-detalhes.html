@@ -30,19 +30,23 @@
         <div class="card painel card-empresa">
           <div class="topo-empresa">
             <div class="logo-col">
-              <div class="logo">LOGO</div>
-              <div class="redes">
-                <a
-                  *ngFor="let social of company.socials"
-                  class="icone"
-                  [ngClass]="getSocialClass(social)"
-                  [href]="social.href"
-                  aria-label="{{ social.type }}"
-                >
-                  {{ social.label }}
-                </a>
-              </div>
+            <div class="logo">LOGO</div>
+            <div class="redes">
+              <a
+                *ngFor="let social of company.socials"
+                class="icone"
+                [ngClass]="getSocialClass(social)"
+                [href]="social.href"
+                aria-label="{{ social.type }}"
+              >
+                <img
+                  [src]="getSocialIcon(social)"
+                  [alt]="social.type"
+                  loading="lazy"
+                />
+              </a>
             </div>
+          </div>
             <div class="conteudo-empresa">
               <h2 class="titulo-empresa">{{ company.name }}</h2>
               <div class="badges">
@@ -71,6 +75,10 @@
 
         <div class="card painel card-avaliacoes">
           <h3>Avaliações Clientes</h3>
+          <p class="nota-avaliacao">
+            Deixe sua avaliação do estabelecimento. Cadastre-se e aproveite tudo que o central de negócios tem a oferecer.
+            <a class="link-login" routerLink="/login">Login</a>
+          </p>
           <div class="avaliacao" *ngFor="let review of reviews">
             <div class="avatar laranja">{{ review.userInitial }}</div>
             <div class="conteudo-avaliacao">
@@ -114,7 +122,7 @@
             </div>
           </div>
           <div class="info-linha">
-            <div class="icone-info cnpj"></div>
+            <div class="icone-info cnpj">&#127970;</div>
             <div class="texto-info">
               <p class="titulo-info">CNPJ</p>
               <p class="valor-info">{{ contact.cnpj }}</p>

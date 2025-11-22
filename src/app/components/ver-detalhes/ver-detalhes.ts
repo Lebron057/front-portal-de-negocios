@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Navbar } from '../navbar/navbar';
+import { RouterModule } from '@angular/router';
 
 type SocialLinkType = 'whatsapp' | 'instagram' | 'facebook' | 'email';
 
@@ -40,7 +41,7 @@ interface Review {
 
 @Component({
   selector: 'app-ver-detalhes',
-  imports: [Navbar, CommonModule],
+  imports: [Navbar, CommonModule, RouterModule],
   templateUrl: './ver-detalhes.html',
   styleUrl: './ver-detalhes.css',
 })
@@ -56,7 +57,6 @@ export class VerDetalhes {
       { type: 'whatsapp', label: 'WA', href: '#' },
       { type: 'instagram', label: 'IG', href: '#' },
       { type: 'facebook', label: 'FB', href: '#' },
-      { type: 'email', label: '@', href: '#' },
     ],
   };
 
@@ -114,6 +114,19 @@ export class VerDetalhes {
         return 'rede-facebook';
       default:
         return 'rede-email';
+    }
+  }
+
+  getSocialIcon(link: SocialLink): string {
+    switch (link.type) {
+      case 'whatsapp':
+        return '/whatsapp.png';
+      case 'instagram':
+        return '/instagram.png';
+      case 'facebook':
+        return '/facebook.png';
+      default:
+        return '/favicon.ico';
     }
   }
 }
