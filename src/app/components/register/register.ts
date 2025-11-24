@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavbarVoltar } from '../navbar-voltar/navbar-voltar';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NavbarVoltar
   ],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
@@ -30,7 +32,7 @@ export class Register {
   empresaModel = {
     cnpj: '',
     nomeEmpresa: '',
-    nomeResponsavel: '',
+    email: '',
     senha: '',
     confirmarSenha: ''
   };
@@ -87,7 +89,7 @@ export class Register {
     console.log('📊 Dados enviados:', {
       cnpj: this.empresaModel.cnpj,
       nomeEmpresa: this.empresaModel.nomeEmpresa,
-      nomeResponsavel: this.empresaModel.nomeResponsavel,
+      email: this.empresaModel.email,
       senha: '******'
     });
     console.log('💾 Salvando em TB_EMPRESAS...');
@@ -119,8 +121,14 @@ export class Register {
 
   private resetFormEmpresa() {
     this.empresaModel = {
-      cnpj: '', nomeEmpresa: '', nomeResponsavel: '', senha: '', confirmarSenha: ''
+      cnpj: '', nomeEmpresa: '', email: '', senha: '', confirmarSenha: ''
     };
+  }
+
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   // --- Funções de Máscara (para (input) event) ---

@@ -1,0 +1,219 @@
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+body {
+    background: var(--cor-fundo_geral);
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* --- Container Principal --- */
+main {
+    background-color: var(--branco_soft);
+    width: 100%;
+    max-width: 1100px; /* Ajustado para telas largas */
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 2px solid var(--cor-borda_input); /* Remove a borda padrão */
+    position: relative;
+}
+
+/* --- Títulos e Header --- */
+h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    padding-left: 0.5rem;
+}
+
+/* Botão voltar simulado para alinhamento */
+app-navbar-voltar {
+    position: absolute;
+    top: -3rem;
+    left: 0;
+    width: 100px;
+    color: #555;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- Estilo Geral de Inputs e Labels --- */
+label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--label-color);
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="time"],
+input[type="file"] {
+    background-color: var(--branco_soft);
+    border: 1px solid var(--cor-borda_input);
+    border-radius: 12px;
+    height: 50px;
+    width: 100%;
+    padding: 0 1rem;
+    font-size: 0.95rem;
+    outline: none;
+    color: var(--text-color);
+    transition: border 0.3s;
+}
+
+input::placeholder {
+    color: var(--cinza-placeholder);
+    font-size: 0.75rem;
+    font-weight: 600;
+    /* Remove o position absolute antigo que quebrava o layout */
+    position: static; 
+    margin: 0;
+}
+
+input:focus {
+    border-color: var(--orange-btn);
+}
+
+/* --- Primeira Linha: CEP, Endereço, Contato --- */
+.primeira_linha {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+/* Esconde o campo Nome que não tem na imagem */
+.nomeResponsavel {
+    display: none;
+}
+
+.cep {
+    flex: 1; /* Ocupa menos espaço */
+    max-width: 200px;
+}
+
+.endereco {
+    flex: 3; /* Ocupa mais espaço */
+}
+
+.contatoWhatsapp {
+    flex: 1.5;
+    min-width: 200px;
+}
+
+/* --- Segunda Linha: Descrição --- */
+.segunda_linha {
+    display: flex;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.descricao {
+    width: 100%;
+}
+
+.descricao_input {
+    height: 7.5rem !important; /* Força altura maior */
+}
+  
+
+/* --- Terceira Linha: Imagens e Horários --- */
+.container_3linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    width: 100%;
+    align-items: flex-start;
+}
+
+/* Área de Upload de Imagens */
+.terceira_linha1 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.terceira_linha1 input[type="file"] {
+    height: 150px;
+    padding: 1rem;
+    border: 2px dashed #d1d5db;
+    background-color: #fafafa;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Texto de ajuda do upload */
+.terceira_linha1 p {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.5rem;
+}
+
+/* Horários de Funcionamento */
+.terceira_linha2 {
+    flex: 1;
+    background-color: transparent;
+}
+
+/* Grid para organizar os dias da semana em duas colunas (simulando a imagem) */
+.terceira_linha2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    column-gap: 2rem;
+    row-gap: 0.5rem;
+}
+
+.terceira_linha2 label {
+    grid-column: 1 / -1; /* Título ocupa largura total */
+    margin-bottom: 1rem;
+}
+
+/* Estilo de cada linha de dia (Seg, Ter...) */
+.terceira_linha2 p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.terceira_linha2 p input[type="time"] {
+    width: 70px; /* Inputs menores para caber */
+    height: 35px;
+    border-radius: 8px;
+    padding: 0 0.2rem;
+    text-align: center;
+}
+
+/* Responsividade Básica */
+@media (max-width: 900px) {
+    .primeira_linha {
+        flex-wrap: wrap;
+    }
+    
+    .cep, .contatoWhatsapp, .endereco {
+        width: 100%;
+        flex: auto;
+        max-width: none;
+    }
+
+    .container_3linha {
+        flex-direction: column;
+    }
+}

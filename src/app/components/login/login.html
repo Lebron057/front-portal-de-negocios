@@ -1,7 +1,5 @@
 <body>
-    <div class="container-voltar">
-        <a class="voltar" href="#"><img src="/seta.png" alt=""><button class="btn-voltar">Voltar</button></a>
-    </div>
+    <app-navbar-voltar></app-navbar-voltar>
     <aside>
         <figure>
             @if (tipoLogin === 'consumidor') {
@@ -52,7 +50,10 @@
 
                 <div class="senha">
                     <label for="senhaConsumidor">Senha</label>
-                    <input id="senhaConsumidor" name="senha" type="password" [(ngModel)]="consumidorModel.senha" required>
+                    <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="consumidorModel.senha" required>
+                    <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                    </button>
                 </div>
 
                 <button class="submit" type="submit">Entrar</button>
@@ -68,7 +69,10 @@
 
                 <div class="senha">
                     <label for="senhaEmpresa">Senha</label>
-                    <input id="senhaEmpresa" name="senha" type="password" [(ngModel)]="empresaModel.senha" required>
+                    <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="empresaModel.senha" required>
+                    <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                    </button>
                 </div>
 
                 <button class="submit" type="submit">Entrar</button>
