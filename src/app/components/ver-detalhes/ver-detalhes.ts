@@ -18,6 +18,7 @@ interface Company {
   ratingCount: number;
   description: string;
   socials: SocialLink[];
+  logoUrl?: string;
 }
 
 interface ContactInfo {
@@ -46,18 +47,25 @@ interface Review {
   styleUrl: './ver-detalhes.css',
 })
 export class VerDetalhes {
+  heroImages: string[] = [
+    '/logoGaleto.jpg',
+    '/unnamed.jpg',
+    '/empresaJacto.png',
+  ];
+
   company: Company = {
-    name: 'Loja de Roupa Zé Mané',
+    name: 'Jacto Agricula',
     category: 'categoria',
     rating: 4.8,
     ratingCount: 153,
     description:
-      'Moda masculina e feminina com as últimas tendências. Atendimento personalizado e peças exclusivas para todas as ocasiões.',
+      'A Jacto é uma empresa brasileira reconhecida mundialmente por sua inovação e excelência na fabricação de equipamentos agrícolas.',
     socials: [
       { type: 'whatsapp', label: 'WA', href: '#' },
       { type: 'instagram', label: 'IG', href: '#' },
       { type: 'facebook', label: 'FB', href: '#' },
     ],
+    logoUrl: '/jactoLogo.png',
   };
 
   services: string[] = [
@@ -120,7 +128,7 @@ export class VerDetalhes {
   getSocialIcon(link: SocialLink): string {
     switch (link.type) {
       case 'whatsapp':
-        return '/whatsapp.png';
+        return '/whatsapp.jpeg';
       case 'instagram':
         return '/instagram.png';
       case 'facebook':
