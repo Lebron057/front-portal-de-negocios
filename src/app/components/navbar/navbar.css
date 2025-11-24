@@ -16,6 +16,7 @@ nav {
     display: flex;
     align-items: center;
     text-decoration: none;
+    gap: 10px;
 }
 
 .titulo-logo {
@@ -44,4 +45,9 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+img {
+    width: 45px;
+    height: 45px;
 }

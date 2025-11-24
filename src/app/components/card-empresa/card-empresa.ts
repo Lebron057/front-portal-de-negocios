@@ -37,6 +37,16 @@ export class CardEmpresa {
       status: 'Aberto',
       horario: '07:00 - 22:00',
       categoria: ['Supermercado', 'Ofertas', 'Variedade', 'Produtos']
+    },
+    {
+      nome: 'Dom Galeto',
+      imagem_url: 'galeto.jpg',
+      descricao: 'Restaurante self-service com ambiente familiar.',
+      endereco: 'Endereço da Empresa B',
+      telefone: '(11) 9876-5432',
+      status: 'Fechado',
+      horario: '11:00 - 14:00',
+      categoria: ['Restaurante', 'Self-service', 'Comida Brasileira']
     }
   ];
 }
