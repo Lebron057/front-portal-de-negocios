@@ -6,6 +6,7 @@ import { CardEmpresa } from './components/card-empresa/card-empresa';
 
 import { Register } from './components/register/register';  
 import { Login } from './components/login/login'; 
+import { VerDetalhes } from './components/ver-detalhes/ver-detalhes';
 
 
 export const routes: Routes = [
@@ -21,5 +22,8 @@ export const routes: Routes = [
     },
     {
         path: 'register', component: Register
+    },
+    {
+        path: 'detalhe', component: VerDetalhes
     }
 ];
