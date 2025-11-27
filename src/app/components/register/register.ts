@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavbarVoltar } from '../navbar-voltar/navbar-voltar';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -9,8 +10,9 @@ import { NavbarVoltar } from '../navbar-voltar/navbar-voltar';
   imports: [
     CommonModule,
     FormsModule,
-    NavbarVoltar
-  ],
+    NavbarVoltar,
+    RouterLink
+],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
 })

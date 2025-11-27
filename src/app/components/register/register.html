@@ -68,7 +68,7 @@
                     <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                 </button>
 
-                <button class="submit" type="submit">Cadastrar</button>
+                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit" type="submit">Cadastrar</button>
             </form>
 
 
@@ -99,7 +99,7 @@
                 <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                         <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                 </button>
-                <button class="submit" type="submit">Cadastrar</button>
+                <button (click)="cadastrarEmpresa()" routerLink="/register-detalhes-empresa" class="submit" type="submit">Cadastrar</button>
             </form>
 
         </div>

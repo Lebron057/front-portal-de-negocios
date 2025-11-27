@@ -153,14 +153,14 @@ label {
     border: none;
     position: absolute;
     right: 10%;
-    bottom:38.7%    
+    bottom:38%    
 }
 
 
 .submit { /* Alterado de .submit para button */
     /* === MUDANÇA PRINCIPAL === */
     width: 100%; /* Ocupa 100% do seu contêiner pai (form) */
-    height: 3.7rem;
+    height: 3rem;
     background-color: var(--laranja);
     border: none;
     border-radius: 16px;
