@@ -123,6 +123,20 @@ label {
     color: var(--cor-cinza_texto);
 }
 
+.olhoSenha{
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    position: absolute;
+    right: 10%;
+    bottom:34%    
+}
+
 ::placeholder {
     color: var(--cinza-placeholder);
     font-size: 0.75rem;
@@ -170,40 +184,15 @@ p {
     color: var(--cor-cinza_texto);
 }
 
-.container-voltar{
-    position:absolute;
+app-navbar-voltar{
     width: 90%;
-    bottom:90%;
     display:flex;
     justify-content: flex-start;
-    margin-left: 5%;
+    position:absolute;
+    top:5rem;
+    left:5%;
 }
 
-.voltar{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-}
-
-
-.btn-voltar{
-
-    background:none;
-    color:#65758B;
-    border: none;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    align-items: start;
-
-}
-.btn-voltar:hover{
-    text-decoration: underline;
-}
-.btn-voltar:active{
-    color:#000000;
-}
 
 /* Estilos para o toggle switch */
 
@@ -346,6 +335,15 @@ p {
 
         /* Alinha os itens ao topo */
         justify-content: flex-start;
+    }
+
+    app-navbar-voltar{
+        margin-top: 0;
+        height: 1rem;
+        position: relative;
+        top: 5rem;
+        left: -1rem;
+
     }
 
     /* 1. FAZ A IMAGEM DESAPARECER */

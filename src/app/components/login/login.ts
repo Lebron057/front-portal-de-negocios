@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule, Router } from "@angular/router";
+import { NavbarVoltar } from "../navbar-voltar/navbar-voltar";
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,8 @@ import { RouterLink, RouterModule, Router } from "@angular/router";
   imports: [
     RouterModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    NavbarVoltar
 ],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
@@ -75,6 +77,12 @@ export class Login {
     setTimeout(() => {
       this.router.navigate(['/']);
     }, 1000); // Pequeno delay para ver a mensagem de sucesso
+  }
+
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   /**

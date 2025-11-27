@@ -1,7 +1,5 @@
 <body>
-    <div class="container-voltar">
-        <a class="voltar" href="#"><img src="/seta.png" alt=""><button class="btn-voltar">Voltar</button></a>
-    </div>
+    <app-navbar-voltar></app-navbar-voltar>
     <aside>
         <figure>
             @if (tipoCadastro === 'consumidor') {
@@ -57,14 +55,20 @@
                     [value]="consumidorModel.telefone" (input)="formatarTelefone($event)" required>
 
                 <label for="senhaConsumidor">Senha</label>
-                <input id="senhaConsumidor" name="senha" type="password" placeholder="Mínimo 8 caracteres"
+                <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
                     [(ngModel)]="consumidorModel.senha" required>
+                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                    <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                </button>   
 
                 <label for="confirmarSenhaConsumidor">Confirmar Senha</label>
-                <input id="confirmarSenhaConsumidor" name="confirmar_senha" type="password"
+                <input id="confirmarSenhaConsumidor" name="confirmar_senha" [type]="showPassword ? 'text' : 'password'"
                     placeholder="Mínimo 8 caracteres" [(ngModel)]="consumidorModel.confirmarSenha" required>
+                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                    <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                </button>
 
-                <button class="submit" type="submit">Cadastrar</button>
+                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit" type="submit">Cadastrar</button>
             </form>
 
 
@@ -78,19 +82,24 @@
                 <input id="nomeEmpresa" name="nome_empresa" type="text" placeholder="Exemplo: Meu negócio"
                     [(ngModel)]="empresaModel.nomeEmpresa" required>
 
-                <label for="nomeResponsavel">Nome do Responsável</label>
-                <input id="nomeResponsavel" name="nome_responsavel" type="text" placeholder="Digite seu nome completo"
-                    [(ngModel)]="empresaModel.nomeResponsavel" required>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="Exemplo: teste@email.com"
+                    [(ngModel)]="empresaModel.email" required>
 
                 <label for="senhaEmpresa">Senha</label>
-                <input id="senhaEmpresa" name="senha" type="password" placeholder="Mínimo 8 caracteres"
+                <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
                     [(ngModel)]="empresaModel.senha" required>
+                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                </button>
 
                 <label for="confirmarSenhaEmpresa">Confirmar Senha</label>
-                <input id="confirmarSenhaEmpresa" name="confirmar_senha" type="password"
+                <input id="confirmarSenhaEmpresa" name="confirmar_senha" [type]="showPassword ? 'text' : 'password'"
                     placeholder="Mínimo 8 caracteres" [(ngModel)]="empresaModel.confirmarSenha" required>
-
-                <button class="submit" type="submit">Cadastrar</button>
+                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                </button>
+                <button (click)="cadastrarEmpresa()" routerLink="/register-detalhes-empresa" class="submit" type="submit">Cadastrar</button>
             </form>
 
         </div>

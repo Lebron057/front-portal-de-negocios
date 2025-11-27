@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './components/home/home';
 import { CardEmpresa } from './components/card-empresa/card-empresa';
+import { RegisterDetalhesEmpresa } from './components/register-detalhes-empresa/register-detalhes-empresa';
 
 
 
@@ -22,6 +23,9 @@ export const routes: Routes = [
     },
     {
         path: 'register', component: Register
+    },
+    {
+        path: 'register-detalhes-empresa', component: RegisterDetalhesEmpresa
     },
     {
         path: 'detalhe', component: VerDetalhes
