@@ -1,0 +1,170 @@
+<app-navbar></app-navbar>
+
+<main class="detalhes">
+  <div class="detalhes-wrapper">
+    <div class="barra-voltar">
+      <a class="voltar" href="#">
+        <span class="seta">&#8592;</span>
+        <span>Voltar</span>
+      </a>
+    </div>
+
+    <section class="hero">
+      <div id="carouselExample" class="carousel slide hero-carousel">
+        <div class="carousel-inner">
+          <ng-container *ngIf="heroImages.length; else heroPlaceholder">
+            <div
+              class="carousel-item"
+              *ngFor="let image of heroImages; let i = index"
+              [class.active]="i === 0"
+            >
+              <img [src]="image" class="d-block w-100 hero-img" [alt]="'Foto ' + (i + 1)" loading="lazy">
+            </div>
+          </ng-container>
+          <ng-template #heroPlaceholder>
+            <div class="carousel-item active">
+              <div class="hero-slide d-flex align-items-center justify-content-center">
+                <span>Adicione fotos para o carrossel</span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="grid-layout">
+      <div class="col-esquerda">
+        <div class="card painel card-empresa">
+          <div class="topo-empresa">
+            <div class="logo-col">
+              <div class="logo" [class.logo-placeholder]="!company.logoUrl">
+                <img
+                  *ngIf="company.logoUrl; else logoFallback"
+                  [src]="company.logoUrl"
+                  [alt]="'Logo da ' + company.name"
+                  loading="lazy"
+                />
+                <ng-template #logoFallback>
+                  <span class="logo-fallback-text">LOGO</span>
+                </ng-template>
+              </div>
+
+              <div class="redes">
+                <a
+                  *ngFor="let social of company.socials"
+                  class="icone"
+                  [ngClass]="getSocialClass(social)"
+                  [href]="social.href"
+                  aria-label="{{ social.type }}"
+                >
+                  <img
+                    [src]="getSocialIcon(social)"
+                    [alt]="social.type"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+            </div>
+            <div class="conteudo-empresa">
+              <h2 class="titulo-empresa">{{ company.name }}</h2>
+              <div class="badges">
+                <span class="badge">{{ company.category }}</span>
+                <div class="rating-badge">
+                  <span class="estrela">&#9733;</span>
+                  <span class="valor">{{ company.rating | number:'1.1-1' }}</span>
+                </div>
+                <span class="avaliacoes">{{ company.ratingCount }} avaliações</span>
+              </div>
+              <p class="descricao-empresa">
+                {{ company.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card painel card-servicos">
+          <div class="servicos-head">
+            <h3>Serviços Oferecidos</h3>
+          </div>
+          <div class="chips chips-servicos">
+            <span class="chip" *ngFor="let service of services">{{ service }}</span>
+          </div>
+        </div>
+
+        <div class="card painel card-avaliacoes">
+          <h3>Avaliações Clientes</h3>
+          <p class="nota-avaliacao">
+            Deixe sua avaliação do estabelecimento. Cadastre-se e aproveite tudo que o central de negócios tem a oferecer.
+            <a class="link-login" routerLink="/login">Login</a>
+          </p>
+          <div class="avaliacao" *ngFor="let review of reviews">
+            <div class="avatar laranja">{{ review.userInitial }}</div>
+            <div class="conteudo-avaliacao">
+              <div class="cabecalho-avaliacao">
+                <div>
+                  <p class="nome-usuario">{{ review.userName }}</p>
+                  <p class="data-avaliacao">{{ review.date }}</p>
+                </div>
+                <div class="estrelas">
+                  <span
+                    *ngFor="let star of starRange; let i = index"
+                    class="estrela"
+                    [class.off]="i + 1 > review.rating"
+                    >&#9733;</span
+                  >
+                </div>
+              </div>
+              <p class="texto-avaliacao">
+                {{ review.text }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-direita">
+        <div class="card painel card-info">
+          <h3>Informações da empresa</h3>
+          <div class="info-linha">
+            <div class="icone-info local">&#128205;</div>
+            <div class="texto-info">
+              <p class="titulo-info">Endereço</p>
+              <p class="valor-info">{{ contact.address }}</p>
+            </div>
+          </div>
+          <div class="info-linha">
+            <div class="icone-info telefone">&#128222;</div>
+            <div class="texto-info">
+              <p class="titulo-info">Telefone</p>
+              <p class="valor-info">{{ contact.phone }}</p>
+            </div>
+          </div>
+          <div class="info-linha">
+            <div class="icone-info cnpj">&#127970;</div>
+            <div class="texto-info">
+              <p class="titulo-info">CNPJ</p>
+              <p class="valor-info">{{ contact.cnpj }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card painel card-horarios">
+          <h3>Horários de atendimento</h3>
+          <ul class="lista-horarios">
+            <li *ngFor="let item of schedule">
+              <span>{{ item.day }}</span><span>{{ item.hours }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

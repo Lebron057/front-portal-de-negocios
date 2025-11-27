@@ -7,6 +7,7 @@ import { RegisterDetalhesEmpresa } from './components/register-detalhes-empresa/
 
 import { Register } from './components/register/register';  
 import { Login } from './components/login/login'; 
+import { VerDetalhes } from './components/ver-detalhes/ver-detalhes';
 
 
 export const routes: Routes = [
@@ -25,5 +26,8 @@ export const routes: Routes = [
     },
     {
         path: 'register-detalhes-empresa', component: RegisterDetalhesEmpresa
+    },
+    {
+        path: 'detalhe', component: VerDetalhes
     }
 ];
