@@ -128,9 +128,14 @@ export class Register {
   }
 
   showPassword = false;
+  showConfirmarSenha = false;
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmarSenhaVisibility() {
+    this.showConfirmarSenha = !this.showConfirmarSenha;
   }
 
   // --- Funções de Máscara (para (input) event) ---

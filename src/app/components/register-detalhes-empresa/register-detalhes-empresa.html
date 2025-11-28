@@ -1,47 +1,54 @@
 <body>
-    <app-navbar-voltar></app-navbar-voltar>
-    <main>
-        <h1>Detalhes da Empresa</h1>
-        <form class="primeira_linha">
-            <div class="nomeResponsavel">
-                <label for="nomeResponsavel">Nome do Responsável</label>
-                <input type="text" id="nomeResponsavel" name="nomeResponsavel" placeholder="Digite seu nome completo">
-            </div>
-            <div class="cep">
-                <label for="cepEmpresa">CEP</label>
-                <input type="text" id="cepEmpresa" name="cepEmpresa" placeholder="01001-0001">
-            </div>
-            <div class="endereco">
-                <label for="enderecoEmpresa">Endereço</label>
-                <input type="text" id="enderecoEmpresa" name="enderecoEmpresa" placeholder="Rua Imaginaria 123">
-            </div>
-            <div class="contatoWhatsapp">
-                <label for="contatoEmpresa">Contato(Whatsapp)</label>
-                <input type="text" id="contatoEmpresa" name="contatoEmpresa" placeholder="(99) 99999-9999">
-            </div>
-        </form>
-        <form class="segunda_linha">
-            <div class="descricao">
-                <label for="descricaoEmpresa">Descrição</label>
-                <input  class="descricao_input" type="text" id="descricaoEmpresa" name="descricaoEmpresa" placeholder="Descreva seu trabalho">
-            </div>
-        </form>
-        <div class="container_3linha">
-            <form class="terceira_linha1">
-                <label for="imagensEmpresa">Adicione imagens do seu negócio</label>
-                <input type="file" id="imagensEmpresa" name="imagensEmpresa" multiple>
-                <p>Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de 10 imagens</p>
+    <div class="page-container">
+        <app-navbar-voltar></app-navbar-voltar>
+        <main>
+            <h1>Detalhes da Empresa</h1>
+            <form class="primeira_linha">
+                <div class="nomeResponsavel">
+                    <label for="nomeResponsavel">Nome do Responsável</label>
+                    <input type="text" id="nomeResponsavel" name="nomeResponsavel"
+                        placeholder="Digite seu nome completo">
+                </div>
+                <div class="cep">
+                    <label for="cepEmpresa">CEP</label>
+                    <input type="text" id="cepEmpresa" name="cepEmpresa" placeholder="01001-0001">
+                </div>
+                <div class="endereco">
+                    <label for="enderecoEmpresa">Endereço</label>
+                    <input type="text" id="enderecoEmpresa" name="enderecoEmpresa" placeholder="Rua Imaginaria 123">
+                </div>
+                <div class="contatoWhatsapp">
+                    <label for="contatoEmpresa">Contato(Whatsapp)</label>
+                    <input type="text" id="contatoEmpresa" name="contatoEmpresa" placeholder="(99) 99999-9999">
+                </div>
             </form>
-            <form class="terceira_linha2">
-                <label for="horarioEmpresa">Horário de funcionamento</label>
-                <p>Seg<input type="time">-<input type="time"></p>
-                <p>Ter<input type="time">-<input type="time"></p>
-                <p>Qua<input type="time">-<input type="time"></p>
-                <p>Qui<input type="time">-<input type="time"></p>
-                <p>Sex<input type="time">-<input type="time"></p>
-                <p>Sab<input type="time">-<input type="time"></p>
-                <p>Dom<input type="time">-<input type="time"></p>
+            <form class="segunda_linha">
+                <div class="descricao">
+                    <label for="descricaoEmpresa">Descrição</label>
+                    <input class="descricao_input" type="text" id="descricaoEmpresa" name="descricaoEmpresa"
+                        placeholder="Descreva seu trabalho">
+                </div>
             </form>
-        </div>
-    </main>
+            <div class="container_3linha">
+                <form class="terceira_linha1">
+                    <label for="imagensEmpresa">Adicione imagens do seu negócio</label>
+                    <input type="file" id="imagensEmpresa" name="imagensEmpresa" multiple>
+                    <p>Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de 10 imagens</p>
+                </form>
+                <form class="terceira_linha2">
+                    <label for="horarioEmpresa">Horário de funcionamento</label>
+                    <p>Seg<input type="time">-<input type="time"></p>
+                    <p>Ter<input type="time">-<input type="time"></p>
+                    <p>Qua<input type="time">-<input type="time"></p>
+                    <p>Qui<input type="time">-<input type="time"></p>
+                    <p>Sex<input type="time">-<input type="time"></p>
+                    <p>Sab<input type="time">-<input type="time"></p>
+                    <p>Dom<input type="time">-<input type="time"></p>
+                </form>
+            </div>
+
+            <button class="submit" type="submit">Salvar alterações</button>
+            <button class="cancelar" type="submit2">Cancelar</button>
+        </main>
+    </div>
 </body>

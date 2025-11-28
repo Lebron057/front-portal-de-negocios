@@ -8,6 +8,7 @@ import { RegisterDetalhesEmpresa } from './components/register-detalhes-empresa/
 import { Register } from './components/register/register';  
 import { Login } from './components/login/login'; 
 import { VerDetalhes } from './components/ver-detalhes/ver-detalhes';
+import { NavbarVoltar } from './components/navbar-voltar/navbar-voltar';
 
 
 export const routes: Routes = [
@@ -29,5 +30,8 @@ export const routes: Routes = [
     },
     {
         path: 'detalhe', component: VerDetalhes
+    },
+    {
+        path: 'navbar-voltar', component: NavbarVoltar
     }
 ];

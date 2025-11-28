@@ -16,7 +16,8 @@
             <!-- 
       O :host é usado para centralizar o componente na tela 
       para fins de demonstração.
-    -->     <div class="container-toggle">
+    -->
+            <div class="container-toggle">
                 <div class="custom-toggle-container">
                     <!-- Este é o "slider" azul que se move -->
                     <div class="slider-background"
@@ -40,7 +41,7 @@
                 {{ successMessage }}
             </div> -->
 
-            
+
             <form *ngIf="tipoLogin === 'consumidor'" (ngSubmit)="loginConsumidor()">
                 <div class="infoConsumidorEmpresa">
                     <label for="emailTelefoneConsumidor">Email ou Telefone</label>
@@ -50,10 +51,13 @@
 
                 <div class="senha">
                     <label for="senhaConsumidor">Senha</label>
-                    <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="consumidorModel.senha" required>
-                    <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
-                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
-                    </button>
+                    <div class="password-container">
+                        <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="consumidorModel.senha" required>
+                        <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                            <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                        </button>
+                    </div>
                 </div>
 
                 <button class="submit" type="submit">Entrar</button>
@@ -69,10 +73,13 @@
 
                 <div class="senha">
                     <label for="senhaEmpresa">Senha</label>
-                    <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="empresaModel.senha" required>
-                    <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
-                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
-                    </button>
+                    <div class="password-container">
+                        <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="empresaModel.senha" required>
+                        <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                            <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                        </button>
+                    </div>
                 </div>
 
                 <button class="submit" type="submit">Entrar</button>
