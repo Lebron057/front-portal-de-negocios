@@ -30,8 +30,5 @@ export const routes: Routes = [
     },
     {
         path: 'detalhe', component: VerDetalhes
-    },
-    {
-        path: 'navbar-voltar', component: NavbarVoltar
     }
 ];
