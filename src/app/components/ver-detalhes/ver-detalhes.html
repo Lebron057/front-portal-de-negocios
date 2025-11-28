@@ -9,36 +9,6 @@
       </a>
     </div>
 
-    <section class="hero">
-      <div id="carouselExample" class="carousel slide hero-carousel">
-        <div class="carousel-inner">
-          <ng-container *ngIf="heroImages.length; else heroPlaceholder">
-            <div
-              class="carousel-item"
-              *ngFor="let image of heroImages; let i = index"
-              [class.active]="i === 0"
-            >
-              <img [src]="image" class="d-block w-100 hero-img" [alt]="'Foto ' + (i + 1)" loading="lazy">
-            </div>
-          </ng-container>
-          <ng-template #heroPlaceholder>
-            <div class="carousel-item active">
-              <div class="hero-slide d-flex align-items-center justify-content-center">
-                <span>Adicione fotos para o carrossel</span>
-              </div>
-            </div>
-          </ng-template>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </section>
 
     <section class="grid-layout">
       <div class="col-esquerda">
