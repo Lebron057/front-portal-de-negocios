@@ -55,20 +55,27 @@
                     [value]="consumidorModel.telefone" (input)="formatarTelefone($event)" required>
 
                 <label for="senhaConsumidor">Senha</label>
-                <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
-                    [(ngModel)]="consumidorModel.senha" required>
-                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
-                    <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
-                </button>   
+                <div class="password-container">
+                    <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
+                        placeholder="Mínimo 8 caracteres" [(ngModel)]="consumidorModel.senha" required>
+                    <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                    </button>
+                </div>
 
                 <label for="confirmarSenhaConsumidor">Confirmar Senha</label>
-                <input id="confirmarSenhaConsumidor" name="confirmar_senha" [type]="showPassword ? 'text' : 'password'"
-                    placeholder="Mínimo 8 caracteres" [(ngModel)]="consumidorModel.confirmarSenha" required>
-                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
-                    <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
-                </button>
+                <div class="password-container">
+                    <input id="confirmarSenhaConsumidor" name="confirmar_senha"
+                        [type]="showConfirmarSenha ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
+                        [(ngModel)]="consumidorModel.confirmarSenha" required>
+                    <button type="button" (click)="toggleConfirmarSenhaVisibility()" class="olhoConfirmarSenha">
+                        <img src="{{ showConfirmarSenha ? '/ocultarSenhaConfirmar.svg' : '/verSenhaConfirmar.svg' }}"
+                            alt="Toggle Password">
+                    </button>
+                </div>
 
-                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit" type="submit">Cadastrar</button>
+                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit"
+                    type="submit">Cadastrar</button>
             </form>
 
 
@@ -87,19 +94,26 @@
                     [(ngModel)]="empresaModel.email" required>
 
                 <label for="senhaEmpresa">Senha</label>
-                <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
-                    [(ngModel)]="empresaModel.senha" required>
-                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                <div class="password-container">
+                    <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
+                        placeholder="Mínimo 8 caracteres" [(ngModel)]="empresaModel.senha" required>
+                    <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                         <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
-                </button>
+                    </button>
+                </div>
 
                 <label for="confirmarSenhaEmpresa">Confirmar Senha</label>
-                <input id="confirmarSenhaEmpresa" name="confirmar_senha" [type]="showPassword ? 'text' : 'password'"
-                    placeholder="Mínimo 8 caracteres" [(ngModel)]="empresaModel.confirmarSenha" required>
-                <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
-                        <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
-                </button>
-                <button (click)="cadastrarEmpresa()" routerLink="/register-detalhes-empresa" class="submit" type="submit">Cadastrar</button>
+                <div class="password-container">
+                    <input id="confirmarSenhaEmpresa" name="confirmar_senha"
+                        [type]="showConfirmarSenha ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
+                        [(ngModel)]="empresaModel.confirmarSenha" required>
+                    <button type="button" (click)="toggleConfirmarSenhaVisibility()" class="olhoConfirmarSenha">
+                        <img src="{{  showConfirmarSenha ? '/ocultarSenhaConfirmar.svg' : '/verSenhaConfirmar.svg' }}"
+                            alt="Toggle Password">
+                    </button>
+                </div>
+                <button (click)="cadastrarEmpresa()" routerLink="/register-detalhes-empresa" class="submit"
+                    type="submit">Cadastrar</button>
             </form>
 
         </div>
