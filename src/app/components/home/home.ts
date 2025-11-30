@@ -13,7 +13,7 @@ export class Home {
   // 1. Categorias Essenciais
   categorias: string[] = [
     'Todos',
-    'Restaurantes & Bares',
+    'Restaurante',
     'Vestuário & Moda',
     'Saúde & Beleza',
     'Mercados',
