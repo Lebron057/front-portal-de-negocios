@@ -3,26 +3,45 @@
     <section class="home-pesquisa">
         <h2>Encontre negócios Locais</h2>
         <h4>Conectamos você com empresas verificadas da sua região. Avalie, comente e descubra novos serviços.</h4>
-        <div class="input-pesquisa">
-            <img class="input-icon" src="lupa_icon.png" alt="lupa">
-            <input type="text" placeholder="Pesquise o estabelecimento ou serviço">
-        </div>
-        <div class="filtros">
-            <!-- Categoria -->
-            <button class="botao_filtro">Categoria</button>
-
-            <!-- serviços -->
-            <button class="botao_filtro">Serviços</button>
-
-            <!-- Aberto agora -->
-            <button class="botao_filtro">Aberto</button>
+        
+        <div class="filtros-container">
             
-            <!-- + Avaliados -->
-            <button class="botao_filtro">+ Avaliados</button>
-            
-            <!-- Ofertas -->
-            <button class="botao_filtro">Ofertas</button>
+            <div class="filtros-linha">
+                <div class="select-wrapper">
+                    <select (change)="atualizarCategoria($event)" class="custom-select">
+                        <option value="" disabled selected>Escolha uma categoria</option>
+                        @for (cat of categorias; track cat) {
+                            <option [value]="cat">{{ cat }}</option>
+                        }
+                    </select>
+                    <span class="select-arrow"></span>
+                </div>
+
+                <div class="select-wrapper">
+                    <select (change)="atualizarBairro($event)" class="custom-select">
+                        <option value="" disabled selected>Filtrar por Bairro</option>
+                        @for (bairro of bairros; track bairro) {
+                            <option [value]="bairro">{{ bairro }}</option>
+                        }
+                    </select>
+                    <span class="select-arrow"></span>
+                </div>
+            </div>
+
+            <label class="toggle-switch">
+                <input type="checkbox" 
+                       [checked]="filtros.abertoAgora" 
+                       (change)="toggleAbertoAgora($event)">
+                <span class="slider round"></span>
+                <span class="label-text">Abertos agora</span>
+            </label>
+
+            <button class="btn-buscar" (click)="aplicarFiltros()">
+                Buscar Resultados
+            </button>
+
         </div>
+        
     </section>
 
     <section class="home-cards">

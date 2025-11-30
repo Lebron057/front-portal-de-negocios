@@ -16,7 +16,7 @@ export class CardEmpresa {
       telefone: '(11) 1234-5678',
       status: 'Aberto',
       horario: '08:00 - 18:00',
-      categoria: ['Tecnologia', 'Agronegócio', 'Inovação', 'Soluções'],
+      categoria: ['Agronegócio', 'Tecnologia'],
     },
     {
       nome: 'Dom Galeto',
@@ -26,7 +26,7 @@ export class CardEmpresa {
       telefone: '(11) 9876-5432',
       status: 'Fechado',
       horario: '11:00 - 14:00',
-      categoria: ['Restaurante', 'Self-service', 'Comida Brasileira']
+      categoria: ['Restaurante']
     },
     {
       nome: 'Supermercado Pompeia',
@@ -36,7 +36,7 @@ export class CardEmpresa {
       telefone: '(11) 2468-1357',
       status: 'Aberto',
       horario: '07:00 - 22:00',
-      categoria: ['Supermercado', 'Ofertas', 'Variedade', 'Produtos']
+      categoria: ['Supermercado']
     },
     {
       nome: 'Dom Galeto',
@@ -46,7 +46,7 @@ export class CardEmpresa {
       telefone: '(11) 9876-5432',
       status: 'Fechado',
       horario: '11:00 - 14:00',
-      categoria: ['Restaurante', 'Self-service', 'Comida Brasileira']
+      categoria: ['Restaurante']
     }
   ];
 }
