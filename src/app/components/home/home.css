@@ -207,3 +207,68 @@ input:checked + .slider:before {
     color: #666;
     margin-top: 8px;
 }
+
+/* Estilos para organizar as seções */
+
+.container-secoes {
+    padding: 2rem 5%; /* Espaçamento lateral */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categoria-wrapper {
+    margin-bottom: 3rem; /* Espaço entre uma categoria e outra */
+}
+
+.categoria-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 5px solid #ff6b6b; /* Detalhe visual colorido no título */
+    padding-left: 1rem;
+}
+
+.categoria-header h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
+}
+
+.categoria-header .contador {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Grid para os cards ficarem lado a lado dentro da categoria */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.divisor-secao {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 3rem;
+}
+
+.sem-resultados {
+    text-align: center;
+    padding: 4rem;
+    color: #777;
+    font-size: 1.2rem;
+}
+
+/* Responsividade básica */
+@media (max-width: 768px) {
+    .categoria-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cards-grid {
+        /* No mobile, talvez você queira um scroll horizontal ou 1 coluna */
+        grid-template-columns: 1fr; 
+    }
+}

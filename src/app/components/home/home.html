@@ -51,7 +51,35 @@
         </div>
     </section>
 
-    <section class="cards">
-        <app-card-empresa></app-card-empresa>
-    </section>
+    <div class="container-secoes">
+        
+        <!-- Loop Externo: Itera sobre as SEÇÕES (Categorias) -->
+        @for (secao of secoesPorCategoria; track secao.titulo) {
+            
+            <section class="categoria-wrapper">
+                <div class="categoria-header">
+                    <h3>{{ secao.titulo }}</h3>
+                    <span class="contador">{{ secao.empresas.length }} locais</span>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Loop Interno: Itera sobre as EMPRESAS daquela categoria -->
+                    @for (empresa of secao.empresas; track empresa.nome) {
+                        <!-- Importante: Passamos os dados da empresa para o componente filho -->
+                        <!-- Certifique-se que seu app-card-empresa tem um @Input() empresa -->
+                        <app-card-empresa [empresa]="empresa"></app-card-empresa>
+                    }
+                </div>
+            </section>
+            
+            <!-- Linha divisória estética (opcional) -->
+            <hr class="divisor-secao">
+        } 
+        @empty {
+            <div class="sem-resultados">
+                <p>Nenhuma empresa encontrada com os filtros selecionados.</p>
+            </div>
+        }
+
+    </div>
 </main>
