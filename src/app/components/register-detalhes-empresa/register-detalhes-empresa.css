@@ -138,7 +138,7 @@ input:focus {
 }
 
 .descricao_input {
-    height: 7.5rem !important;
+    height: 3rem !important;
     /* Força altura maior */
 
 }
@@ -178,8 +178,15 @@ input:focus {
 
 /* Horários de Funcionamento */
 .terceira_linha2 {
-    flex: 1;
-    background-color: transparent;
+    display: grid;
+    /* 1rem é o espaçamento superior para o título */
+    grid-template-rows: auto 1fr;
+    /* Duas colunas para os dias, com espaço */
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; /* Espaço entre as colunas e entre o título e os dias */
+    padding: 1rem;
+    max-width: 600px; /* Limita a largura para melhor visualização */
+    margin: auto;
 }
 
 /* Grid para organizar os dias da semana em duas colunas (simulando a imagem) */
@@ -189,20 +196,28 @@ input:focus {
     /* Duas colunas */
     column-gap: 2rem;
     row-gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 3.4rem;
 }
+
+
 
 .terceira_linha2 label {
     grid-column: 1 / -1;
     /* Título ocupa largura total */
     margin-bottom: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
+
 
 /* Estilo de cada linha de dia (Seg, Ter...) */
 .terceira_linha2 p {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: 0.1rem;
+    margin-bottom: 0.3rem;
     font-weight: 600;
     color: var(--text-color);
 }
@@ -210,11 +225,163 @@ input:focus {
 .terceira_linha2 p input[type="time"] {
     width: 70px;
     /* Inputs menores para caber */
-    height: 35px;
+    height: 28px;
     border-radius: 8px;
     padding: 0 0.2rem;
     text-align: center;
 }
+
+.horario-coluna {
+    display: flex;
+    flex-direction: column;
+    /* Espaço entre os dias dentro da coluna */
+    gap: 0.1rem; 
+}
+
+/* Estilo de cada linha de dia (o "card" individual) */
+.horario-dia1 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+.horario-dia2 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+.horario-dia3 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+.horario-dia4 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+.horario-dia5 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+.horario-dia6 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+.horario-dia7 {
+    display: flex;
+    align-items: center;
+    /* Alinha o dia, os inputs e o separador de forma justa */
+    justify-content: space-between; 
+    gap: 0.3rem;
+    /* Padding reduzido */
+    padding: 0.5rem 0.8rem; 
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color, #555);
+    background-color: #f9f9f9; 
+    transition: transform 0.1s;
+}
+
+/* Nome do dia da semana (ex: Seg, Ter) */
+.horario-dia span:first-child {
+    /* Garante um espaço fixo menor */
+    flex-basis: 35px; 
+    text-align: left;
+    margin-right: 0.3rem;
+    color: #333; 
+    font-size: 0.95rem; /* Levemente menor */
+}
+
+/* Input de Horário */
+.horario-dia input[type="time"] {
+    /* Largura reduzida */
+    width: 65px; 
+    /* Altura reduzida */
+    height: 30px; 
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0 0.4rem;
+    text-align: center;
+    font-size: 0.9rem; /* Fonte menor */
+    background-color: white;
+    appearance: none; 
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.horario-dia input[type="time"]:focus {
+    border-color: #007bff; 
+}
+
+/* Separador (o traço '-') */
+.horario-dia .separador {
+    font-weight: 400;
+    color: #999;
+    flex-shrink: 0; 
+}
+
 
 /* Responsividade Básica */
 @media (max-width: 900px) {

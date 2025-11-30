@@ -37,18 +37,22 @@
                 </form>
                 <form class="terceira_linha2">
                     <label for="horarioEmpresa">Horário de funcionamento</label>
-                    <p>Seg<input type="time">-<input type="time"></p>
-                    <p>Ter<input type="time">-<input type="time"></p>
-                    <p>Qua<input type="time">-<input type="time"></p>
-                    <p>Qui<input type="time">-<input type="time"></p>
-                    <p>Sex<input type="time">-<input type="time"></p>
-                    <p>Sab<input type="time">-<input type="time"></p>
-                    <p>Dom<input type="time">-<input type="time"></p>
+                    <div class="horario-coluna">
+                    <p class="horario-dia1">Seg<input type="time">-<input type="time"></p>
+                    <p class="horario-dia2">Ter<input type="time">-<input type="time"></p>
+                    <p class="horario-dia3">Qua<input type="time">-<input type="time"></p>
+                    <p class="horario-dia4">Qui<input type="time">-<input type="time"></p>
+                    </div>
+                    <div class="horario-coluna">
+                    <p class="horario-dia5">Sex<input type="time">-<input type="time"></p>
+                    <p class="horario-dia6">Sab<input type="time">-<input type="time"></p>
+                    <p class="horario-dia7">Dom<input type="time">-<input type="time"></p>
+                    </div>
                 </form>
             </div>
 
             <button class="submit" type="submit">Salvar alterações</button>
-            <button class="cancelar" type="submit2">Cancelar</button>
+            <button class="cancelar" type="submit2" (click)="openModal()">Cancelar</button>
         </main>
     </div>
 </body>
