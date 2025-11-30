@@ -9,7 +9,7 @@
             <div class="filtros-linha">
                 <div class="select-wrapper">
                     <select (change)="atualizarCategoria($event)" class="custom-select">
-                        <option value="" disabled selected>Escolha uma categoria</option>
+                        <option value="" selected>Escolha uma categoria</option>
                         @for (cat of categorias; track cat) {
                             <option [value]="cat">{{ cat }}</option>
                         }
@@ -19,7 +19,7 @@
 
                 <div class="select-wrapper">
                     <select (change)="atualizarBairro($event)" class="custom-select">
-                        <option value="" disabled selected>Filtrar por Bairro</option>
+                        <option value="" selected>Filtrar por Bairro</option>
                         @for (bairro of bairros; track bairro) {
                             <option [value]="bairro">{{ bairro }}</option>
                         }
@@ -59,7 +59,7 @@
             <section class="categoria-wrapper">
                 <div class="categoria-header">
                     <h3>{{ secao.titulo }}</h3>
-                    <span class="contador">{{ secao.empresas.length }} locais</span>
+                    <span class="contador">locais: {{ secao.empresas.length }}</span>
                 </div>
                 
                 <div class="cards-grid">

@@ -109,11 +109,15 @@ export class Home implements OnInit {
   atualizarSecoes() {
     let categoriasParaExibir: string[] = [];
 
-    if (this.filtros.categoria) {
+    if (this.filtros.categoria && this.filtros.categoria !== '') {
       categoriasParaExibir = [this.filtros.categoria];
     } else {
       // Usa as categorias definidas ou extrai dinamicamente se preferir
-      categoriasParaExibir = this.categorias;
+      const todasAsCats = new Set<string>();
+      this.todasEmpresas.forEach(emp => {
+        emp.categoria.forEach(cat => todasAsCats.add(cat));
+      });
+      categoriasParaExibir = Array.from(todasAsCats);
     }
 
     this.secoesPorCategoria = [];
@@ -125,7 +129,7 @@ export class Home implements OnInit {
       );
 
       // Aplica os outros filtros (Bairro, Aberto Agora) DENTRO do grupo
-      if (this.filtros.bairro) {
+      if (this.filtros.bairro && this.filtros.bairro !== '') {
         empresasDaCategoria = empresasDaCategoria.filter(e => e.bairro === this.filtros.bairro);
       }
       if (this.filtros.abertoAgora) {
@@ -140,6 +144,8 @@ export class Home implements OnInit {
         });
       }
     });
+
+    this.secoesPorCategoria.sort((a, b) => a.titulo.localeCompare(b.titulo));
   }
 
   // --- Métodos de filtro ---
