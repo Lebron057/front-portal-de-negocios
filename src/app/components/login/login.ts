@@ -136,4 +136,49 @@ export class Login {
       cnpjEmail: '', senha: ''
     };
   }
+
+    cadastroSucesso: boolean = false;
+    
+    // Variável para armazenar a mensagem de erro, se houver
+    mensagemErro: string = '';
+
+    /**
+     * Método simulado para realizar um cadastro.
+     * Na vida real, esta função faria uma chamada a um serviço (API).
+     */
+    realizarCadastro(): void {
+        // 1. Resetar estados anteriores
+        this.cadastroSucesso = false;
+        this.mensagemErro = '';
+
+        // 2. Simulação da lógica de cadastro (Ex: chamada a API)
+        const sucesso = Math.random() > 0.3; // 70% de chance de sucesso para o exemplo
+
+        if (sucesso) {
+            // 3. IF: Cadastro bem-sucedido
+            this.cadastroSucesso = true;
+            
+            // Opcional: Fechar o modal e REDIRECIONAR automaticamente após alguns segundos
+            setTimeout(() => {
+                this.fecharModal();
+                
+                // 3. Comando de redirecionamento para a página inicial (raiz '/')
+                this.router.navigate(['/']); 
+                
+            }, 2000); // Redireciona 3 segundos após o sucesso.
+
+        } else {
+            // 4. ELSE: Cadastro falhou
+            this.mensagemErro = 'Complete todos os campos para realizar login.';
+        }
+    }
+
+    /**
+     * Método para fechar o modal.
+     */
+    fecharModal(): void {
+        this.cadastroSucesso = false;
+        this.mensagemErro = '';
+    }
+  
 }
