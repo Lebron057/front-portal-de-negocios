@@ -139,7 +139,8 @@ label {
     color: var(--cor-cinza_texto);
 }
 
-.password-container {
+.password-container,
+.input-container {
     position: relative;
     width: 100%;
 }
@@ -196,6 +197,12 @@ label {
     transition: 0.1s;
 }
 
+.submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
 a {
     text-decoration: none;
     color: var(--cor-icones);
@@ -204,10 +211,32 @@ a {
     margin-top: 10px;
 }
 
+a:hover     {
+    text-decoration: underline;
+}
+
+a:active    {
+    text-decoration: none;
+    transform: scale(0.80);
+    transition: 0.1s;
+}
+
 p {
     font-size: 1.2rem;
     font-weight: 400;
     color: var(--cor-cinza_texto);
+}
+
+.error-message {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: red;
+    font-size: 0.75rem;
+    font-weight: 600;
+    pointer-events: none;
+    white-space: nowrap;
 }
 
 app-navbar-voltar {
@@ -475,3 +504,4 @@ app-navbar-voltar {
         text-align: center;
     }
 }
+

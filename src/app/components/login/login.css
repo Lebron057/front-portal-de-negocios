@@ -209,12 +209,28 @@ label {
     transition: 0.1s;
 }
 
+.submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
 a {
     text-decoration: none;
     color: var(--cor-icones);
     font-size: 1.2rem;
     font-weight: 600;
     margin-top: 10px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: none;
+    transform: scale(0.80);
+    transition: 0.1s;
 }
 
 p {

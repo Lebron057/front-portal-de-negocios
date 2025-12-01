@@ -41,51 +41,53 @@
                 {{ successMessage }}
             </div> -->
 
-
-            <form *ngIf="tipoLogin === 'consumidor'" (ngSubmit)="loginConsumidor()">
+            @if (tipoLogin === 'consumidor') {
+            <form #formConsumidor="ngForm" (ngSubmit)="loginConsumidor()">
                 <div class="infoConsumidorEmpresa">
                     <label for="emailTelefoneConsumidor">Email ou Telefone</label>
-                    <input id="emailTelefoneConsumidor" name="emailTelefone" type="text"
-                        [(ngModel)]="consumidorModel.emailTelefone" required>
+                    <input ngModel required #emailTelefoneConsumidor="ngModel"  id="emailTelefoneConsumidor" name="emailTelefone" type="text"
+                        [(ngModel)]="consumidorModel.emailTelefone">
+                    
                 </div>
 
                 <div class="senha">
                     <label for="senhaConsumidor">Senha</label>
                     <div class="password-container">
-                        <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
-                            [(ngModel)]="consumidorModel.senha" required>
+                        <input ngModel required="true" #senhaConsumidor="ngModel" id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="consumidorModel.senha">
                         <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                             <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                         </button>
                     </div>
                 </div>
 
-                <button class="submit" type="submit">Entrar</button>
+                <button [disabled]="!formConsumidor.valid" class="submit" type="submit">Entrar</button>
             </form>
+            }
 
-
-            <form *ngIf="tipoLogin === 'empresa'" (ngSubmit)="loginEmpresa()">
+            @if (tipoLogin === 'empresa') {
+            <form #formEmpresa="ngForm" (ngSubmit)="loginEmpresa()">
 
                 <div class="infoConsumidorEmpresa">
                     <label for="cnpjEmail">CNPJ ou Email</label>
-                    <input id="cnpjEmail" name="cnpjEmail" type="text" [(ngModel)]="empresaModel.cnpjEmail" required>
+                    <input ngModel required #cnpjEmail="ngModel" id="cnpjEmail" name="cnpjEmail" type="text" [(ngModel)]="empresaModel.cnpjEmail">
                 </div>
 
                 <div class="senha">
                     <label for="senhaEmpresa">Senha</label>
                     <div class="password-container">
-                        <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
-                            [(ngModel)]="empresaModel.senha" required>
+                        <input ngModel required #senhaEmpresa="ngModel" id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="empresaModel.senha">
                         <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                             <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                         </button>
                     </div>
                 </div>
 
-                <button class="submit" type="submit">Entrar</button>
+                <button [disabled]="!formEmpresa.valid" class="submit" type="submit">Entrar</button>
             </form>
-
+            }
         </div>
-        <p>Não possui conta? <a href="/register">Cadastre-se</a></p>
+        <p>Não possui conta? <a class="registerLink" href="/register">Cadastre-se</a></p>
     </div>
 </body>

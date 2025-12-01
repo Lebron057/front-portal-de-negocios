@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { NavbarVoltar } from '../navbar-voltar/navbar-voltar';
 import { RouterLink } from "@angular/router";
 
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -12,7 +14,7 @@ import { RouterLink } from "@angular/router";
     FormsModule,
     NavbarVoltar,
     RouterLink
-],
+  ],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
 })
@@ -42,6 +44,7 @@ export class Register {
   // Controle de visibilidade e mensagem de sucesso
   isSuccessVisible = false;
   successMessage = '';
+  emailPattern = emailRegex;
 
   constructor() { }
 
@@ -127,6 +130,12 @@ export class Register {
     };
   }
 
+  showModal = false;
+  toggleInvalidModal(){
+    this.showModal =  true;
+    console.log("Preencha todos os campos")
+  }
+
   showPassword = false;
   showConfirmarSenha = false;
 
@@ -136,6 +145,14 @@ export class Register {
 
   toggleConfirmarSenhaVisibility() {
     this.showConfirmarSenha = !this.showConfirmarSenha;
+  }
+
+  verificarSenhas(tipo: 'consumidor' | 'empresa'): boolean {
+    if (tipo === 'consumidor') {
+      return this.consumidorModel.senha === this.consumidorModel.confirmarSenha;
+    } else {
+      return this.empresaModel.senha === this.empresaModel.confirmarSenha;
+    }
   }
 
   // --- Funções de Máscara (para (input) event) ---
@@ -161,4 +178,6 @@ export class Register {
     // Atualiza o valor no modelo e no input
     this.empresaModel.cnpj = value;
   }
+
+
 }
