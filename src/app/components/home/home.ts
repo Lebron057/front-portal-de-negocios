@@ -152,17 +152,14 @@ export class Home implements OnInit {
 
   atualizarCategoria(event: any) {
     this.filtros.categoria = event.target.value;
-    this.atualizarSecoes();
   }
 
   atualizarBairro(event: any) {
     this.filtros.bairro = event.target.value;
-    this.atualizarSecoes();
   }
 
   toggleAbertoAgora(event: any) {
     this.filtros.abertoAgora = event.target.checked;
-    this.atualizarSecoes();
   }
 
   aplicarFiltros() {
