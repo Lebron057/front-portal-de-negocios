@@ -1,16 +1,66 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { NavbarVoltar } from "../navbar-voltar/navbar-voltar";
-
 
 
 @Component({
   selector: 'app-register-detalhes-empresa',
-  imports: [NavbarVoltar],
+  imports: [CommonModule, NavbarVoltar],
   templateUrl: './register-detalhes-empresa.html',
   styleUrl: './register-detalhes-empresa.css',
 })
 export class RegisterDetalhesEmpresa {
-  
-} 
+  // Variável para controlar a exibição do modal de sucesso
+  cadastroSucesso: boolean = false;
+    
+    // Variável para armazenar a mensagem de erro, se houver
+    mensagemErro: string = '';
+
+    // 2. Injetar o Router no construtor
+    constructor(private router: Router) { } 
+
+    /**
+     * Método simulado para realizar um cadastro.
+     * Na vida real, esta função faria uma chamada a um serviço (API).
+     */
+    realizarCadastro(): void {
+        // 1. Resetar estados anteriores
+        this.cadastroSucesso = false;
+        this.mensagemErro = '';
+
+        // 2. Simulação da lógica de cadastro (Ex: chamada a API)
+        const sucesso = Math.random() > 0.3; // 70% de chance de sucesso para o exemplo
+
+        if (sucesso) {
+            // 3. IF: Cadastro bem-sucedido
+            this.cadastroSucesso = true;
+            
+            // Opcional: Fechar o modal e REDIRECIONAR automaticamente após alguns segundos
+            setTimeout(() => {
+                this.fecharModal();
+                
+                // 3. Comando de redirecionamento para a página inicial (raiz '/')
+                this.router.navigate(['/']); 
+                
+            }, 2000); // Redireciona 3 segundos após o sucesso.
+
+        } else {
+            // 4. ELSE: Cadastro falhou
+            this.mensagemErro = 'Não foi possível salvar as alterações. Complete todos os campos ou garanta que nada esteja errado.';
+        }
+    }
+
+    /**
+     * Método para fechar o modal.
+     */
+    fecharModal(): void {
+        this.cadastroSucesso = false;
+        this.mensagemErro = '';
+    }
+
+    
+}
+
 
 

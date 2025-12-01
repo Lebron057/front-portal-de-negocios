@@ -51,8 +51,24 @@
                 </form>
             </div>
 
-            <button class="submit" type="submit">Salvar alterações</button>
-            <button class="cancelar" type="submit2">Cancelar</button>
+            <button (click)="realizarCadastro()" class="submit" type="submit">Salvar alterações</button>
+                <button class="cancelar" type="submit2" >Cancelar</button>
         </main>
     </div>
+    <hr>
+    @if (cadastroSucesso) {
+    <div class="modal-sucesso">
+        <div class="modal-content">
+            <button class="close-btn" (click)="fecharModal()">×</button>
+            <div class="icon-container">
+            </div>
+            <h2>Alterações feitas com sucesso!</h2>
+        </div>
+    </div>
+} @else if (mensagemErro) {
+    <div class="mensagem-erro">
+        <p>**Erro:** {{ mensagemErro }}</p>
+        <button class="entendi-botao" (click)="fecharModal()">Entendi</button>
+    </div>
+}
 </body>
