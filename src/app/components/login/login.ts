@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule, Router } from "@angular/router";
 import { NavbarVoltar } from "../navbar-voltar/navbar-voltar";
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -33,9 +34,12 @@ export class Login {
     senha: ''
   };
 
+
   // Controle de visibilidade e mensagem de sucesso
   isSuccessVisible = false;
   successMessage = '';
+  emailPattern = emailRegex;
+
 
   constructor(private router: Router) { }
 

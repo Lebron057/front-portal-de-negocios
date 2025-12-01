@@ -39,25 +39,45 @@
                 {{ successMessage }}
             </div> -->
 
-
-            <form *ngIf="tipoCadastro === 'consumidor'" (ngSubmit)="cadastrarConsumidor()">
+            @if (tipoCadastro === 'consumidor') { 
+            <form #formConsumidor="ngForm" (ngSubmit)="cadastrarConsumidor()">
 
                 <label for="nomeConsumidor">Nome</label>
                 <input id="nomeConsumidor" name="nome" type="text" placeholder="Digite seu nome completo"
                     [(ngModel)]="consumidorModel.nome" required>
 
                 <label for="emailConsumidor">Email</label>
-                <input id="emailConsumidor" name="email" type="email" placeholder="Exemplo: teste@email.com"
-                    [(ngModel)]="consumidorModel.email" required>
+                <div class="input-container">
+                    <input ngModel required #emailConsumidor="ngModel" id="emailConsumidor" name="email" type="email"
+                        placeholder="Exemplo: teste@email.com" [(ngModel)]="consumidorModel.email"
+                        [pattern]="emailPattern">
+                    @if (emailConsumidor.touched && emailConsumidor.errors?.['pattern']) {
+                    <div class="error-message">
+                        O formato do e-mail está incorreto.
+                    </div>
+                    }
+                    @if (emailConsumidor.touched && emailConsumidor.errors?.['required']) {
+                    <div class="error-message">
+                        O e-mail é obrigatório.
+                    </div>
+                    }
+                </div>
 
                 <label for="telefoneConsumidor">Telefone</label>
-                <input id="telefoneConsumidor" name="telefone" type="text" placeholder="Exemplo: (11) 99999-9999"
-                    [value]="consumidorModel.telefone" (input)="formatarTelefone($event)" required>
+                <input maxlength="15" id="telefoneConsumidor" name="telefone" type="text"
+                    placeholder="Exemplo: (11) 99999-9999" [value]="consumidorModel.telefone"
+                    (input)="formatarTelefone($event)" required>
 
                 <label for="senhaConsumidor">Senha</label>
                 <div class="password-container">
-                    <input id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
-                        placeholder="Mínimo 8 caracteres" [(ngModel)]="consumidorModel.senha" required>
+                    <input ngModel minlength="8" required #senhaConsumidor="ngModel" id="senhaConsumidor" name="senha"
+                        [type]="showPassword ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
+                        [(ngModel)]="consumidorModel.senha">
+                    @if(senhaConsumidor.touched && senhaConsumidor.errors?.['minlength']){
+                    <div class="error-message">
+                        A senha deve ter no mínimo 8 dígitos.
+                    </div>
+                    }
                     <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                         <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                     </button>
@@ -65,38 +85,69 @@
 
                 <label for="confirmarSenhaConsumidor">Confirmar Senha</label>
                 <div class="password-container">
-                    <input id="confirmarSenhaConsumidor" name="confirmar_senha"
+                    <input ngModel minlength="8" required #confirmarSenhaConsumidor="ngModel"
+                        id="confirmarSenhaConsumidor" name="confirmar_senha"
                         [type]="showConfirmarSenha ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
-                        [(ngModel)]="consumidorModel.confirmarSenha" required>
+                        [(ngModel)]="consumidorModel.confirmarSenha">
+                    @if(confirmarSenhaConsumidor.touched && confirmarSenhaConsumidor.errors?.['minlength']) {
+                    <div class="error-message">
+                        A senha deve ter no mínimo 8 dígitos.
+                    </div>
+                    }
+                    @if(confirmarSenhaConsumidor.touched && !confirmarSenhaConsumidor.errors?.['minlength'] &&
+                    !verificarSenhas('consumidor')) {
+                    <div class="error-message">
+                        As senhas não conferem.
+                    </div>
+                    }
                     <button type="button" (click)="toggleConfirmarSenhaVisibility()" class="olhoConfirmarSenha">
                         <img src="{{ showConfirmarSenha ? '/ocultarSenhaConfirmar.svg' : '/verSenhaConfirmar.svg' }}"
                             alt="Toggle Password">
                     </button>
                 </div>
 
-                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit"
-                    type="submit">Cadastrar</button>
+                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit" type="submit"
+                    [disabled]="!formConsumidor.valid">Cadastrar</button>
             </form>
+            }
 
-
-            <form *ngIf="tipoCadastro === 'empresa'" (ngSubmit)="cadastrarEmpresa()">
+            @if (tipoCadastro === 'empresa') {
+            <form #formEmpresa="ngForm" (ngSubmit)="cadastrarEmpresa()">
 
                 <label for="cnpj">CNPJ</label>
-                <input id="cnpj" name="cnpj" type="text" placeholder="00.000.000/0000-00" [value]="empresaModel.cnpj"
-                    (input)="formatarCNPJ($event)" required>
+                <input maxlength="18" id="cnpj" name="cnpj" type="text" placeholder="00.000.000/0000-00"
+                    [value]="empresaModel.cnpj" (input)="formatarCNPJ($event)" required>
 
                 <label for="nomeEmpresa">Nome da Empresa</label>
                 <input id="nomeEmpresa" name="nome_empresa" type="text" placeholder="Exemplo: Meu negócio"
                     [(ngModel)]="empresaModel.nomeEmpresa" required>
 
                 <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="Exemplo: teste@email.com"
-                    [(ngModel)]="empresaModel.email" required>
-
+                <div class="input-container">
+                    <input ngModel required #emailEmpresa="ngModel" id="email" name="email" type="email"
+                        placeholder="Exemplo: teste@email.com" [(ngModel)]="empresaModel.email"
+                        [pattern]="emailPattern">
+                    @if (emailEmpresa.touched && emailEmpresa.errors?.['pattern']) {
+                    <div class="error-message">
+                        O formato do e-mail está incorreto.
+                    </div>
+                    }
+                    @if (emailEmpresa.touched && emailEmpresa.errors?.['required']) {
+                    <div class="error-message">
+                        O e-mail é obrigatório.
+                    </div>
+                    }
+                </div>
                 <label for="senhaEmpresa">Senha</label>
                 <div class="password-container">
-                    <input id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
-                        placeholder="Mínimo 8 caracteres" [(ngModel)]="empresaModel.senha" required>
+                    <input ngModel minlength="8" required #senhaEmpresa="ngModel" id="senhaEmpresa" name="senha"
+                        [type]="showPassword ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
+                        [(ngModel)]="empresaModel.senha">
+                    @if(senhaEmpresa.touched && senhaEmpresa.errors?.['minlength']) {
+                    <div class="error-message">
+                        A senha deve ter no mínimo 8 dígitos.
+                    </div>
+                    }
                     <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                         <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                     </button>
@@ -104,17 +155,35 @@
 
                 <label for="confirmarSenhaEmpresa">Confirmar Senha</label>
                 <div class="password-container">
-                    <input id="confirmarSenhaEmpresa" name="confirmar_senha"
-                        [type]="showConfirmarSenha ? 'text' : 'password'" placeholder="Mínimo 8 caracteres"
-                        [(ngModel)]="empresaModel.confirmarSenha" required>
+                    <input ngModel minlength="8" required #confirmarSenhaEmpresa="ngModel" id="confirmarSenhaEmpresa"
+                        name="confirmar_senha" [type]="showConfirmarSenha ? 'text' : 'password'"
+                        placeholder="Mínimo 8 caracteres" [(ngModel)]="empresaModel.confirmarSenha">
+                    @if(confirmarSenhaEmpresa.touched && confirmarSenhaEmpresa.errors?.['minlength']) {
+                    <div class="error-message">
+                        A senha deve ter no mínimo 8 dígitos.
+                    </div>
+                    }
+                    @if(confirmarSenhaEmpresa.touched && !confirmarSenhaEmpresa.errors?.['minlength'] &&
+                    !verificarSenhas('empresa')) {
+                    <div class="error-message">
+                        As senhas não conferem.
+                    </div>
+                    }
                     <button type="button" (click)="toggleConfirmarSenhaVisibility()" class="olhoConfirmarSenha">
                         <img src="{{  showConfirmarSenha ? '/ocultarSenhaConfirmar.svg' : '/verSenhaConfirmar.svg' }}"
                             alt="Toggle Password">
                     </button>
                 </div>
+                @if(!formEmpresa.valid){
+                <button (click)="toggleInvalidModal()" routerLink="/register-detalhes-empresa" class="submit"
+                    type="submit" [disabled]="!formEmpresa.valid">Cadastrar</button>
+                }
+                @if(formEmpresa.valid){
                 <button (click)="cadastrarEmpresa()" routerLink="/register-detalhes-empresa" class="submit"
-                    type="submit">Cadastrar</button>
+                    type="submit" [disabled]="!formEmpresa.valid">Cadastrar</button>
+                }
             </form>
+            }
 
         </div>
         <p>Já possui conta? <a href="/login">Entrar</a></p>
