@@ -167,7 +167,7 @@ input:focus {
 
 
 .file-input-hidden {
-    display: none;
+    display: contents;
 }
 
 .label_imagens {
@@ -230,6 +230,85 @@ input:focus {
     color: #888;
     margin-top: 0.8rem;
     text-align: center;
+}
+
+.lista-arquivos-interna {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.arquivos-selecionados-titulo {
+    font-weight: 600;
+    color: var(--laranja, #FF7A00);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.lista-arquivos-interna ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-height: 80px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.lista-arquivos-interna li {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.2rem;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.arquivo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 300px;
+    /* Limit width for better look */
+    margin: 0 auto;
+    /* Center the item */
+}
+
+.arquivo-nome {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    text-align: left;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 0.3rem;
+    line-height: 1;
+    border-radius: 50%;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.remove-btn:hover {
+    background-color: #ffe6e6;
 }
 
 /* Horários de Funcionamento */
@@ -436,7 +515,7 @@ input:focus {
 }
 
 .cancelar:active {
-    background-color:var(--cor-botao_active);
+    background-color: var(--cor-botao_active);
     transform: scale(0.9);
     transition: 0.5s;
 
@@ -449,7 +528,7 @@ input:focus {
 }
 
 .submit:active {
-    background-color:var(--cor-botao_active);
+    background-color: var(--cor-botao_active);
     transform: scale(0.9);
     transition: 0.5s;
 }

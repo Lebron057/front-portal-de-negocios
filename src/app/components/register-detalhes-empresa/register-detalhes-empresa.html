@@ -36,10 +36,10 @@
                 <form class="terceira_linha1">
                     <label class="label_imagens" for="imagensEmpresa">Adicione imagens do seu negócio</label>
                     <div class="upload-wrapper">
-                        <input class="file-input-hidden" [ngModel]="detalhesEmpresa.imagens"
-                            (ngModelChange)="detalhesEmpresa.imagens = $event" type="file" id="imagensEmpresa"
-                            name="imagensEmpresa" multiple>
+                        <input class="file-input-hidden" (change)="onFileSelected($event)" type="file"
+                            id="imagensEmpresa" name="imagensEmpresa" multiple>
                         <label for="imagensEmpresa" class="custom-upload-area">
+                            @if (nomesArquivos.length === 0) {
                             <div class="upload-icon">
                                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,31 +49,46 @@
                                 </svg>
                             </div>
                             <span class="upload-text">Clique para selecionar</span>
-                            <span class="upload-hint">ou arraste seus arquivos aqui</span>
+                            } @else {
+                            <div class="lista-arquivos-interna">
+                                <p class="arquivos-selecionados-titulo">{{ nomesArquivos.length }} arquivo(s)
+                                    selecionado(s):</p>
+                                <ul>
+                                    @for (nome of nomesArquivos; track nome; let i = $index) {
+                                    <li class="arquivo-item">
+                                        <span class="arquivo-nome">{{ nome }}</span>
+                                        <button class="remove-btn" (click)="removerArquivo(i, $event)">×</button>
+                                    </li>
+                                    }
+                                </ul>
+                                <span class="upload-hint" style="margin-top: 0.5rem;">Clique para adicionar mais</span>
+                            </div>
+                            }
                         </label>
                     </div>
+
                     <p class="upload-info">Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de 10
                         imagens</p>
                 </form>
                 <form class="terceira_linha2">
                     <label for="horarioEmpresa">Horário de funcionamento</label>
                     <div class="horario-coluna">
-                        <p class="horario-dia1"><span>Seg</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>
-                        <p class="horario-dia2"><span>Ter</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>    
-                        <p class="horario-dia3"><span>Qua</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>
-                        <p class="horario-dia4"><span>Qui</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia1"><span>Seg</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia2"><span>Ter</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia3"><span>Qua</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia4"><span>Qui</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
                     </div>
                     <div class="horario-coluna">
-                        <p class="horario-dia5"><span>Sex</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>
-                        <p class="horario-dia6"><span>Sab</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>
-                        <p class="horario-dia7"><span>Dom</span><input style="width: 5rem;" class="horario-input" type="time">-<input
-                                style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia5"><span>Sex</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia6"><span>Sab</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia7"><span>Dom</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
                     </div>
                 </form>
             </div>

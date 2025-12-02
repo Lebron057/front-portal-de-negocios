@@ -75,14 +75,37 @@ export class RegisterDetalhesEmpresa {
     }
 
     formatarContato(event: any) {
-    let value = event.target.value.replace(/\D/g, '');
-    if (value.length <= 11) {
-      value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-      value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+        let value = event.target.value.replace(/\D/g, '');
+        if (value.length <= 11) {
+            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+        }
+        // Atualiza o valor no modelo e no input
+        this.detalhesEmpresa.contato = value;
     }
-    // Atualiza o valor no modelo e no input
-    this.detalhesEmpresa.contato = value;
-  }
+
+    arquivosSelecionados: File[] = [];
+
+    get nomesArquivos(): string[] {
+        return this.arquivosSelecionados.map(file => file.name);
+    }
+
+    onFileSelected(event: any): void {
+        const files: FileList = event.target.files;
+        if (files && files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                this.arquivosSelecionados.push(files[i]);
+            }
+        }
+        // Limpa o input para permitir selecionar o mesmo arquivo novamente se desejar
+        event.target.value = '';
+    }
+
+    removerArquivo(index: number, event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
+        this.arquivosSelecionados.splice(index, 1);
+    }
 
 }
 
