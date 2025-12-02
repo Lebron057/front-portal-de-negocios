@@ -1,6 +1,7 @@
 <body>
+    <app-navbar-voltar></app-navbar-voltar>
     <div class="page-container">
-        <app-navbar-voltar></app-navbar-voltar>
+
         <main>
             <h1>Detalhes da Empresa</h1>
             <form class="primeira_linha">
@@ -11,7 +12,8 @@
                 </div>
                 <div class="cep">
                     <label for="cepEmpresa">CEP</label>
-                    <input type="text" id="cepEmpresa" name="cepEmpresa" placeholder="01001-0001">
+                    <input [ngModel]="detalhesEmpresa.cep" (ngModelChange)="detalhesEmpresa.cep = formatarCep($event)"
+                        maxlength="9" type="text" id="cepEmpresa" name="cepEmpresa" placeholder="01001-000">
                 </div>
                 <div class="endereco">
                     <label for="enderecoEmpresa">Endereço</label>
@@ -19,40 +21,82 @@
                 </div>
                 <div class="contatoWhatsapp">
                     <label for="contatoEmpresa">Contato(Whatsapp)</label>
-                    <input type="text" id="contatoEmpresa" name="contatoEmpresa" placeholder="(99) 99999-9999">
+                    <input maxlength="15" [value]="detalhesEmpresa.contato" (input)="formatarContato($event)"
+                        type="text" id="contatoEmpresa" name="contatoEmpresa" placeholder="(99) 99999-9999">
                 </div>
             </form>
             <form class="segunda_linha">
                 <div class="descricao">
                     <label for="descricaoEmpresa">Descrição</label>
-                    <input class="descricao_input" type="text" id="descricaoEmpresa" name="descricaoEmpresa"
-                        placeholder="Descreva seu trabalho">
+                    <input maxlength="255" class="descricao_input" type="text" id="descricaoEmpresa"
+                        name="descricaoEmpresa" placeholder="Descreva seu trabalho">
                 </div>
             </form>
             <div class="container_3linha">
                 <form class="terceira_linha1">
-                    <label for="imagensEmpresa">Adicione imagens do seu negócio</label>
-                    <input type="file" id="imagensEmpresa" name="imagensEmpresa" multiple>
-                    <p>Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de 10 imagens</p>
+                    <label class="label_imagens" for="imagensEmpresa">Adicione imagens do seu negócio</label>
+                    <div class="upload-wrapper">
+                        <input class="file-input-hidden" (change)="onFileSelected($event)" type="file"
+                            id="imagensEmpresa" name="imagensEmpresa" multiple>
+                        <label for="imagensEmpresa" class="custom-upload-area">
+                            @if (nomesArquivos.length === 0) {
+                            <div class="upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="17 8 12 3 7 8" />
+                                    <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                            </div>
+                            <span class="upload-text">Clique para selecionar</span>
+                            } @else {
+                            <div class="lista-arquivos-interna">
+                                <p class="arquivos-selecionados-titulo">{{ nomesArquivos.length }} arquivo(s)
+                                    selecionado(s):</p>
+                                <ul>
+                                    @for (nome of nomesArquivos; track nome; let i = $index) {
+                                    <li class="arquivo-item">
+                                        <span class="arquivo-nome">{{ nome }}</span>
+                                        <button class="remove-btn" (click)="removerArquivo(i, $event)">×</button>
+                                    </li>
+                                    }
+                                </ul>
+                                <span class="upload-hint" style="margin-top: 0.5rem;">Clique para adicionar mais</span>
+                            </div>
+                            }
+                        </label>
+                    </div>
+
+                    <p class="upload-info">Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de 10
+                        imagens</p>
                 </form>
                 <form class="terceira_linha2">
                     <label for="horarioEmpresa">Horário de funcionamento</label>
                     <div class="horario-coluna">
-                    <p class="horario-dia1">Seg<input type="time" required>-<input type="time"></p>
-                    <p class="horario-dia2">Ter<input type="time">-<input type="time"></p>
-                    <p class="horario-dia3">Qua<input type="time">-<input type="time"></p>
-                    <p class="horario-dia4">Qui<input type="time">-<input type="time"></p>
+                        <p class="horario-dia1"><span>Seg</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia2"><span>Ter</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia3"><span>Qua</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia4"><span>Qui</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
                     </div>
                     <div class="horario-coluna">
-                    <p class="horario-dia5">Sex<input type="time">-<input type="time"></p>
-                    <p class="horario-dia6">Sab<input type="time">-<input type="time"></p>
-                    <p class="horario-dia7">Dom<input type="time">-<input type="time"></p>
+                        <p class="horario-dia5"><span>Sex</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia6"><span>Sab</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
+                        <p class="horario-dia7"><span>Dom</span><input style="width: 5rem;" class="horario-input"
+                                type="time">-<input style="width: 5rem;" class="horario-input" type="time"></p>
                     </div>
                 </form>
             </div>
 
-            <button (click)="realizarCadastro()" class="submit" type="submit">Salvar alterações</button>
-                <button class="cancelar" type="submit2" >Cancelar</button>
+            <div class="button-group">
+                <button (click)="realizarCadastro()" class="submit" type="submit">Salvar alterações</button>
+                <button class="cancelar" type="submit2">Cancelar</button>
+            </div>
         </main>
     </div>
     <hr>
@@ -61,15 +105,15 @@
         <div class="modal-content">
             <button class="close-btn" (click)="fecharModal()">×</button>
             <div class="icon-container">
-                <span style="font-size: 40px; color: white;">&#10003;</span> 
+                <span style="font-size: 40px; color: white;">&#10003;</span>
             </div>
             <h2>Alterações feitas com sucesso!</h2>
         </div>
     </div>
-} @else if (mensagemErro) {
+    } @else if (mensagemErro) {
     <div class="mensagem-erro">
         <p>**Erro:** {{ mensagemErro }}</p>
         <button class="entendi-botao" (click)="fecharModal()">Entendi</button>
     </div>
-}
+    }
 </body>
