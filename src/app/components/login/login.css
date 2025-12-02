@@ -511,3 +511,106 @@ app-navbar-voltar {
         text-align: center;
     }
 }
+
+.modal-sucesso {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo um pouco mais escuro para destaque */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Efeito de transição suave ao aparecer */
+    opacity: 1;
+    transition: opacity 0.3s ease; 
+}
+
+/* CONTEÚDO BRANCO DO MODAL */
+.modal-content {
+    background-color: white;
+    padding: 40px; /* Mais padding para parecer mais espaçoso */
+    border-radius: 12px; /* Cantos mais arredondados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra mais profunda e suave */
+    text-align: center;
+    position: relative;
+    max-width: 350px;
+    width: 90%;
+    
+    /* Adiciona uma pequena animação de entrada */
+    transform: translateY(0);
+    animation: bounceIn 0.5s ease-out;
+}
+
+/* ÍCONE DE CONFIRMAÇÃO (O círculo verde) */
+.icon-container {
+    /* Usando um gradiente para o fundo verde */
+    background: linear-gradient(135deg, #4CAF50, #4bba51);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 20px; /* Centraliza e adiciona margem inferior */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Efeito de sombra sutil para o ícone */
+}
+
+/* ESTILO DO TEXTO */
+.modal-content h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 5px;
+    font-weight: 600; /* Mais destacado */
+}
+
+/* BOTÃO DE FECHAR (X) */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #aaa; /* Cor cinza suave */
+    font-size: 28px; /* Maior e mais visível */
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #555; /* Escurece no hover */
+}
+
+/* ANIMAÇÃO DE ENTRADA (opcional, mas legal) */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.mensagem-erro {
+  background-color: #fdd;
+  border: 1px solid #f99;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.entendi-botao {
+  margin-top: 20px;
+  padding: 0.01px 20px;
+  background-color:transparent;
+  color: #FF7A00;
+  border: 1px solid #FF7A00;
+  border-radius: 20px;
+  cursor: pointer;
+}
