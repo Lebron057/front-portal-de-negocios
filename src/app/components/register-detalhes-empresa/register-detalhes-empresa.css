@@ -51,13 +51,16 @@ h1 {
 
 /* Botão voltar simulado para alinhamento */
 app-navbar-voltar {
-    /* align-self: flex-start; removido pois o container já alinha */
+    position: relative;
+    left: -35%;
     width: auto;
     margin-bottom: 1rem;
     color: #555;
     font-weight: 600;
     cursor: pointer;
 }
+
+
 
 /* --- Estilo Geral de Inputs e Labels --- */
 label {
@@ -154,26 +157,79 @@ input:focus {
 }
 
 /* Área de Upload de Imagens */
+/* Área de Upload de Imagens Customizada */
 .terceira_linha1 {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.terceira_linha1 input[type="file"] {
-    height: 150px;
-    padding: 1rem;
+
+
+.file-input-hidden {
+    display: none;
+}
+
+.label_imagens {
+    position: relative;
+    bottom: -1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+
+.upload-wrapper {
+    width: 100%;
+    margin-top: 2rem;
+}
+
+
+.custom-upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 160px;
     border: 2px dashed #d1d5db;
+    border-radius: 16px;
     background-color: #fafafa;
     cursor: pointer;
-    position: relative;
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 1rem;
+}
+
+.custom-upload-area:hover {
+    border-color: var(--laranja, #FF7A00);
+    background-color: #fff8f0;
+    transform: translateY(-2px);
+}
+
+.upload-icon {
+    color: var(--laranja, #FF7A00);
+    margin-bottom: 0.8rem;
+    opacity: 0.8;
+}
+
+.upload-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.3rem;
+}
+
+.upload-hint {
+    font-size: 0.85rem;
+    color: #888;
 }
 
 /* Texto de ajuda do upload */
-.terceira_linha1 p {
+.upload-info {
     font-size: 0.75rem;
     color: #888;
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
+    text-align: center;
 }
 
 /* Horários de Funcionamento */
@@ -183,9 +239,11 @@ input:focus {
     grid-template-rows: auto 1fr;
     /* Duas colunas para os dias, com espaço */
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem; /* Espaço entre as colunas e entre o título e os dias */
+    gap: 1.5rem;
+    /* Espaço entre as colunas e entre o título e os dias */
     padding: 1rem;
-    max-width: 600px; /* Limita a largura para melhor visualização */
+    max-width: 600px;
+    /* Limita a largura para melhor visualização */
     margin: auto;
 }
 
@@ -223,8 +281,6 @@ input:focus {
 }
 
 .terceira_linha2 p input[type="time"] {
-    width: 70px;
-    /* Inputs menores para caber */
     height: 28px;
     border-radius: 8px;
     padding: 0 0.2rem;
@@ -235,151 +291,91 @@ input:focus {
     display: flex;
     flex-direction: column;
     /* Espaço entre os dias dentro da coluna */
-    gap: 0.1rem; 
+    gap: 0.1rem;
 }
 
 /* Estilo de cada linha de dia (o "card" individual) */
-.horario-dia1 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9; 
-    transition: transform 0.1s;
-}
-
-.horario-dia2 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9; 
-    transition: transform 0.1s;
-}
-
-.horario-dia3 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9; 
-    transition: transform 0.1s;
-}
-
-.horario-dia4 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9; 
-    transition: transform 0.1s;
-}
-
-.horario-dia5 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9; 
-    transition: transform 0.1s;
-}
-
-.horario-dia6 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9; 
-    transition: transform 0.1s;
-}
-
+.horario-dia1,
+.horario-dia2,
+.horario-dia3,
+.horario-dia4,
+.horario-dia5,
+.horario-dia6,
 .horario-dia7 {
     display: flex;
     align-items: center;
     /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: space-between; 
-    gap: 0.3rem;
+    justify-content: flex-start;
+    gap: 0.5rem;
     /* Padding reduzido */
-    padding: 0.5rem 0.8rem; 
+    padding: 0.5rem 0.8rem;
     margin: 0;
     font-weight: 600;
     color: var(--text-color, #555);
-    background-color: #f9f9f9; 
+    background-color: #f9f9f9;
     transition: transform 0.1s;
+}
+
+/* Estilo para o span do dia da semana */
+.horario-dia1 span,
+.horario-dia2 span,
+.horario-dia3 span,
+.horario-dia4 span,
+.horario-dia5 span,
+.horario-dia6 span,
+.horario-dia7 span {
+    display: inline-block;
+    width: 40px;
+    /* Largura fixa para alinhar os inputs */
+}
+
+.horario-input {
+    display: inline-block;
+    width: 130px;
+    height: 28px;
+    border-radius: 8px;
+    padding: 0 0.2rem;
+    text-align: center;
 }
 
 /* Nome do dia da semana (ex: Seg, Ter) */
 .horario-dia span:first-child {
     /* Garante um espaço fixo menor */
-    flex-basis: 35px; 
+    flex-basis: 35px;
     text-align: left;
     margin-right: 0.3rem;
-    color: #333; 
-    font-size: 0.95rem; /* Levemente menor */
+    color: #333;
+    font-size: 0.95rem;
+    /* Levemente menor */
 }
 
 /* Input de Horário */
 .horario-dia input[type="time"] {
     /* Largura reduzida */
-    width: 65px; 
+    width: 130px;
     /* Altura reduzida */
-    height: 30px; 
+    height: 30px;
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 0 0.4rem;
     text-align: center;
-    font-size: 0.9rem; /* Fonte menor */
+    font-size: 0.9rem;
+    /* Fonte menor */
     background-color: white;
-    appearance: none; 
+    appearance: none;
     outline: none;
     transition: border-color 0.2s;
 }
 
 .horario-dia input[type="time"]:focus {
-    border-color: #007bff; 
+    border-color: #007bff;
 }
 
 /* Separador (o traço '-') */
 .horario-dia .separador {
     font-weight: 400;
     color: #999;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 
@@ -432,33 +428,63 @@ input:focus {
     left: 64%;
 }
 
+.cancelar:hover {
+    background-color: #FF7A00;
+    color: white;
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+
+.cancelar:active {
+    background-color:var(--cor-botao_active);
+    transform: scale(0.9);
+    transition: 0.5s;
+
+}
+
+.submit:hover {
+    background-color: var(--cor-botao_hover);
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+
+.submit:active {
+    background-color:var(--cor-botao_active);
+    transform: scale(0.9);
+    transition: 0.5s;
+}
+
 .modal-sucesso {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo um pouco mais escuro para destaque */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Fundo um pouco mais escuro para destaque */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     /* Efeito de transição suave ao aparecer */
     opacity: 1;
-    transition: opacity 0.3s ease; 
+    transition: opacity 0.3s ease;
 }
 
 /* CONTEÚDO BRANCO DO MODAL */
 .modal-content {
     background-color: white;
-    padding: 40px; /* Mais padding para parecer mais espaçoso */
-    border-radius: 12px; /* Cantos mais arredondados */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra mais profunda e suave */
+    padding: 40px;
+    /* Mais padding para parecer mais espaçoso */
+    border-radius: 12px;
+    /* Cantos mais arredondados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    /* Sombra mais profunda e suave */
     text-align: center;
     position: relative;
     max-width: 350px;
     width: 90%;
-    
+
     /* Adiciona uma pequena animação de entrada */
     transform: translateY(0);
     animation: bounceIn 0.5s ease-out;
@@ -471,11 +497,12 @@ input:focus {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin: 0 auto 20px; /* Centraliza e adiciona margem inferior */
+    margin: 0 auto 20px;
+    /* Centraliza e adiciona margem inferior */
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     /* Efeito de sombra sutil para o ícone */
 }
 
@@ -484,7 +511,8 @@ input:focus {
     color: #333;
     font-size: 24px;
     margin-bottom: 5px;
-    font-weight: 600; /* Mais destacado */
+    font-weight: 600;
+    /* Mais destacado */
 }
 
 /* BOTÃO DE FECHAR (X) */
@@ -494,14 +522,17 @@ input:focus {
     right: 15px;
     background: none;
     border: none;
-    color: #aaa; /* Cor cinza suave */
-    font-size: 28px; /* Maior e mais visível */
+    color: #aaa;
+    /* Cor cinza suave */
+    font-size: 28px;
+    /* Maior e mais visível */
     cursor: pointer;
     transition: color 0.2s;
 }
 
 .close-btn:hover {
-    color: #555; /* Escurece no hover */
+    color: #555;
+    /* Escurece no hover */
 }
 
 /* ANIMAÇÃO DE ENTRADA (opcional, mas legal) */
@@ -510,6 +541,7 @@ input:focus {
         transform: scale(0.8);
         opacity: 0;
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
@@ -517,20 +549,20 @@ input:focus {
 }
 
 .mensagem-erro {
-  background-color: #fdd;
-  border: 1px solid #f99;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 5px;
-  text-align: center;
+    background-color: #fdd;
+    border: 1px solid #f99;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .entendi-botao {
-  margin-top: 20px;
-  padding: 0.01px 20px;
-  background-color:transparent;
-  color: #FF7A00;
-  border: 1px solid #FF7A00;
-  border-radius: 20px;
-  cursor: pointer;
+    margin-top: 20px;
+    padding: 0.01px 20px;
+    background-color: transparent;
+    color: #FF7A00;
+    border: 1px solid #FF7A00;
+    border-radius: 20px;
+    cursor: pointer;
 }
