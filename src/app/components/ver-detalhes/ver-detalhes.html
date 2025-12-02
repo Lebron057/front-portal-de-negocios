@@ -1,5 +1,6 @@
 <app-navbar></app-navbar>
 
+<ng-container *ngIf="company as empresa; else loading">
 <main class="detalhes">
   <div class="detalhes-wrapper">
     <div class="barra-voltar">
@@ -9,17 +10,47 @@
       </a>
     </div>
 
+    <section class="hero">
+      <div id="carouselExample" class="carousel slide hero-carousel">
+        <div class="carousel-inner">
+          <ng-container *ngIf="heroImages.length; else heroPlaceholder">
+            <div
+              class="carousel-item"
+              *ngFor="let image of heroImages; let i = index"
+              [class.active]="i === 0"
+            >
+              <img [src]="image" class="d-block w-100 hero-img" [alt]="'Foto ' + (i + 1)" loading="lazy">
+            </div>
+          </ng-container>
+          <ng-template #heroPlaceholder>
+            <div class="carousel-item active">
+              <div class="hero-slide d-flex align-items-center justify-content-center">
+                <span>Adicione fotos para o carrossel</span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
 
     <section class="grid-layout">
       <div class="col-esquerda">
         <div class="card painel card-empresa">
           <div class="topo-empresa">
             <div class="logo-col">
-              <div class="logo" [class.logo-placeholder]="!company.logoUrl">
+              <div class="logo" [class.logo-placeholder]="!empresa.logoUrl">
                 <img
-                  *ngIf="company.logoUrl; else logoFallback"
-                  [src]="company.logoUrl"
-                  [alt]="'Logo da ' + company.name"
+                  *ngIf="empresa.logoUrl; else logoFallback"
+                  [src]="empresa.logoUrl"
+                  [alt]="'Logo da ' + empresa.name"
                   loading="lazy"
                 />
                 <ng-template #logoFallback>
@@ -29,7 +60,7 @@
 
               <div class="redes">
                 <a
-                  *ngFor="let social of company.socials"
+                  *ngFor="let social of empresa.socials"
                   class="icone"
                   [ngClass]="getSocialClass(social)"
                   [href]="social.href"
@@ -44,17 +75,17 @@
               </div>
             </div>
             <div class="conteudo-empresa">
-              <h2 class="titulo-empresa">{{ company.name }}</h2>
+              <h2 class="titulo-empresa">{{ empresa.name }}</h2>
               <div class="badges">
-                <span class="badge">{{ company.category }}</span>
+                <span class="badge">{{ empresa.category }}</span>
                 <div class="rating-badge">
                   <span class="estrela">&#9733;</span>
-                  <span class="valor">{{ company.rating | number:'1.1-1' }}</span>
+                  <span class="valor">{{ empresa.rating | number:'1.1-1' }}</span>
                 </div>
-                <span class="avaliacoes">{{ company.ratingCount }} avaliações</span>
+                <span class="avaliacoes">{{ empresa.ratingCount }} avaliações</span>
               </div>
               <p class="descricao-empresa">
-                {{ company.description }}
+                {{ empresa.description }}
               </p>
             </div>
           </div>
@@ -103,27 +134,29 @@
       <div class="col-direita">
         <div class="card painel card-info">
           <h3>Informações da empresa</h3>
+          <ng-container *ngIf="contact as contato">
           <div class="info-linha">
             <div class="icone-info local">&#128205;</div>
             <div class="texto-info">
               <p class="titulo-info">Endereço</p>
-              <p class="valor-info">{{ contact.address }}</p>
+              <p class="valor-info">{{ contato.address }}</p>
             </div>
           </div>
           <div class="info-linha">
             <div class="icone-info telefone">&#128222;</div>
             <div class="texto-info">
               <p class="titulo-info">Telefone</p>
-              <p class="valor-info">{{ contact.phone }}</p>
+              <p class="valor-info">{{ contato.phone }}</p>
             </div>
           </div>
           <div class="info-linha">
             <div class="icone-info cnpj">&#127970;</div>
             <div class="texto-info">
               <p class="titulo-info">CNPJ</p>
-              <p class="valor-info">{{ contact.cnpj }}</p>
+              <p class="valor-info">{{ contato.cnpj }}</p>
             </div>
           </div>
+          </ng-container>
         </div>
 
         <div class="card painel card-horarios">
@@ -138,3 +171,12 @@
     </section>
   </div>
 </main>
+</ng-container>
+
+<ng-template #loading>
+  <main class="detalhes">
+    <div class="detalhes-wrapper">
+      <p>Carregando...</p>
+    </div>
+  </main>
+</ng-template>

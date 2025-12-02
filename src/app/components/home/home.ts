@@ -22,9 +22,10 @@ interface SecaoCategoria {
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [Navbar, CardEmpresa, CommonModule],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrls: ['./home.css'],
 })
 export class Home implements OnInit {
   // Dados brutos (sua lista completa)

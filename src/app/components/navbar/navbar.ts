@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  standalone: true,
+  imports: [RouterLink, CommonModule],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+  styleUrls: ['./navbar.css'],
 })
-export class Navbar {
 
+export class Navbar {
+  @Input() actionLabel = 'Entrar';
+  @Input() actionLink: string | any[] = '/login';
+  @Input() usuarioNome = '';
 }

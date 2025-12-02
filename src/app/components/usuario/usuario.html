@@ -1,0 +1,90 @@
+<app-navbar actionLabel="Sair" [actionLink]="'/login'"></app-navbar>
+
+<main class="usuario">
+  <section class="painel">
+    <div class="perfil">
+      <div class="avatar">{{ iniciais }}</div>
+      <div class="perfil__texto">
+        <p class="perfil__saudacao">Olá, {{ primeiroNome }}!</p>
+        <h2>Seu painel de comentários</h2>
+        <p class="perfil__descricao">
+          Aqui você acompanha tudo que comentou e que foi atribuído ao seu perfil no Portal de Negócios.
+        </p>
+        <div class="perfil__dados">
+          <span class="pill">Membro desde {{ usuario.desde }}</span>
+          <span class="pill">{{ usuario.cidade }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="metricas">
+      <div class="metrica">
+        <p class="metrica__label">Comentários</p>
+        <strong>{{ usuario.totalComentarios }}</strong>
+        <span class="metrica__sub">atribuídos a você</span>
+      </div>
+      <div class="metrica">
+        <p class="metrica__label">Média das notas</p>
+        <strong>{{ usuario.mediaNotas }}</strong>
+        <span class="metrica__sub">últimos 30 dias</span>
+      </div>
+      <div class="metrica">
+        <p class="metrica__label">Empresas visitadas</p>
+        <strong>{{ usuario.visitas }}</strong>
+        <span class="metrica__sub">em destaque</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="comentarios">
+    <div class="comentarios__header">
+      <div class="comentarios__titulo">
+        <p class="legenda">Comentários atribuídos</p>
+        <h3>Histórico dos seus feedbacks</h3>
+        <p class="sub">Tudo o que você comentou e foi vinculado ao seu perfil.</p>
+      </div>
+      <button class="comentarios__cta" type="button">Novo comentário</button>
+    </div>
+
+    <div class="comentarios__lista">
+      @for (comentario of comentarios; track comentario.id) {
+        <article class="comentario-card">
+          <header class="comentario-card__topo">
+            <div>
+              <p class="empresa">{{ comentario.empresa }}</p>
+              <p class="data">{{ comentario.data }}</p>
+            </div>
+            <span
+              class="status"
+              [class.status--pendente]="comentario.status === 'Pendente'"
+              [class.status--respondido]="comentario.status === 'Respondido'"
+            >
+              {{ comentario.status }}
+            </span>
+          </header>
+
+          <p class="comentario-card__titulo">{{ comentario.titulo }}</p>
+          <p class="comentario-card__texto">{{ comentario.texto }}</p>
+
+          <footer class="comentario-card__rodape">
+            <div class="rating">
+              <span class="rating__nota">{{ comentario.nota.toFixed(1) }}</span>
+              <div class="rating__stars">
+                @for (star of ratingScale; track $index) {
+                  <span class="star" [class.star--filled]="star <= comentario.nota">★</span>
+                }
+              </div>
+            </div>
+
+            <div class="tags">
+              @for (tag of comentario.tags; track $index) {
+                <span class="tag">{{ tag }}</span>
+              }
+              <span class="tag tag--atributo">Atribuído a você</span>
+            </div>
+          </footer>
+        </article>
+      }
+    </div>
+  </section>
+</main>
