@@ -1,0 +1,513 @@
+/* NOTA: Suas variáveis CSS (ex: var(--cor-botao_esmeralda)) não foram fornecidas.
+   Assumimos que elas estão definidas em outro lugar (como em :root {}).
+   O layout funcionará, mas as cores podem não aparecer sem essas variáveis. */
+
+/* === Configuração Global === */
+* {
+    /* Isso torna o cálculo de largura e altura mais fácil, incluindo padding e borda */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: linear-gradient(to bottom, #e6f9f3 0%, #f7f9fb 50%, #f2c27e 100%);
+    display: flex;
+    /* Mín-height garante que o corpo ocupe pelo menos a altura da tela,
+       mas permite que ele cresça (role) se o conteúdo for maior. */
+    min-height: 100vh;
+    width: 100%;
+    /* Permite rolagem vertical se o conteúdo for grande (especialmente no celular),
+       mas esconde a rolagem horizontal. */
+    overflow-x: hidden;
+    align-items: center;
+    justify-content: center;
+    /* Centraliza os filhos (aside e form) */
+    font-family: 'Poppins', sans-serif;
+    /* Adiciona espaço entre os itens e permite que eles "quebrem" para a próxima linha */
+    flex-wrap: wrap;
+    gap: 2rem;
+    /* Espaçamento entre o 'aside' e o 'cadastro_container' */
+    padding: 1rem;
+    /* Adiciona um pequeno preenchimento ao redor do corpo */
+}
+
+aside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    /* Removemos a margem fixa para permitir que o flexbox centralize */
+    /* margin-left: 3rem; */
+    flex: 1;
+    /* Permite que o 'aside' cresça e encolha */
+    min-width: 300px;
+    /* Largura mínima antes de quebrar */
+}
+
+figure {
+    display: flex;
+    width: 100%;
+    /* Altura removida para ser automática */
+    align-items: center;
+    justify-content: center;
+}
+
+/* === Nova regra para a imagem === */
+.img_cadastro {
+    width: 100%;
+    /* Faz a imagem ser fluida */
+    max-width: 636px;
+    /* Define um limite máximo de tamanho */
+    height: auto;
+    /* Mantém a proporção da imagem */
+}
+
+h1 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: var(--cor-titulo_login_cadastro);
+    margin-bottom: 0.5rem;
+    text-align: center;
+    /* Centraliza o título */
+}
+
+.cadastro_container {
+    /* Usando o nome da classe do register.html */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /* Removemos a margem fixa */
+    /* margin-left: 10rem; */
+    flex: 1;
+    /* Permite que o 'cadastro_container' cresça e encolha */
+    min-width: 320px;
+    /* Largura mínima (bom para celulares) */
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 2px solid var(--cor-borda_input);
+    border-radius: 16px;
+    /* === MUDANÇA PRINCIPAL === */
+    /* Define uma largura máxima, mas permite que seja menor */
+    max-width: 560px;
+    width: 100%;
+    /* Ocupa 100% do seu contêiner pai (.cadastro_container) */
+    /* A altura deve ser automática para se ajustar ao conteúdo */
+    min-height: 400px;
+    height: auto;
+    /* Adiciona preenchimento interno para que os inputs não colem nas bordas */
+    padding: 2rem;
+    gap: 2rem
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--cor-cinza_texto);
+    width: 100%;
+    gap: 2rem;
+    /* Faz o formulário ocupar todo o espaço do .info */
+}
+
+input {
+    /* === MUDANÇA PRINCIPAL === */
+    width: 100%;
+    /* Ocupa 100% do seu contêiner pai (form) */
+    height: 3rem;
+    border: 2px solid var(--cor-borda_input);
+    border-radius: 16px;
+    margin-top: 0px;
+    font-size: 1rem;
+    padding: 0 1rem;
+    /* Adiciona preenchimento interno */
+}
+
+label {
+    margin-top: 10px;
+    font-size: 1.25rem;
+    font-weight: 550;
+    color: var(--cor-cinza_texto);
+}
+
+.infoConsumidorEmpresa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.senha {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.olhoSenha {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+
+.submit {
+    /* Alterado de .submit para button */
+    /* === MUDANÇA PRINCIPAL === */
+    width: 100%;
+    /* Ocupa 100% do seu contêiner pai (form) */
+    height: 3rem;
+    background-color: var(--laranja);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 1rem;
+}
+
+.submit:hover {
+    background-color: var(--cor-botao_hover);
+    transform: scale(1.02);
+    transition: 0.7s;
+}
+
+.submit:active {
+    background-color: var(--cor-botao_active);
+    transform: scale(0.98);
+    transition: 0.1s;
+}
+
+.submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--cor-icones);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: none;
+    transform: scale(0.80);
+    transition: 0.1s;
+}
+
+p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--cor-cinza_texto);
+}
+
+app-navbar-voltar {
+    width: 90%;
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    top: 5rem;
+    left: 5%;
+}
+
+
+
+/* Estilos para o toggle switch */
+
+/* Centraliza o componente na página para fácil visualização.
+      Em um app real, você pode remover 'display: flex', 'height', e 'background-color'.
+    */
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+
+    /* Definição das variáveis de cor baseadas na imagem */
+    --toggle-bg: #E1E7EF;
+    --slider-bg: #4A7BEE;
+    /* Tom de azul similar ao da imagem */
+    --text-active: #FFFFFF;
+    --text-inactive: #6D727A;
+    /* Tom de cinza similar ao da imagem */
+}
+
+.container-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-toggle-container {
+    width: 330px;
+    height: 40px;
+    background-color: var(--toggle-bg);
+    border-radius: 20px;
+    /* Metade da altura (40px / 2) */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Duas colunas de tamanho igual */
+    align-items: center;
+    position: relative;
+    padding: 4px;
+    /* Espaçamento interno que cria a borda */
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.slider-background {
+    position: absolute;
+
+
+
+    /* O slider ocupa 50% da largura, menos o padding da esquerda,
+        para caber perfeitamente na primeira metade.
+      */
+    width: calc(50%);
+
+    /* O slider ocupa 100% da altura, menos os paddings superior e inferior */
+    height: calc(100%);
+
+    background-color: var(--slider-bg);
+    border-radius: 16px;
+    /* Raio um pouco menor que o container */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+    /* Fica atrás do texto */
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-inactive);
+    position: relative;
+    z-index: 2;
+    /* Fica na frente do slider */
+    transition: color 0.3s ease-in-out;
+    user-select: none;
+    /* Impede que o texto seja selecionado ao clicar */
+}
+
+/* Quando a opção está ativa, o texto fica branco e mais forte */
+.option.active {
+    color: var(--text-active);
+    font-weight: 700;
+}
+
+/* === MEDIA QUERY PARA RESPONSIVIDADE === */
+/* Essas regras serão aplicadas quando a tela for 1024px ou menor */
+
+@media (max-width: 1024px) {
+    body {
+        /* Empilha os itens verticalmente em telas menores */
+        flex-direction: column;
+        justify-content: flex-start;
+        /* Alinha ao topo */
+        /* Permite que o corpo cresça automaticamente */
+        height: auto;
+        padding: 1rem;
+        /* Reduz o preenchimento em telas menores */
+    }
+
+    aside {
+        /* Remove o comportamento flex '1' para empilhar corretamente */
+        flex: none;
+        margin-left: 0;
+        width: 10%;
+        /* Ocupa a largura total */
+    }
+
+    .cadastro_container {
+        /* Alterado para .cadastro_container */
+        flex: none;
+        margin-left: 0;
+        width: 100%;
+        /* Ocupa a largura total */
+    }
+
+    .info {
+        /* Reduz o preenchimento em telas pequenas para dar mais espaço */
+        padding: 1.5rem;
+    }
+
+    /* Reduz um pouco o tamanho das fontes em telas menores */
+    h1 {
+        font-size: 2rem;
+    }
+
+    label,
+    p,
+    a {
+        font-size: 1.2rem;
+    }
+
+    input,
+    button {
+        height: 50px;
+        /* Inputs e botões ligeiramente menores */
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Define as regras para telas com largura máxima de 768px (tamanho comum para tablets e celulares) */
+@media (max-width: 768px) {
+
+    body {
+        /* Muda a organização do body para vertical (um item em cima do outro) */
+        flex-direction: column;
+
+        /* Permite que o usuário role a página para cima e para baixo */
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* Evita a rolagem lateral */
+
+        /* Remove a altura fixa para permitir o scroll */
+        height: auto;
+
+        /* Alinha os itens ao topo */
+        justify-content: flex-start;
+    }
+
+    app-navbar-voltar {
+        margin-top: 0;
+        height: 1rem;
+        position: relative;
+        top: 5rem;
+        left: -1rem;
+
+    }
+
+
+    /* 1. FAZ A IMAGEM DESAPARECER */
+    /* Selecionamos a 'figure' que está dentro do 'aside' e a escondemos */
+    aside figure {
+        display: none;
+    }
+
+    /* 2. MOVE O BOTÃO PARA O FINAL */
+
+    /* O 'aside' agora só contém o botão. Usamos 'order' do flexbox
+       para mudar a ordem visual dos elementos no 'body' */
+    aside {
+        order: 2;
+        /* Manda o <aside> para o final */
+        margin: 0;
+        /* Remove a margem lateral */
+        width: 100%;
+        /* Faz ocupar a largura total */
+        padding: 1rem 0;
+        /* Adiciona um espaço para o botão não colar no fim da tela */
+    }
+
+    /* O 'cadastro_container' (que contém o formulário) vem primeiro */
+    .cadastro_container {
+        /* Alterado para .cadastro_container */
+        order: 1;
+        margin: 1rem 0;
+        /* Remove a margem lateral e adiciona margem vertical */
+        width: 100%;
+        margin-top: 15%;
+    }
+
+    /* --- Ajustes Adicionais para o layout móvel --- */
+
+    .info {
+        border: none;
+        background: none;
+        ;
+        /* Faz o card do formulário se ajustar à tela */
+        width: 90vw;
+        /* Ocupa 90% da largura da tela */
+        height: auto;
+        /* A altura se ajusta ao conteúdo */
+        padding: 1rem;
+        box-sizing: border-box;
+        /* Garante que o padding não "estoure" a largura */
+    }
+
+    form {
+        /* Alinha o formulário dentro do card */
+        width: 100%;
+        align-items: center;
+        /* Centraliza os itens do formulário */
+    }
+
+    /* Faz os inputs e o botão de submit ocuparem a largura total */
+    input,
+    form .submit[type="submit"] {
+        /* Alterado de .submit para button */
+        width: 100%;
+        box-sizing: border-box;
+        /* Inclui padding/border na largura */
+    }
+
+    /* Reduz o tamanho das fontes para telas menores */
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    label,
+    p,
+    a {
+        font-size: 1.2rem;
+    }
+
+    form .submit[type="submit"] {
+        /* Alterado de .submit para button */
+        font-size: 1.2rem;
+    }
+
+    p {
+        text-align: center;
+    }
+}

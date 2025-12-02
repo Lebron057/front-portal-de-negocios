@@ -1,0 +1,279 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+    background: linear-gradient(180deg, #E6F9F3, #EFFAFB);
+}
+
+.home-pesquisa {
+    padding: 60px 20px;
+    background-image: url("/background_filtro.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+h2 {
+    font-weight: 800;
+    font-size: 48px;
+    color: var(--preto_azulado);
+    font-family: var(--texto_principal);
+    text-align: center;
+}
+
+h4 {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--preto_azulado);
+    font-family: var(--texto_principal);
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* --- Container Principal --- */
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* --- Linha dos Selects --- */
+.filtros-linha {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.select-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.custom-select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #fff;
+    border: 1px solid #B9BEC5;
+    border-radius: 10px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-family: var(--texto_secundario);
+    font-weight: 500;
+    color: var(--preto_azulado);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-select:focus {
+    border-color: var(--laranja);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(230, 110, 0, 0.15);
+}
+
+.select-wrapper::after {
+    content: '▼';
+    font-size: 10px;
+    color: var(--laranja);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* --- Switch Toggle --- */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 12px;
+    padding: 5px;
+    transition: opacity 0.3s;
+}
+
+.toggle-switch:hover {
+    opacity: 0.8;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.slider {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    background-color: #d1d5db;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+    background-color: var(--laranja);
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+.label-text {
+    font-family: var(--texto_secundario);
+    font-weight: 600;
+    color: var(--preto_azulado);
+    font-size: 16px;
+    user-select: none;
+}
+
+/* --- Botão Buscar (NOVO) --- */
+.btn-buscar {
+    background-color: var(--laranja);
+    color: #fff;
+    font-family: var(--texto_secundario);
+    font-weight: 700;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 40px; /* Largura confortável */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: 10px; /* Um pequeno espaço extra acima do botão */
+    width: 100%; /* Ocupa toda a largura no mobile */
+    max-width: 300px; /* Limita a largura em telas grandes */
+}
+
+.btn-buscar:hover {
+    background-color: #e66e00; /* Um tom mais escuro de laranja */
+    transform: translateY(-2px); /* Efeito sutil de levitação */
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.btn-buscar:active {
+    background-color: #cc5c00;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* --- Destaques --- */
+.home-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.texto-destaque {
+    text-align: center;
+}
+
+.texto-destaque h3 {
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--preto_azulado);
+}
+
+.texto-destaque h5 {
+    font-weight: 600;
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* Estilos para organizar as seções */
+
+.container-secoes {
+    padding: 2rem 0; /* Espaçamento lateral */
+    max-width: 1200px;
+    margin: 0 8%;
+}
+
+.categoria-wrapper {
+    margin-bottom: 3rem; /* Espaço entre uma categoria e outra */
+}
+
+.categoria-header {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 5px solid #949494;
+    padding-left: 0.5rem;
+}
+
+.categoria-header h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
+}
+
+.categoria-header .contador {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Grid para os cards ficarem lado a lado dentro da categoria */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.divisor-secao {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 3rem;
+}
+
+.sem-resultados {
+    text-align: center;
+    padding: 4rem;
+    color: #777;
+    font-size: 1.2rem;
+}
+
+/* Responsividade básica */
+@media (max-width: 768px) {
+    .categoria-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cards-grid {
+        /* No mobile, talvez você queira um scroll horizontal ou 1 coluna */
+        grid-template-columns: 1fr; 
+    }
+}

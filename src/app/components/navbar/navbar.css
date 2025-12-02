@@ -1,0 +1,69 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--azul_claro);
+    font-family: var(--texto_secundario);
+    padding: 1rem 2rem;
+}
+
+.link__home {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+}
+
+.titulo-logo {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--azul_escuro);
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background-color: var(--azul_escuro);
+    color: var(--branco_soft);
+    border: none;
+    font-size: 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 130px;
+    height: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+img {
+    width: 45px;
+    height: 45px;
+}
+
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-pill {
+    background: #e6f9f3;
+    color: var(--azul_escuro);
+    border: 1px solid #cce8e0;
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+}

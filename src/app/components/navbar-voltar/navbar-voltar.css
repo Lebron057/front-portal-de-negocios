@@ -1,0 +1,36 @@
+.container-voltar:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+
+.voltar{
+    display:flex;
+    align-items: center;
+    justify-content: start;
+    text-decoration: none;
+    gap:10px;
+}
+
+.voltar:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+
+
+.btn-voltar{
+
+    background:none;
+    color:#65758B;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: start;
+
+}
+
+.btn-voltar:active{
+    color:#000000;
+}

@@ -1,1 +1,85 @@
-<p>home works!</p>
+<header><app-navbar></app-navbar></header>
+<main>
+    <section class="home-pesquisa">
+        <h2>Encontre negócios Locais</h2>
+        <h4>Conectamos você com empresas verificadas da sua região. Avalie, comente e descubra novos serviços.</h4>
+        
+        <div class="filtros-container">
+            
+            <div class="filtros-linha">
+                <div class="select-wrapper">
+                    <select (change)="atualizarCategoria($event)" class="custom-select">
+                        <option value="" selected>Escolha uma categoria</option>
+                        @for (cat of categorias; track cat) {
+                            <option [value]="cat">{{ cat }}</option>
+                        }
+                    </select>
+                    <span class="select-arrow"></span>
+                </div>
+
+                <div class="select-wrapper">
+                    <select (change)="atualizarBairro($event)" class="custom-select">
+                        <option value="" selected>Filtrar por Bairro</option>
+                        @for (bairro of bairros; track bairro) {
+                            <option [value]="bairro">{{ bairro }}</option>
+                        }
+                    </select>
+                    <span class="select-arrow"></span>
+                </div>
+            </div>
+
+            <label class="toggle-switch">
+                <input type="checkbox" 
+                       [checked]="filtros.abertoAgora" 
+                       (change)="toggleAbertoAgora($event)">
+                <span class="slider round"></span>
+                <span class="label-text">Abertos agora</span>
+            </label>
+
+            <button class="btn-buscar" (click)="aplicarFiltros()">
+                Buscar Resultados
+            </button>
+
+        </div>
+        
+    </section>
+
+    <section class="home-cards">
+        <div class="texto-destaque">
+            <h3>Empresas em destaque</h3>
+            <h5>Descubra os melhores negócios da sua região, avaliados pela comunidade</h5>
+        </div>
+    </section>
+
+    <div class="container-secoes">
+        
+        <!-- Loop Externo: Itera sobre as SEÇÕES (Categorias) -->
+        @for (secao of secoesPorCategoria; track secao.titulo) {
+            
+            <section class="categoria-wrapper">
+                <div class="categoria-header">
+                    <h3>{{ secao.titulo }}</h3>
+                    <span class="contador">locais: {{ secao.empresas.length }}</span>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Loop Interno: Itera sobre as EMPRESAS daquela categoria -->
+                    @for (empresa of secao.empresas; track empresa.nome) {
+                        <!-- Importante: Passamos os dados da empresa para o componente filho -->
+                        <!-- Certifique-se que seu app-card-empresa tem um @Input() empresa -->
+                        <app-card-empresa [empresa]="empresa"></app-card-empresa>
+                    }
+                </div>
+            </section>
+            
+            <!-- Linha divisória estética (opcional) -->
+            <hr class="divisor-secao">
+        } 
+        @empty {
+            <div class="sem-resultados">
+                <p>Nenhuma empresa encontrada com os filtros selecionados.</p>
+            </div>
+        }
+
+    </div>
+</main>

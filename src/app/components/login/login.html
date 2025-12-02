@@ -1,0 +1,93 @@
+<body>
+    <app-navbar-voltar></app-navbar-voltar>
+    <aside>
+        <figure>
+            @if (tipoLogin === 'consumidor') {
+            <img class="img_cadastro" src="/img_login&cadastro_cliente.png" alt="">}
+            @else if (tipoLogin === 'empresa') {
+            <img class="img_cadastro" src="/img_login&cadastro_empresa.png" alt="">}
+        </figure>
+    </aside>
+
+    <div class="cadastro_container">
+        <div class="info">
+            <h1>Entrar</h1>
+
+            <!-- 
+      O :host é usado para centralizar o componente na tela 
+      para fins de demonstração.
+    -->
+            <div class="container-toggle">
+                <div class="custom-toggle-container">
+                    <!-- Este é o "slider" azul que se move -->
+                    <div class="slider-background"
+                        [style.transform]="tipoLogin === 'empresa' ? 'translateX(calc(100% + 4px))' : 'translateX(0)'">
+                    </div>
+
+                    <!-- Opção 1: Consumidor -->
+                    <div class="option" [class.active]="tipoLogin === 'consumidor'" (click)="tipoLogin=('consumidor')">
+                        Consumidor
+                    </div>
+
+                    <!-- Opção 2: Empresa -->
+                    <div class="option" [class.active]="tipoLogin === 'empresa'" (click)="tipoLogin=('empresa')">
+                        Empresa
+                    </div>
+                </div>
+            </div>
+
+            <!-- mensagem de sucesso -->
+            <!-- <div id="successMessage" *ngIf="isSuccessVisible">
+                {{ successMessage }}
+            </div> -->
+
+            @if (tipoLogin === 'consumidor') {
+            <form #formConsumidor="ngForm" (ngSubmit)="loginConsumidor()">
+                <div class="infoConsumidorEmpresa">
+                    <label for="emailTelefoneConsumidor">Email ou Telefone</label>
+                    <input ngModel required #emailTelefoneConsumidor="ngModel"  id="emailTelefoneConsumidor" name="emailTelefone" type="text"
+                        [(ngModel)]="consumidorModel.emailTelefone">
+                    
+                </div>
+
+                <div class="senha">
+                    <label for="senhaConsumidor">Senha</label>
+                    <div class="password-container">
+                        <input ngModel required="true" #senhaConsumidor="ngModel" id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="consumidorModel.senha">
+                        <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                            <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                        </button>
+                    </div>
+                </div>
+
+                <button [disabled]="!formConsumidor.valid" class="submit" type="submit">Entrar</button>
+            </form>
+            }
+
+            @if (tipoLogin === 'empresa') {
+            <form #formEmpresa="ngForm" (ngSubmit)="loginEmpresa()">
+
+                <div class="infoConsumidorEmpresa">
+                    <label for="cnpjEmail">CNPJ ou Email</label>
+                    <input ngModel required #cnpjEmail="ngModel" id="cnpjEmail" name="cnpjEmail" type="text" [(ngModel)]="empresaModel.cnpjEmail">
+                </div>
+
+                <div class="senha">
+                    <label for="senhaEmpresa">Senha</label>
+                    <div class="password-container">
+                        <input ngModel required #senhaEmpresa="ngModel" id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
+                            [(ngModel)]="empresaModel.senha">
+                        <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
+                            <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
+                        </button>
+                    </div>
+                </div>
+
+                <button [disabled]="!formEmpresa.valid" class="submit" type="submit">Entrar</button>
+            </form>
+            }
+        </div>
+        <p>Não possui conta? <a class="registerLink" href="/register">Cadastre-se</a></p>
+    </div>
+</body>
