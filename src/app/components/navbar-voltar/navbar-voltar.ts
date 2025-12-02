@@ -3,9 +3,10 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-voltar',
+  standalone: true,
   imports: [RouterModule],
   templateUrl: './navbar-voltar.html',
-  styleUrl: './navbar-voltar.css',
+  styleUrls: ['./navbar-voltar.css'],
 })
 export class NavbarVoltar {
 

@@ -6,9 +6,10 @@ import { NavbarVoltar } from "../navbar-voltar/navbar-voltar";
 
 @Component({
   selector: 'app-register-detalhes-empresa',
+  standalone: true,
   imports: [CommonModule, NavbarVoltar],
   templateUrl: './register-detalhes-empresa.html',
-  styleUrl: './register-detalhes-empresa.css',
+  styleUrls: ['./register-detalhes-empresa.css'],
 })
 export class RegisterDetalhesEmpresa {
   // Variável para controlar a exibição do modal de sucesso
@@ -61,6 +62,5 @@ export class RegisterDetalhesEmpresa {
 
     
 }
-
 
 

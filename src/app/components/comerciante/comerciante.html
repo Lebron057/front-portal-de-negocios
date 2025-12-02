@@ -1,0 +1,185 @@
+<app-navbar actionLabel="Sair" [actionLink]="'/login'" [usuarioNome]="usuarioNome"></app-navbar>
+
+<main class="comerciante">
+  <section class="negocios" *ngIf="modoLista">
+    <div class="negocios__header">
+      <div>
+        <p class="legenda">Meus negócios</p>
+        <h2>Gerencie suas unidades</h2>
+        <p class="descricao">Escolha um negócio para abrir o painel completo.</p>
+      </div>
+      <button class="toggle" type="button" (click)="adicionarNegocio()">Adicionar negócio</button>
+    </div>
+
+    <div class="negocios__lista">
+      @for (negocio of negocios; track negocio.id) {
+        <article class="negocio-card" [class.negocio-card--inativo]="negocio.status === 'Inativo'">
+          <header class="negocio-card__topo">
+            <div>
+              <p class="cliente">{{ negocio.nome }}</p>
+              <p class="cidade">{{ negocio.categoria }} • {{ negocio.cidade }}</p>
+            </div>
+            <span class="status" [class.status--fechado]="negocio.status === 'Inativo'">
+              {{ negocio.status }}
+            </span>
+          </header>
+
+          <p class="negocio-card__substatus">
+            {{ negocio.aberto ? 'Aberto agora' : 'Fechado no momento' }}
+          </p>
+
+          <div class="negocio-card__acoes">
+            <button class="btn-light" type="button" (click)="toggleNegocioStatus(negocio)">
+              {{ negocio.status === 'Ativo' ? 'Inativar' : 'Ativar' }}
+            </button>
+            <button class="btn-secondary" type="button" (click)="removerNegocio(negocio)">Remover</button>
+            <button class="btn-primary" type="button" (click)="abrirModal(negocio)">Editar</button>
+            <button class="btn-primary" type="button" (click)="verDetalhes(negocio)">Ver painel</button>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="painel-detalhe" *ngIf="!modoLista">
+    <div class="painel-detalhe__header">
+      <div class="painel-detalhe__col-esq">
+        <button class="btn-light voltar-btn" type="button" (click)="voltarLista()">← Voltar para negócios</button>
+        <div class="painel-detalhe__topo">
+          <div>
+            <p class="legenda">Painel do comerciante</p>
+            <h1>{{ negocioAtivo.nome }}</h1>
+            <p class="descricao">{{ negocioAtivo.categoria }} • {{ negocioAtivo.cidade }}</p>
+          </div>
+          <div class="status-linha">
+            <span [class]="statusBadgeClasse">{{ statusTexto }}</span>
+            <button class="toggle" type="button" (click)="toggleStatus()">{{ statusAcao }}</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="topo__nota topo__nota--compact">
+        <p class="legenda">Avaliação geral</p>
+        <div class="nota">{{ avaliacaoGeral.nota.toFixed(1) }}</div>
+        <div class="stars">
+          @for (star of ratingScale; track star) {
+            <span class="star" [class.star--filled]="star <= Math.round(avaliacaoGeral.nota)">★</span>
+          }
+        </div>
+        <p class="descricao">{{ avaliacaoGeral.totalAvaliacoes }} avaliações</p>
+      </div>
+    </div>
+
+    <section class="cards">
+      @for (indicador of indicadores; track indicador.label) {
+        <article class="card">
+          <p class="card__label">{{ indicador.label }}</p>
+          <strong class="card__valor">{{ indicador.valor }}</strong>
+          <p class="card__descricao">{{ indicador.descricao }}</p>
+        </article>
+      }
+    </section>
+
+    <section class="comentarios">
+      <div class="comentarios__header">
+        <div>
+          <p class="legenda">Comentários dos clientes</p>
+          <h2>O que estão dizendo do seu restaurante</h2>
+          <p class="descricao">Veja rapidamente os feedbacks mais recentes atribuídos ao seu negócio.</p>
+        </div>
+        <button class="toggle toggle--claro" type="button">Ver todos</button>
+      </div>
+
+      <div class="comentarios__lista">
+        @for (comentario of comentariosClientes; track comentario.data) {
+          <article class="comentario">
+            <header class="comentario__topo">
+              <div>
+                <p class="cliente">{{ comentario.cliente }}</p>
+                <p class="cidade">{{ comentario.cidade }} • {{ comentario.data }}</p>
+              </div>
+              <div class="rating">
+                <span class="rating__nota">{{ comentario.nota.toFixed(1) }}</span>
+                <div class="stars">
+                  @for (star of ratingScale; track star) {
+                    <span class="star" [class.star--filled]="star <= comentario.nota">★</span>
+                  }
+                </div>
+              </div>
+            </header>
+
+            <p class="comentario__titulo">{{ comentario.titulo }}</p>
+            <p class="comentario__texto">{{ comentario.texto }}</p>
+          </article>
+        }
+      </div>
+    </section>
+  </section>
+</main>
+
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal">
+    <div class="modal__header">
+      <a class="voltar" (click)="fecharModal()">
+        <span class="seta">&#8592;</span>
+        <span>Voltar</span>
+      </a>
+      <h3>Detalhes da sua empresa</h3>
+    </div>
+
+    <form class="form" *ngIf="negocioForm" (ngSubmit)="salvarAlteracoes()">
+      <div class="form__row">
+        <label>
+          CEP
+          <input name="cep" placeholder="01001-000" [(ngModel)]="negocioForm.cep" />
+        </label>
+        <label>
+          Endereço
+          <input name="endereco" placeholder="Endereço completo" [(ngModel)]="negocioForm.endereco" />
+        </label>
+        <label>
+          Contato (WhatsApp)
+          <input name="contato" placeholder="(99) 99999-9999" [(ngModel)]="negocioForm.contato" />
+        </label>
+      </div>
+
+      <label class="form__full">
+        Descrição
+        <textarea name="descricao" maxlength="200" placeholder="Conte sobre seu negócio" [(ngModel)]="negocioForm.descricao"></textarea>
+        <small>*Máximo de 200 caracteres</small>
+      </label>
+
+      <div class="form__grid">
+        <div class="uploads">
+          <p>Adicione imagens do seu negócio</p>
+          <div class="upload-item">+</div>
+          <div class="upload-item">+</div>
+          <div class="upload-item">+</div>
+          <small>*Máximo 10MB por imagem. Formatos: JPG, PNG</small>
+        </div>
+
+        <div class="horarios">
+          <p>Horários de Funcionamento</p>
+          <div class="horarios__lista">
+            @for (dia of negocioForm.horarios; track dia.dia; let i = $index) {
+              <div class="horario">
+                <span class="dia">{{ dia.dia }}</span>
+                <input class="hora" name="abre{{ i }}" placeholder="09:00" [(ngModel)]="dia.abre" />
+                <input class="hora" name="fecha{{ i }}" placeholder="18:00" [(ngModel)]="dia.fecha" />
+                <label class="check">
+                  <input type="checkbox" name="atende{{ i }}" [(ngModel)]="dia.atende" />
+                  <span>Atende</span>
+                </label>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form__acoes">
+        <button type="button" class="btn-secondary" (click)="fecharModal()">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
