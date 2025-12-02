@@ -65,7 +65,7 @@
             </form>
             }
 
-            @if (tipoLogin === 'empresa') {
+            @if (tipoLogin === 'empresa' ) {
             <form #formEmpresa="ngForm" (ngSubmit)="loginEmpresa()">
 
                 <div class="infoConsumidorEmpresa">
@@ -90,6 +90,7 @@
         </div>
         <p>Não possui conta? <a class="registerLink" href="/register">Cadastre-se</a></p>
     </div>
+    
         <hr>
     @if (cadastroSucesso) {
     <div class="modal-sucesso">
@@ -107,4 +108,5 @@
         <button class="entendi-botao" (click)="fecharModal()">Entendi</button>
     </div>
 }
+
 </body>
