@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+main {
+    background: linear-gradient(180deg, #E6F9F3, #EFFAFB);
+}
+
 .home-pesquisa {
     padding: 60px 20px;
     background-image: url("/background_filtro.png");
