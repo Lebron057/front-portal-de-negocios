@@ -508,8 +508,6 @@ input:focus {
 }
 
 .cancelar:hover {
-    background-color: #FF7A00;
-    color: white;
     transform: scale(1.2);
     transition: 0.5s;
 }
