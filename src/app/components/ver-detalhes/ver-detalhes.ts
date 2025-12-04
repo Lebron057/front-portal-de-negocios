@@ -82,7 +82,7 @@ export class VerDetalhes implements OnInit {
     private negocioService: NegocioApiService,
     private authService: AuthService,
     private avaliacaoService: AvaliacaoService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -122,7 +122,8 @@ export class VerDetalhes implements OnInit {
     const endereco = n.endereco;
     const socials: SocialLink[] = [];
     if (n.whatsapp) {
-      socials.push({ type: 'whatsapp', label: 'WhatsApp', href: `https://wa.me/${n.whatsapp}` });
+      const whatsappClean = n.whatsapp.replace(/\D/g, '');
+      socials.push({ type: 'whatsapp', label: 'WhatsApp', href: `https://wa.me/${whatsappClean}` });
     }
     if (n.url_instagram) {
       socials.push({ type: 'instagram', label: 'Instagram', href: n.url_instagram });
@@ -137,8 +138,8 @@ export class VerDetalhes implements OnInit {
       categories: n.categorias?.length
         ? n.categorias.map((c: any) => c.nome)
         : n.categoria?.nome
-        ? [n.categoria.nome]
-        : ['Categoria não informada'],
+          ? [n.categoria.nome]
+          : ['Categoria não informada'],
       rating: ratingClamped,
       ratingCount: n.avaliacoes?.length || 0,
       description: n.descricao || 'Descrição não informada.',
