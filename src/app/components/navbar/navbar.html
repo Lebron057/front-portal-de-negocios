@@ -1,12 +1,19 @@
 <nav>
     <div class="titulo-logo">
-        <a class="link__home" href="">
+        <a class="link__home" routerLink="/">
             <img src="favicon.png" alt="logo pompeia">
-            <h1>Portal de négocios</h1>
+            <h1>Portal de négocios de Pompeia</h1>
         </a>
     </div>
    <div class="acoes">
-        <span *ngIf="usuarioNome" class="user-pill">{{ usuarioNome }}</span>
-        <button type="button" [routerLink]="actionLink">{{ actionLabel }}</button>
+        <span
+          *ngIf="loggedIn || usuarioNome"
+          class="user-pill"
+          [class.clickable]="!!painelLink"
+          (click)="irParaPainel()"
+        >
+          Olá, {{ displayName || usuarioNome }}
+        </span>
+        <button type="button" [routerLink]="!loggedIn ? actionLink : null" (click)="onActionClick($event)">{{ loggedIn ? 'Sair' : actionLabel }}</button>
     </div>
 </nav>

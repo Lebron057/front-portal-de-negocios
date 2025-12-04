@@ -3,7 +3,10 @@
     <div class="card-superior">
         <!-- Imagem do topo -->
         <div class="card__image-container">
-            <img class="card__image" src="fotos_empresa/{{ empresa.imagem_url }}" alt="Imagem da empresa">
+            <img class="card__image" [src]="empresa.imagem_url" alt="Imagem da empresa">
+        </div>
+        <div class="card__status" [class.card__status--fechado]="empresa.status === 'Fechado'">
+            {{ empresa.status }}
         </div>
         <!-- Título (Nome da empresa) -->
         <h2 class="card__title">{{ empresa.nome }}</h2>

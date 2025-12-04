@@ -11,6 +11,16 @@
       <button class="toggle" type="button" (click)="adicionarNegocio()">Adicionar negócio</button>
     </div>
 
+    <div class="dados-pessoais">
+      <div class="dados-card">
+        <p class="legenda">Suas informações</p>
+        <h3>{{ dadosPessoais.nome || '—' }}</h3>
+        <p class="descricao">{{ dadosPessoais.email || 'Email não informado' }}</p>
+        <p class="descricao">{{ dadosPessoais.telefone || 'Telefone não informado' }}</p>
+        <p class="descricao" *ngIf="dadosPessoais.cnpj">CNPJ: {{ dadosPessoais.cnpj }}</p>
+      </div>
+    </div>
+
     <div class="negocios__lista">
       @for (negocio of negocios; track negocio.id) {
         <article class="negocio-card" [class.negocio-card--inativo]="negocio.status === 'Inativo'">
@@ -33,7 +43,7 @@
               {{ negocio.status === 'Ativo' ? 'Inativar' : 'Ativar' }}
             </button>
             <button class="btn-secondary" type="button" (click)="removerNegocio(negocio)">Remover</button>
-            <button class="btn-primary" type="button" (click)="abrirModal(negocio)">Editar</button>
+            <button class="btn-primary" type="button" (click)="editarNegocio(negocio)">Editar</button>
             <button class="btn-primary" type="button" (click)="verDetalhes(negocio)">Ver painel</button>
           </div>
         </article>
@@ -41,15 +51,15 @@
     </div>
   </section>
 
-  <section class="painel-detalhe" *ngIf="!modoLista">
+  <section class="painel-detalhe" *ngIf="!modoLista && negocioAtivo as ativo">
     <div class="painel-detalhe__header">
       <div class="painel-detalhe__col-esq">
         <button class="btn-light voltar-btn" type="button" (click)="voltarLista()">← Voltar para negócios</button>
         <div class="painel-detalhe__topo">
           <div>
             <p class="legenda">Painel do comerciante</p>
-            <h1>{{ negocioAtivo.nome }}</h1>
-            <p class="descricao">{{ negocioAtivo.categoria }} • {{ negocioAtivo.cidade }}</p>
+            <h1>{{ ativo.nome }}</h1>
+            <p class="descricao">{{ ativo.categoria }} • {{ ativo.cidade }}</p>
           </div>
           <div class="status-linha">
             <span [class]="statusBadgeClasse">{{ statusTexto }}</span>
@@ -114,72 +124,5 @@
         }
       </div>
     </section>
-  </section>
+</section>
 </main>
-
-<div class="modal-backdrop" *ngIf="showModal">
-  <div class="modal">
-    <div class="modal__header">
-      <a class="voltar" (click)="fecharModal()">
-        <span class="seta">&#8592;</span>
-        <span>Voltar</span>
-      </a>
-      <h3>Detalhes da sua empresa</h3>
-    </div>
-
-    <form class="form" *ngIf="negocioForm" (ngSubmit)="salvarAlteracoes()">
-      <div class="form__row">
-        <label>
-          CEP
-          <input name="cep" placeholder="01001-000" [(ngModel)]="negocioForm.cep" />
-        </label>
-        <label>
-          Endereço
-          <input name="endereco" placeholder="Endereço completo" [(ngModel)]="negocioForm.endereco" />
-        </label>
-        <label>
-          Contato (WhatsApp)
-          <input name="contato" placeholder="(99) 99999-9999" [(ngModel)]="negocioForm.contato" />
-        </label>
-      </div>
-
-      <label class="form__full">
-        Descrição
-        <textarea name="descricao" maxlength="200" placeholder="Conte sobre seu negócio" [(ngModel)]="negocioForm.descricao"></textarea>
-        <small>*Máximo de 200 caracteres</small>
-      </label>
-
-      <div class="form__grid">
-        <div class="uploads">
-          <p>Adicione imagens do seu negócio</p>
-          <div class="upload-item">+</div>
-          <div class="upload-item">+</div>
-          <div class="upload-item">+</div>
-          <small>*Máximo 10MB por imagem. Formatos: JPG, PNG</small>
-        </div>
-
-        <div class="horarios">
-          <p>Horários de Funcionamento</p>
-          <div class="horarios__lista">
-            @for (dia of negocioForm.horarios; track dia.dia; let i = $index) {
-              <div class="horario">
-                <span class="dia">{{ dia.dia }}</span>
-                <input class="hora" name="abre{{ i }}" placeholder="09:00" [(ngModel)]="dia.abre" />
-                <input class="hora" name="fecha{{ i }}" placeholder="18:00" [(ngModel)]="dia.fecha" />
-                <label class="check">
-                  <input type="checkbox" name="atende{{ i }}" [(ngModel)]="dia.atende" />
-                  <span>Atende</span>
-                </label>
-              </div>
-            }
-          </div>
-        </div>
-      </div>
-
-      <div class="form__acoes">
-        <button type="button" class="btn-secondary" (click)="fecharModal()">Cancelar</button>
-        <button type="submit" class="btn-primary">Salvar alterações</button>
-      </div>
-    </form>
-  </div>
-</div>

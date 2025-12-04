@@ -106,6 +106,7 @@ input:focus {
     gap: 1.5rem;
     width: 100%;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
 /* Esconde o campo Nome que não tem na imagem */
@@ -120,30 +121,165 @@ input:focus {
 }
 
 .endereco {
-    flex: 3;
-    /* Ocupa mais espaço */
-}
-
-.contatoWhatsapp {
-    flex: 1.5;
-    min-width: 200px;
+    flex: 2;
 }
 
 /* --- Segunda Linha: Descrição --- */
 .segunda_linha {
     display: flex;
+    gap: 1.5rem;
     margin-bottom: 2rem;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .descricao {
-    width: 100%;
+    flex: 2;
 }
 
 .descricao_input {
     height: 3rem !important;
     /* Força altura maior */
 
+}
+.categoria {
+    flex: 1;
+    min-width: 200px;
+}
+
+.site {
+    flex: 1;
+    min-width: 220px;
+}
+.cidade, .estado, .numero, .bairro {
+    min-width: 150px;
+    flex: 1;
+}
+
+.terceira_linha_info {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.multi-select { position: relative; }
+.multi-select__control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    border: 1px solid #d8dce2;
+    border-radius: 12px;
+    padding: 0.6rem 0.85rem;
+    background: #f7f9fc;
+    cursor: pointer;
+    transition: border 0.25s, box-shadow 0.25s;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+}
+.multi-select__control:hover,
+.multi-select__control:focus-within { border-color: var(--orange-btn); box-shadow: 0 8px 20px rgba(255,122,0,0.12); background: #fff; }
+.multi-select__control .placeholder { color: var(--cinza-placeholder); font-weight: 600; font-size: 0.95rem; }
+.multi-select__control .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.multi-select__control .chip {
+    background: #fff7ed;
+    border: 1px solid #ffead5;
+    color: #c2410c;
+    padding: 0.2rem 0.55rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+.multi-select__control .seta { margin-left: 0.6rem; color: #1f2937; font-size: 0.95rem; }
+.multi-select__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 14px 28px rgba(15,23,42,0.16);
+    z-index: 10;
+    max-height: 280px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.dropdown__search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+.dropdown__search input {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.5rem 0.65rem;
+    outline: none;
+    height: 42px;
+}
+.dropdown__search input:focus {
+    border-color: var(--orange-btn);
+    box-shadow: 0 0 0 2px rgba(255,122,0,0.12);
+}
+.btn-all {
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 0.45rem 0.65rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #0f172a;
+    white-space: nowrap;
+}
+.dropdown__lista { padding: 0.5rem 0.75rem 0.75rem; overflow: auto; }
+.dropdown__item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.dropdown__item input { accent-color: var(--orange-btn); }
+.dropdown__item:hover { background: #f8fafc; }
+.btn-remover {
+    border: none;
+    background: transparent;
+    color: #e11d48;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.1rem 0.3rem;
+}
+
+.hint {
+    display: block;
+    margin-top: 0.35rem;
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.selecionadas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+}
+
+.pill--categoria {
+    background: #fff7ed;
+    border: 1px solid #ffead5;
+    color: #c2410c;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
 }
 
 
@@ -374,40 +510,6 @@ input:focus {
 }
 
 /* Estilo de cada linha de dia (o "card" individual) */
-.horario-dia1,
-.horario-dia2,
-.horario-dia3,
-.horario-dia4,
-.horario-dia5,
-.horario-dia6,
-.horario-dia7 {
-    display: flex;
-    align-items: center;
-    /* Alinha o dia, os inputs e o separador de forma justa */
-    justify-content: flex-start;
-    gap: 0.5rem;
-    /* Padding reduzido */
-    padding: 0.5rem 0.8rem;
-    margin: 0;
-    font-weight: 600;
-    color: var(--text-color, #555);
-    background-color: #f9f9f9;
-    transition: transform 0.1s;
-}
-
-/* Estilo para o span do dia da semana */
-.horario-dia1 span,
-.horario-dia2 span,
-.horario-dia3 span,
-.horario-dia4 span,
-.horario-dia5 span,
-.horario-dia6 span,
-.horario-dia7 span {
-    display: inline-block;
-    width: 40px;
-    /* Largura fixa para alinhar os inputs */
-}
-
 .horario-input {
     display: inline-block;
     width: 130px;

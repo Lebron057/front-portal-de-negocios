@@ -186,6 +186,27 @@
   flex-wrap: wrap;
 }
 
+.dados-pessoais {
+  margin: 1rem 0 0.5rem;
+}
+
+.dados-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  max-width: 360px;
+}
+
+.dados-card h3 {
+  margin: 0.1rem 0;
+}
+
+.dados-card .descricao {
+  margin: 0;
+  color: #475569;
+}
+
 .negocios__lista {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
