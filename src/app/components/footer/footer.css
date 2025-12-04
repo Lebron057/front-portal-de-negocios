@@ -1,0 +1,99 @@
+.footer-container {
+    background: linear-gradient(to bottom, #336EEC 0%, #005A9C 100%);
+    color: white;
+    font-family: var(--texto_principal);
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    margin-bottom: 1.5rem;
+    min-height: 80px;
+}
+
+
+/* Supporters Section */
+.supporters-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.supporters-section h4 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.supporters-section ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.supporters-section li {
+    display: flex;
+    align-items: center;
+}
+
+.supporters-section img {
+    height: 40px;
+    /* Base height for logos */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.supporters-section img:hover {
+    transform: scale(1.1);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    width: 100%;
+    max-width: 1200px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .logo-section {
+        position: static;
+        transform: none;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .supporters-section {
+        width: 100%;
+    }
+}

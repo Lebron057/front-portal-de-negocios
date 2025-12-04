@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <button [disabled]="!formConsumidor.valid" class="submit" type="submit">Entrar</button>
+                <button routerLink="/usuario" [disabled]="!formConsumidor.valid" class="submit" type="submit">Entrar</button>
             </form>
             }
 
@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <button (click)="realizarCadastro()" [disabled]="!formEmpresa.valid" class="submit" type="submit">Entrar</button>
+                <button routerLink="/comerciante" (click)="realizarCadastro()" [disabled]="!formEmpresa.valid" class="submit" type="submit">Entrar</button>
             </form>
             }
         </div>

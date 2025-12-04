@@ -3,6 +3,7 @@ import { Navbar } from '../navbar/navbar';
 import { CardEmpresa } from '../card-empresa/card-empresa';
 import { CommonModule } from '@angular/common';
 
+
 interface Empresa {
   nome: string;
   imagem_url: string;

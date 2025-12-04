@@ -42,7 +42,7 @@ export class RegisterDetalhesEmpresa {
                 this.fecharModal();
 
                 // 3. Comando de redirecionamento para a página inicial (raiz '/')
-                this.router.navigate(['/']);
+                this.router.navigate(['/login']);
 
             }, 2000); // Redireciona 3 segundos após o sucesso.
 
