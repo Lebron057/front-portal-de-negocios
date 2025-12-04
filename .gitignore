@@ -42,3 +42,13 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 venv
+
+#API 
+API/venv/
+API/api/venv/
+API/app.db
+API/api/app.db
+API/uploads/
+node_modules/
+dist/
+.angular/
