@@ -13,10 +13,6 @@
         <div class="info">
             <h1>Cadastre-se</h1>
 
-            <!-- 
-      O :host é usado para centralizar o componente na tela 
-      para fins de demonstração.
-    -->
             <div class="custom-toggle-container">
                 <!-- Este é o "slider" azul que se move -->
                 <div class="slider-background"
@@ -34,10 +30,9 @@
                     Empresa
                 </div>
             </div>
-            <!-- mensagem de sucesso -->
-            <!-- <div id="successMessage" *ngIf="isSuccessVisible">
-                {{ successMessage }}
-            </div> -->
+            <div *ngIf="mensagemErro" class="error-message" style="margin-top: 0.5rem;">
+                {{ mensagemErro }}
+            </div>
 
             @if (tipoCadastro === 'consumidor') { 
             <form #formConsumidor="ngForm" (ngSubmit)="cadastrarConsumidor()">
@@ -106,8 +101,7 @@
                     </button>
                 </div>
 
-                <button (click)="cadastrarConsumidor()" routerLink="/login" class="submit" type="submit"
-                    [disabled]="!formConsumidor.valid">Cadastrar</button>
+                <button class="submit" type="submit" [disabled]="!formConsumidor.valid || carregando">Cadastrar</button>
             </form>
             }
 
@@ -138,6 +132,10 @@
                     </div>
                     }
                 </div>
+                <label for="telefoneEmpresa">Telefone</label>
+                <input maxlength="15" id="telefoneEmpresa" name="telefoneEmpresa" type="text"
+                    placeholder="Exemplo: (11) 99999-9999" [value]="empresaModel.telefone"
+                    (input)="formatarTelefone($event)" required>
                 <label for="senhaEmpresa">Senha</label>
                 <div class="password-container">
                     <input ngModel minlength="8" required #senhaEmpresa="ngModel" id="senhaEmpresa" name="senha"
@@ -174,18 +172,11 @@
                             alt="Toggle Password">
                     </button>
                 </div>
-                @if(!formEmpresa.valid){
-                <button (click)="toggleInvalidModal()" routerLink="/register-detalhes-empresa" class="submit"
-                    type="submit" [disabled]="!formEmpresa.valid">Cadastrar</button>
-                }
-                @if(formEmpresa.valid){
-                <button (click)="cadastrarEmpresa()" routerLink="/register-detalhes-empresa" class="submit"
-                    type="submit" [disabled]="!formEmpresa.valid">Cadastrar</button>
-                }
+                <button class="submit" type="submit" [disabled]="!formEmpresa.valid || carregando">Cadastrar</button>
             </form>
             }
 
         </div>
-        <p>Já possui conta? <a href="/login">Entrar</a></p>
+        <p>Já possui conta? <a routerLink="/login">Entrar</a></p>
     </div>
 </body>

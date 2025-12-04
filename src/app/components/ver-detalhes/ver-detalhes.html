@@ -2,13 +2,13 @@
 
 <ng-container *ngIf="company as empresa; else loading">
 <main class="detalhes">
-  <div class="detalhes-wrapper">
-    <div class="barra-voltar">
-      <a class="voltar" href="#">
-        <span class="seta">&#8592;</span>
-        <span>Voltar</span>
-      </a>
-    </div>
+    <div class="detalhes-wrapper">
+      <div class="barra-voltar">
+        <a class="voltar" href="/" (click)="voltar(); $event.preventDefault()">
+          <span class="seta">&#8592;</span>
+          <span>Voltar</span>
+        </a>
+      </div>
 
     <section class="hero">
       <div id="carouselExample" class="carousel slide hero-carousel">
@@ -64,11 +64,13 @@
                   class="icone"
                   [ngClass]="getSocialClass(social)"
                   [href]="social.href"
-                  aria-label="{{ social.type }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="{{ social.label || social.type }}"
                 >
                   <img
                     [src]="getSocialIcon(social)"
-                    [alt]="social.type"
+                    [alt]="social.label || social.type"
                     loading="lazy"
                   />
                 </a>
@@ -101,11 +103,43 @@
         </div>
 
         <div class="card painel card-avaliacoes">
-          <h3>Avaliações Clientes</h3>
-          <p class="nota-avaliacao">
-            Deixe sua avaliação do estabelecimento. Cadastre-se e aproveite tudo que o central de negócios tem a oferecer.
-            <a class="link-login" routerLink="/login">Login</a>
-          </p>
+          <div class="avaliacoes-head">
+            <div>
+              <p class="legenda">Avaliações</p>
+              <h3>O que estão falando</h3>
+            </div>
+            <ng-container *ngIf="podeComentar; else precisaLogin">
+              <button type="button" class="btn-avaliar-outline" (click)="mostrarFormulario = !mostrarFormulario">
+                {{ mostrarFormulario ? 'Fechar' : 'Escrever avaliação' }}
+              </button>
+            </ng-container>
+            <ng-template #precisaLogin>
+              <a class="btn-avaliar-outline" routerLink="/login">Fazer login para comentar</a>
+            </ng-template>
+          </div>
+          <ng-container *ngIf="podeComentar && mostrarFormulario">
+            <form class="form-avaliacao">
+              <div class="linha-form">
+                <label class="campo">
+                  <span>Nota (1 a 5)</span>
+                  <input type="number" min="1" max="5" [(ngModel)]="novaAvaliacao.nota" name="nota" />
+                </label>
+                <label class="campo">
+                  <span>Título</span>
+                  <input type="text" [(ngModel)]="novaAvaliacao.titulo" name="titulo" placeholder="Ex: Atendimento excelente" />
+                </label>
+              </div>
+              <label class="campo">
+                <span>Comentário</span>
+                <textarea rows="3" [(ngModel)]="novaAvaliacao.comentario" name="comentario" placeholder="Conte sua experiência..."></textarea>
+              </label>
+              <div class="acoes-form">
+                <button type="button" class="btn-avaliar" (click)="enviarAvaliacao()">Enviar</button>
+                <p class="erro" *ngIf="erroAvaliacao">{{ erroAvaliacao }}</p>
+                <p class="sucesso" *ngIf="sucessoAvaliacao">{{ sucessoAvaliacao }}</p>
+              </div>
+            </form>
+          </ng-container>
           <div class="avaliacao" *ngFor="let review of reviews">
             <div class="avatar laranja">{{ review.userInitial }}</div>
             <div class="conteudo-avaliacao">
@@ -118,7 +152,8 @@
                   <span
                     *ngFor="let star of starRange; let i = index"
                     class="estrela"
-                    [class.off]="i + 1 > review.rating"
+                    [class.off]="i + 1 > clampRating(review.rating)"
+                    [class.metade]="clampRating(review.rating) > i && clampRating(review.rating) < i + 1"
                     >&#9733;</span
                   >
                 </div>
@@ -139,21 +174,39 @@
             <div class="icone-info local">&#128205;</div>
             <div class="texto-info">
               <p class="titulo-info">Endereço</p>
-              <p class="valor-info">{{ contato.address }}</p>
+              <p class="valor-info">
+                <a [href]="contato.mapsUrl" target="_blank" rel="noopener noreferrer">{{ contato.address }}</a>
+              </p>
             </div>
           </div>
           <div class="info-linha">
             <div class="icone-info telefone">&#128222;</div>
             <div class="texto-info">
-              <p class="titulo-info">Telefone</p>
-              <p class="valor-info">{{ contato.phone }}</p>
+              <p class="titulo-info">Telefone / WhatsApp</p>
+              <p class="valor-info">
+                <a
+                  *ngIf="contato.phoneLink; else telefoneTexto"
+                  [href]="contato.phoneLink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ contato.phone }}
+                </a>
+                <ng-template #telefoneTexto>{{ contato.phone }}</ng-template>
+              </p>
+              <p class="convite-whatsapp">Vem falar com a gente e fechar negócio!</p>
             </div>
           </div>
           <div class="info-linha">
             <div class="icone-info cnpj">&#127970;</div>
             <div class="texto-info">
-              <p class="titulo-info">CNPJ</p>
-              <p class="valor-info">{{ contato.cnpj }}</p>
+              <p class="titulo-info">{{ contato.site ? 'Site' : 'CNPJ' }}</p>
+              <p class="valor-info" *ngIf="contato.site; else cnpjLabel">
+                <a [href]="contato.site" target="_blank" rel="noopener noreferrer">{{ contato.site }}</a>
+              </p>
+              <ng-template #cnpjLabel>
+                <p class="valor-info">{{ contato.cnpj }}</p>
+              </ng-template>
             </div>
           </div>
           </ng-container>

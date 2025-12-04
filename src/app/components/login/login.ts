@@ -1,55 +1,44 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterModule, Router } from "@angular/router";
-import { NavbarVoltar } from "../navbar-voltar/navbar-voltar";
+import { RouterLink, RouterModule, Router } from '@angular/router';
+import { NavbarVoltar } from '../navbar-voltar/navbar-voltar';
+import { AuthService } from '../../services/auth.service';
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    RouterModule,
-    CommonModule,
-    FormsModule,
-    NavbarVoltar
-],
+  imports: [RouterModule, CommonModule, FormsModule, NavbarVoltar, RouterLink],
   templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  styleUrls: ['./login.css'],
 })
 export class Login {
-
-  // Controla qual formulário é exibido
   tipoLogin: 'empresa' | 'consumidor' = 'empresa';
 
-  // Modelo de dados para o formulário de consumidor
   consumidorModel = {
     emailTelefone: '',
-    senha: ''
+    senha: '',
   };
 
-  // Modelo de dados para o formulário de empresa
   empresaModel = {
     cnpjEmail: '',
-    senha: ''
+    senha: '',
   };
 
-
-  // Controle de visibilidade e mensagem de sucesso
   isSuccessVisible = false;
   successMessage = '';
   emailPattern = emailRegex;
+  mensagemErro = '';
+  carregando = false;
+  showPassword = false;
 
+  constructor(private router: Router, private authService: AuthService) {}
 
-  constructor(private router: Router) { }
-
-  /**
-   * Alterna entre os formulários de consumidor e empresa.
-   */
   alternarTipo() {
-    // Esconde a mensagem de sucesso ao trocar
     this.isSuccessVisible = false;
-
+    this.mensagemErro = '';
     if (this.tipoLogin === 'consumidor') {
       this.tipoLogin = 'empresa';
       this.resetFormConsumidor();
@@ -59,126 +48,51 @@ export class Login {
     }
   }
 
-  /**
-   * Chamado pelo (ngSubmit) do formulário de consumidor.
-   */
   loginConsumidor() {
-    // Simula chamada à API
-    console.log('📤 POST /api/consumidores/login');
-    console.log('📊 Dados enviados:', {
-      emailTelefone: this.consumidorModel.emailTelefone,
-      senha: '******'
-    });
-    console.log('🔎 Verificando em TB_CONSUMIDORES...');
-
-    // Exibe mensagem
-    this.mostrarSucesso(`✅ Login de consumidor realizado com sucesso!`);
-
-    // Reseta o formulário
-    this.resetFormConsumidor();
-
-    // Redireciona para a home
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 1000); // Pequeno delay para ver a mensagem de sucesso
+    if (!this.consumidorModel.emailTelefone || !this.consumidorModel.senha) {
+      this.mensagemErro = 'Preencha e-mail e senha.';
+      return;
+    }
+    this.autenticar(this.consumidorModel.emailTelefone, this.consumidorModel.senha, 'usuario');
   }
 
-  showPassword = false;
+  loginEmpresa() {
+    if (!this.empresaModel.cnpjEmail || !this.empresaModel.senha) {
+      this.mensagemErro = 'Preencha e-mail/CNPJ e senha.';
+      return;
+    }
+    this.autenticar(this.empresaModel.cnpjEmail, this.empresaModel.senha, 'empresa');
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  /**
-   * Chamado pelo (ngSubmit) do formulário de empresa.
-   */
-  loginEmpresa() {
-    // Simula chamada à API
-    console.log('📤 POST /api/empresas/login');
-    console.log('📊 Dados enviados:', {
-      cnpjEmail: this.empresaModel.cnpjEmail,
-      senha: '******'
+  private autenticar(usuario: string, senha: string, perfil: 'usuario' | 'empresa') {
+    this.carregando = true;
+    this.mensagemErro = '';
+    this.authService.login(usuario, senha, perfil).subscribe({
+      next: () => {
+        this.isSuccessVisible = true;
+        this.successMessage = 'Login realizado com sucesso!';
+        const destino = perfil === 'empresa' ? '/comerciante' : '/usuario';
+        setTimeout(() => this.router.navigate([destino]), 300);
+      },
+      error: (erro) => {
+        console.error('Erro no login', erro);
+        this.mensagemErro = 'Não foi possível entrar. Verifique as credenciais.';
+      },
+      complete: () => {
+        this.carregando = false;
+      },
     });
-    console.log('🔎 Verificando em TB_EMPRESAS...');
-
-    // Exibe mensagem
-    this.mostrarSucesso(`✅ Login de empresa realizado com sucesso!`);
-
-    // Reseta o formulário
-    this.resetFormEmpresa();
-
-    // Redireciona para a home
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 1000); // Pequeno delay para ver a mensagem de sucesso
-  }
-
-  // --- Funções Auxiliares --
-
-  private mostrarSucesso(mensagem: string) {
-    this.successMessage = mensagem;
-    this.isSuccessVisible = true;
-
-    // Esconde mensagem após 5 segundos
-    setTimeout(() => {
-      this.isSuccessVisible = false;
-    }, 5000);
   }
 
   private resetFormConsumidor() {
-    this.consumidorModel = {
-      emailTelefone: '', senha: ''
-    };
+    this.consumidorModel = { emailTelefone: '', senha: '' };
   }
 
   private resetFormEmpresa() {
-    this.empresaModel = {
-      cnpjEmail: '', senha: ''
-    };
+    this.empresaModel = { cnpjEmail: '', senha: '' };
   }
-
-    cadastroSucesso: boolean = false;
-    
-    // Variável para armazenar a mensagem de erro, se houver
-    mensagemErro: string = '';
-
-    /**
-     * Método simulado para realizar um cadastro.
-     * Na vida real, esta função faria uma chamada a um serviço (API).
-     */
-    realizarCadastro(): void {
-        // 1. Resetar estados anteriores
-        this.cadastroSucesso = false;
-        this.mensagemErro = '';
-
-        // 2. Simulação da lógica de cadastro (Ex: chamada a API)
-        const sucesso = Math.random() > 0.3; // 70% de chance de sucesso para o exemplo
-
-        if (sucesso) {
-            // 3. IF: Cadastro bem-sucedido
-            this.cadastroSucesso = true;
-            
-            // Opcional: Fechar o modal e REDIRECIONAR automaticamente após alguns segundos
-            setTimeout(() => {
-                this.fecharModal();
-                
-                // 3. Comando de redirecionamento para a página inicial (raiz '/')
-                this.router.navigate(['/']); 
-                
-            }, 2000); // Redireciona 3 segundos após o sucesso.
-
-        } else {
-            // 4. ELSE: Cadastro falhou
-            this.mensagemErro = 'Complete todos os campos para realizar login.';
-        }
-    }
-
-    /**
-     * Método para fechar o modal.
-     */
-    fecharModal(): void {
-        this.cadastroSucesso = false;
-        this.mensagemErro = '';
-    }
-  
 }

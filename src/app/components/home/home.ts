@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Navbar } from '../navbar/navbar';
 import { CardEmpresa } from '../card-empresa/card-empresa';
 import { CommonModule } from '@angular/common';
+import { NegocioApiService, NegocioApi } from '../../services/negocio.service';
 
 
 interface Empresa {
+  id: number;
   nome: string;
   imagem_url: string;
   descricao: string;
@@ -13,7 +15,8 @@ interface Empresa {
   status: 'Aberto' | 'Fechado';
   horario: string;
   categoria: string[];
-  bairro?: string; 
+  bairro?: string;
+  horarios?: any[];
 }
 
 interface SecaoCategoria {
@@ -29,80 +32,69 @@ interface SecaoCategoria {
   styleUrls: ['./home.css'],
 })
 export class Home implements OnInit {
-  // Dados brutos (sua lista completa)
-  todasEmpresas: Empresa[] = [
-    {
-      nome: 'Jacto Tech',
-      imagem_url: 'jacto.png',
-      descricao: 'Soluções inovadoras para o agronegócio.',
-      endereco: 'Rua A, 100',
-      telefone: '(11) 1234-5678',
-      status: 'Aberto',
-      horario: '08:00 - 18:00',
-      categoria: ['Agronegócio', 'Tecnologia'],
-      bairro: 'Zona Norte'
-    },
-    {
-      nome: 'Dom Galeto',
-      imagem_url: 'galeto.jpg',
-      descricao: 'Restaurante self-service.',
-      endereco: 'Rua B, 200',
-      telefone: '(11) 9876-5432',
-      status: 'Fechado',
-      horario: '11:00 - 14:00',
-      categoria: ['Restaurante'],
-      bairro: 'Centro'
-    },
-    {
-      nome: 'Bistrô Sabor & Arte',
-      imagem_url: 'https://placehold.co/600x400/purple/white?text=Bistro',
-      descricao: 'Gastronomia contemporânea.',
-      endereco: 'Rua Principal, 500',
-      telefone: '(14) 3452-0000',
-      status: 'Aberto',
-      horario: '18:00 - 23:00',
-      categoria: ['Restaurante'],
-      bairro: 'Zona Sul'
-    },
-    {
-      nome: 'Supermercado Pompeia',
-      imagem_url: 'supermercado_pompeia.png',
-      descricao: 'Supermercado com variedade.',
-      endereco: 'Endereço da Empresa C',
-      telefone: '(11) 2468-1357',
-      status: 'Aberto',
-      horario: '07:00 - 22:00',
-      categoria: ['Supermercado'],
-      bairro: 'Centro'
-    },
-    {
-        nome: 'Loja Estilo Atual',
-        imagem_url: 'https://placehold.co/600x400/pink/white?text=Moda',
-        descricao: 'Moda masculina e feminina.',
-        endereco: 'Av. da Moda, 101',
-        telefone: '(14) 9999-8888',
-        status: 'Aberto',
-        horario: '09:00 - 18:00',
-        categoria: ['Vestuário & Moda'],
-        bairro: 'Centro'
-    }
-  ];
+  todasEmpresas: Empresa[] = [];
 
   // Variável que será usada no HTML para renderizar as sessões
   secoesPorCategoria: SecaoCategoria[] = [];
 
   // Filtros
-  categorias: string[] = ['Restaurante', 'Agronegócio', 'Supermercado', 'Vestuário & Moda'];
-  bairros: string[] = ['Centro', 'Zona Sul', 'Zona Norte'];
-  
+  categorias: string[] = [];
+  bairros: string[] = [];
+
   filtros = {
     categoria: '',
     bairro: '',
     abertoAgora: false
   };
 
+  carregando = true;
+  erro = '';
+
+  private handleStatusEvento = (event: any) => {
+    if (event?.key && event.key !== 'negociosStatusManual') return;
+    this.reaplicarStatusManual();
+  };
+
+  constructor(private negocioService: NegocioApiService) {}
+
   ngOnInit(): void {
-    this.atualizarSecoes();
+    this.carregarNegocios();
+    window.addEventListener('storage', this.handleStatusEvento);
+    window.addEventListener('negocioStatusAtualizado', this.handleStatusEvento as EventListener);
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('storage', this.handleStatusEvento);
+    window.removeEventListener('negocioStatusAtualizado', this.handleStatusEvento as EventListener);
+  }
+
+  private carregarNegocios() {
+    this.carregando = true;
+    this.erro = '';
+    this.negocioService.listarNegocios().subscribe({
+      next: (lista) => {
+        this.todasEmpresas = lista.map((n) => this.mapearEmpresa(n));
+        this.atualizarFiltros();
+        this.atualizarSecoes();
+        this.carregando = false;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar negócios', erro);
+        this.erro = 'Não foi possível carregar os negócios. Tente novamente.';
+        this.carregando = false;
+      },
+    });
+  }
+
+  private atualizarFiltros() {
+    const cats = new Set<string>();
+    const bairs = new Set<string>();
+    this.todasEmpresas.forEach((e) => {
+      e.categoria.forEach((c) => cats.add(c));
+      if (e.bairro) bairs.add(e.bairro);
+    });
+    this.categorias = Array.from(cats);
+    this.bairros = Array.from(bairs);
   }
 
   /**
@@ -114,7 +106,6 @@ export class Home implements OnInit {
     if (this.filtros.categoria && this.filtros.categoria !== '') {
       categoriasParaExibir = [this.filtros.categoria];
     } else {
-      // Usa as categorias definidas ou extrai dinamicamente se preferir
       const todasAsCats = new Set<string>();
       this.todasEmpresas.forEach(emp => {
         emp.categoria.forEach(cat => todasAsCats.add(cat));
@@ -125,12 +116,10 @@ export class Home implements OnInit {
     this.secoesPorCategoria = [];
 
     categoriasParaExibir.forEach(catNome => {
-      // Filtra as empresas que possuem essa categoria
-      let empresasDaCategoria = this.todasEmpresas.filter(emp => 
+      let empresasDaCategoria = this.todasEmpresas.filter(emp =>
         emp.categoria.includes(catNome)
       );
 
-      // Aplica os outros filtros (Bairro, Aberto Agora) DENTRO do grupo
       if (this.filtros.bairro && this.filtros.bairro !== '') {
         empresasDaCategoria = empresasDaCategoria.filter(e => e.bairro === this.filtros.bairro);
       }
@@ -138,7 +127,6 @@ export class Home implements OnInit {
         empresasDaCategoria = empresasDaCategoria.filter(e => e.status === 'Aberto');
       }
 
-      // Só cria a seção se houver empresas nela
       if (empresasDaCategoria.length > 0) {
         this.secoesPorCategoria.push({
           titulo: catNome,
@@ -166,5 +154,125 @@ export class Home implements OnInit {
 
   aplicarFiltros() {
     this.atualizarSecoes();
+  }
+
+  private mapearEmpresa(n: NegocioApi): Empresa {
+    const endereco = n.endereco;
+    const linhaEndereco = endereco
+      ? `${endereco.rua || ''} ${endereco.numero || ''}`.trim() || 'Endereço não informado'
+      : 'Endereço não informado';
+    const bairro = endereco?.bairro;
+    const imagem = n.fotos && n.fotos.length
+      ? `${this.negocioService.baseUrl}${n.fotos[0].url}`
+      : 'https://placehold.co/600x400/0ea5e9/ffffff?text=Neg%C3%B3cio';
+
+    const manual = this.obterStatusManual(n.id);
+    const horarios = (n.horarios || []).filter((h) => h.aberto);
+    const horarioHoje = this.pegarHorarioDoDia(horarios);
+    const horario_abre = horarioHoje?.horario_abre || '';
+    const horario_fecha = horarioHoje?.horario_fecha || '';
+    const horarioTexto =
+      horario_abre && horario_fecha
+        ? `${horario_abre.toString().slice(0, 5)} - ${horario_fecha.toString().slice(0, 5)}`
+        : 'Horário não informado';
+
+    const abertoAgora = this.estaAbertoAgora(horarios);
+    const statusFinal = manual === null ? (abertoAgora ? 'Aberto' : 'Fechado') : manual ? 'Aberto' : 'Fechado';
+
+    return {
+      id: n.id,
+      nome: n.nome_estabelecimento || 'Negócio sem nome',
+      imagem_url: imagem,
+      descricao: n.descricao || 'Descrição não informada',
+      endereco: linhaEndereco,
+      telefone: n.telefone || n.whatsapp || 'Contato não informado',
+      status: statusFinal,
+      horario: horarioTexto,
+      categoria: n.categorias?.length
+        ? n.categorias.map((c) => c.nome)
+        : n.categoria?.nome
+        ? [n.categoria.nome]
+        : ['Sem categoria'],
+      bairro,
+      horarios,
+    };
+  }
+
+  private reaplicarStatusManual() {
+    this.todasEmpresas = this.todasEmpresas.map((e) => {
+      const manual = this.obterStatusManual(e.id);
+      const abertoAgora = this.estaAbertoAgora(e.horarios || []);
+      const status = manual === null ? (abertoAgora ? 'Aberto' : 'Fechado') : manual ? 'Aberto' : 'Fechado';
+      return { ...e, status };
+    });
+    this.atualizarSecoes();
+  }
+
+  private obterStatusManual(negocioId: number): boolean | null {
+    const raw = localStorage.getItem('negociosStatusManual');
+    if (!raw) return null;
+    const data = JSON.parse(raw) as Record<string, { aberto: boolean; data: string }>;
+    const registro = data[negocioId];
+    if (!registro) return null;
+
+    const hoje = new Date().toDateString();
+    const dataRegistro = new Date(registro.data).toDateString();
+    if (hoje !== dataRegistro) return null;
+
+    if (typeof registro.aberto === 'boolean') return registro.aberto;
+    return null;
+  }
+
+  private normalizarDia(dia: string): string {
+    const mapa: Record<string, string> = {
+      Domingo: 'Dom',
+      Segunda: 'Seg',
+      'Segunda-feira': 'Seg',
+      Terca: 'Ter',
+      Terça: 'Ter',
+      'Terça-feira': 'Ter',
+      Quarta: 'Qua',
+      'Quarta-feira': 'Qua',
+      Quinta: 'Qui',
+      'Quinta-feira': 'Qui',
+      Sexta: 'Sex',
+      'Sexta-feira': 'Sex',
+      Sabado: 'Sab',
+      Sábado: 'Sab',
+    };
+    return mapa[dia] || dia;
+  }
+
+  private pegarHorarioDoDia(horarios: any[]): any | null {
+    const hoje = this.normalizarDia(
+      ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'][new Date().getDay()]
+    );
+    return horarios.find((h) => this.normalizarDia(h.dia_semana) === hoje) || horarios[0] || null;
+  }
+
+  private estaAbertoAgora(horarios: any[]): boolean {
+    if (!horarios.length) return false;
+    const agora = new Date();
+    const diaAtual = this.normalizarDia(
+      ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'][agora.getDay()]
+    );
+    const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
+
+    return horarios
+      .filter((h) => h.aberto && this.normalizarDia(h.dia_semana) === diaAtual)
+      .some((h) => {
+        const abre = this.converterParaMinutos(h.horario_abre);
+        const fecha = this.converterParaMinutos(h.horario_fecha);
+        if (abre === null || fecha === null) return false;
+        return minutosAgora >= abre && minutosAgora < fecha;
+      });
+  }
+
+  private converterParaMinutos(hora: any): number | null {
+    if (!hora) return null;
+    const str = hora.toString();
+    const [h, m] = str.split(':').map((v: string) => parseInt(v, 10));
+    if (Number.isNaN(h) || Number.isNaN(m)) return null;
+    return h * 60 + m;
   }
 }

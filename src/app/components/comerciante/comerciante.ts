@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Navbar } from '../navbar/navbar';
+import { AuthService } from '../../services/auth.service';
+import { NegocioApi, NegocioApiService } from '../../services/negocio.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { AvaliacaoService, AvaliacaoApi } from '../../services/avaliacao.service';
 
 interface Indicador {
   label: string;
@@ -49,114 +54,33 @@ interface Negocio {
   templateUrl: './comerciante.html',
   styleUrls: ['./comerciante.css'],
 })
-export class Comerciante {
+export class Comerciante implements OnInit {
   // Disponibiliza Math no template para arredondar notas
   Math = Math;
-  usuarioNome = 'Leonardo Oliveira';
+  usuarioNome = '';
   estabelecimentoAberto = true;
 
-  negocios: Negocio[] = [
-    {
-      id: 1,
-      nome: 'Dom Galeto',
-      categoria: 'Restaurante • Self-service',
-      cidade: 'Pompeia, SP',
-      status: 'Ativo',
-      aberto: true,
-      cep: '17580-000',
-      endereco: 'Av. Brasil, 1200',
-      contato: '(18) 99999-8888',
-      descricao: 'Galeteria com pratos rápidos e atendimento familiar.',
-      imagens: [],
-      horarios: [
-        { dia: 'Seg', abre: '09:00', fecha: '18:00', atende: true },
-        { dia: 'Ter', abre: '09:00', fecha: '18:00', atende: true },
-        { dia: 'Qua', abre: '09:00', fecha: '18:00', atende: true },
-        { dia: 'Qui', abre: '09:00', fecha: '18:00', atende: true },
-        { dia: 'Sex', abre: '09:00', fecha: '18:00', atende: true },
-        { dia: 'Sáb', abre: '10:00', fecha: '16:00', atende: true },
-        { dia: 'Dom', abre: '', fecha: '', atende: false },
-      ],
-    },
-    {
-      id: 2,
-      nome: 'Dom Galeto Express',
-      categoria: 'Delivery • Assados',
-      cidade: 'Marília, SP',
-      status: 'Inativo',
-      aberto: false,
-      cep: '17500-120',
-      endereco: 'Rua das Flores, 45',
-      contato: '(14) 98888-7777',
-      descricao: 'Versão delivery focada em assados rápidos.',
-      imagens: [],
-      horarios: [
-        { dia: 'Seg', abre: '11:00', fecha: '22:00', atende: true },
-        { dia: 'Ter', abre: '11:00', fecha: '22:00', atende: true },
-        { dia: 'Qua', abre: '11:00', fecha: '22:00', atende: true },
-        { dia: 'Qui', abre: '11:00', fecha: '22:00', atende: true },
-        { dia: 'Sex', abre: '11:00', fecha: '23:00', atende: true },
-        { dia: 'Sáb', abre: '11:00', fecha: '23:00', atende: true },
-        { dia: 'Dom', abre: '11:00', fecha: '21:00', atende: true },
-      ],
-    },
-  ];
+  negocios: Negocio[] = [];
+  dadosPessoais = {
+    nome: '',
+    email: '',
+    telefone: '',
+    cnpj: '',
+  };
 
-  negocioAtivo: Negocio = this.negocios[0];
+  negocioAtivo: Negocio | null = null;
   modoLista = true;
 
   avaliacaoGeral = {
-    nota: 4.6,
-    totalAvaliacoes: 128, 
-    comentariosRecentes: 12,
-    nps: 72,
+    nota: 0,
+    totalAvaliacoes: 0,
+    comentariosRecentes: 0,
+    nps: 0,
   };
 
-  indicadores: Indicador[] = [
-    {
-      label: 'Comentários recentes',
-      valor: `${this.avaliacaoGeral.comentariosRecentes}`,
-      descricao: 'Últimos 30 dias',
-    },
-    {
-      label: 'Avaliações totais',
-      valor: `${this.avaliacaoGeral.totalAvaliacoes}`,
-      descricao: 'Acumulado',
-    },
-    {
-      label: 'NPS estimado',
-      valor: `${this.avaliacaoGeral.nps}`,
-      descricao: 'Clientes promotores',
-    },
-  ];
+  indicadores: Indicador[] = [];
 
   comentariosClientes: ComentarioCliente[] = [
-    {
-      cliente: 'Amanda Souza',
-      cidade: 'Pompeia, SP',
-      data: 'Hoje • 12:10',
-      nota: 5,
-      titulo: 'Equipe atenciosa',
-      texto:
-        'Cheguei com crianças pequenas e já prepararam cadeirões e pratos infantis. Atendimento rápido e gentil.',
-    },
-    {
-      cliente: 'João Victor',
-      cidade: 'Marília, SP',
-      data: 'Ontem • 19:45',
-      nota: 4,
-      titulo: 'Galeto bem temperado',
-      texto: 'O galeto é ótimo e chegou quentinho. Só sugeriria mais opções de acompanhamento.',
-    },
-    {
-      cliente: 'Lívia Martins',
-      cidade: 'Pompeia, SP',
-      data: '13 Nov • 21:15',
-      nota: 3,
-      titulo: 'Entrega demorou',
-      texto:
-        'Pedido chegou correto, mas demorou cerca de 30 minutos a mais que o previsto. Fui informada, o que ajudou.',
-    },
   ];
 
   ratingScale = [1, 2, 3, 4, 5];
@@ -164,12 +88,30 @@ export class Comerciante {
   negocioSelecionado: Negocio | null = null;
   negocioForm: Negocio | null = null;
 
+  carregando = false;
+  erro = '';
+
+  constructor(
+    private negocioService: NegocioApiService,
+    private authService: AuthService,
+    private usuarioService: UsuarioService,
+    private avaliacaoService: AvaliacaoService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    this.carregarDadosPessoais();
+    this.carregarNegocios();
+  }
+
   get statusTexto(): string {
-    return this.negocioAtivo?.aberto ? 'Aberto agora' : 'Fechado no momento';
+    if (!this.negocioAtivo) return 'Fechado';
+    return this.negocioAtivo.aberto ? 'Aberto agora' : 'Fechado manualmente';
   }
 
   get statusBadgeClasse(): string {
-    return this.negocioAtivo?.aberto ? 'status status--aberto' : 'status status--fechado';
+    if (!this.negocioAtivo) return 'status status--fechado';
+    return this.negocioAtivo.aberto ? 'status status--aberto' : 'status status--fechado';
   }
 
   get statusAcao(): string {
@@ -177,7 +119,13 @@ export class Comerciante {
   }
 
   toggleStatus(): void {
+    if (!this.negocioAtivo) return;
     this.negocioAtivo.aberto = !this.negocioAtivo.aberto;
+    this.salvarStatusManual(this.negocioAtivo.id, this.negocioAtivo.aberto);
+
+    this.negocios = this.negocios.map((n) =>
+      n.id === this.negocioAtivo!.id ? { ...n, aberto: this.negocioAtivo!.aberto } : n
+    );
   }
 
   toggleNegocioStatus(negocio: Negocio): void {
@@ -185,69 +133,260 @@ export class Comerciante {
   }
 
   adicionarNegocio(): void {
-    const novoId = this.negocios.length ? Math.max(...this.negocios.map((n) => n.id)) + 1 : 1;
-    const novo: Negocio = {
-      id: novoId,
-      nome: `Novo Negócio ${novoId}`,
-      categoria: 'Definir categoria',
-      cidade: 'Definir cidade',
-      status: 'Inativo',
-      aberto: false,
-      cep: '',
-      endereco: '',
-      contato: '',
-      descricao: '',
-      imagens: [],
-      horarios: [
-        { dia: 'Seg', abre: '', fecha: '', atende: false },
-        { dia: 'Ter', abre: '', fecha: '', atende: false },
-        { dia: 'Qua', abre: '', fecha: '', atende: false },
-        { dia: 'Qui', abre: '', fecha: '', atende: false },
-        { dia: 'Sex', abre: '', fecha: '', atende: false },
-        { dia: 'Sáb', abre: '', fecha: '', atende: false },
-        { dia: 'Dom', abre: '', fecha: '', atende: false },
-      ],
-    };
-    this.negocios = [...this.negocios, novo];
+    this.router.navigate(['/register-detalhes-empresa']);
   }
 
   removerNegocio(negocio: Negocio): void {
     this.negocios = this.negocios.filter((n) => n.id !== negocio.id);
-    if (this.negocioAtivo.id === negocio.id && this.negocios.length) {
+    if (this.negocioAtivo && this.negocioAtivo.id === negocio.id && this.negocios.length) {
       this.negocioAtivo = this.negocios[0];
     }
   }
 
-  abrirModal(negocio: Negocio): void {
-    this.negocioSelecionado = negocio;
-    // cria cópia rasa para edição
-    this.negocioForm = JSON.parse(JSON.stringify(negocio));
-    this.showModal = true;
-  }
-
-  fecharModal(): void {
-    this.showModal = false;
-    this.negocioSelecionado = null;
-    this.negocioForm = null;
-  }
-
-  salvarAlteracoes(): void {
-    if (!this.negocioForm) return;
-    this.negocios = this.negocios.map((n) =>
-      n.id === this.negocioForm!.id ? { ...this.negocioForm! } : n
-    );
-    if (this.negocioAtivo.id === this.negocioForm.id) {
-      this.negocioAtivo = { ...this.negocioForm };
-    }
-    this.fecharModal();
+  editarNegocio(negocio: Negocio): void {
+    this.router.navigate(['/register-detalhes-empresa'], { queryParams: { negocioId: negocio.id } });
   }
 
   verDetalhes(negocio: Negocio): void {
     this.negocioAtivo = negocio;
+    this.carregarAvaliacoes(negocio.id);
     this.modoLista = false;
   }
 
   voltarLista(): void {
     this.modoLista = true;
+  }
+
+  private carregarNegocios(): void {
+    const perfil = this.authService.obterPerfilDoToken() || this.authService.obterPerfil();
+    const usuarioId = this.authService.obterUsuarioId();
+    const negocioId = this.authService.obterNegocioId();
+
+    if (perfil !== 'empresa') {
+      this.erro = 'Apenas contas de empresa podem acessar esta área.';
+      this.carregando = false;
+      return;
+    }
+
+    if (!usuarioId && !negocioId) {
+      this.erro = 'Faça login novamente para carregar seus negócios.';
+      return;
+    }
+
+    this.carregando = true;
+    const filtros =
+      perfil === 'empresa' && negocioId
+        ? { negocioId }
+        : { usuarioId: usuarioId || undefined };
+
+    this.negocioService.listarNegocios(filtros).subscribe({
+      next: (lista) => {
+        this.negocios = lista.map((n) => this.mapearNegocio(n));
+        this.negocioAtivo = this.negocios[0] || null;
+        if (this.negocioAtivo) {
+          this.carregarAvaliacoes(this.negocioAtivo.id);
+        } else {
+          this.atualizarIndicadores([]);
+        }
+        this.carregando = false;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar negócios', erro);
+        this.erro = 'Não foi possível carregar seus negócios.';
+        this.carregando = false;
+      },
+    });
+  }
+
+  private carregarDadosPessoais(): void {
+    const perfil = this.authService.obterPerfilDoToken() || this.authService.obterPerfil();
+    const usuarioId = this.authService.obterUsuarioId();
+    const negocioId = this.authService.obterNegocioId();
+
+    if (perfil === 'empresa' && negocioId) {
+      this.negocioService.obterNegocio(negocioId).subscribe({
+        next: (n) => {
+          this.dadosPessoais.nome = n.nome_dono || n.nome_estabelecimento || '';
+          this.dadosPessoais.email = n.email || '';
+          this.dadosPessoais.telefone = n.telefone || n.whatsapp || '';
+          this.dadosPessoais.cnpj = n.cnpj || '';
+          this.usuarioNome = this.dadosPessoais.nome;
+        },
+        error: () => {},
+      });
+    } else if (usuarioId) {
+      this.usuarioService.obterUsuario(usuarioId).subscribe({
+        next: (u) => {
+          this.dadosPessoais.nome = u.nome || '';
+          this.dadosPessoais.email = u.email || '';
+          this.dadosPessoais.telefone = u.telefone || '';
+          this.dadosPessoais.cnpj = '';
+          this.usuarioNome = this.dadosPessoais.nome;
+        },
+        error: () => {},
+      });
+    }
+  }
+
+  private mapearNegocio(n: NegocioApi): Negocio {
+    const abertoManual = this.obterStatusManual(n.id);
+    const endereco = n.endereco;
+    const imagens = (n.fotos || []).map((f) => `${this.negocioService.baseUrl}${f.url}`);
+    const horarios: HorarioDia[] = (n.horarios || []).map((h) => ({
+      dia: h.dia_semana,
+      abre: h.horario_abre || '',
+      fecha: h.horario_fecha || '',
+      atende: h.aberto,
+    }));
+    const abertoAutomatico = this.estaAbertoAgora(horarios);
+    const abertoFinal = abertoManual ?? abertoAutomatico;
+
+    return {
+      id: n.id,
+      nome: n.nome_estabelecimento || 'Negócio sem nome',
+      categoria:
+        n.categorias?.map((c) => c.nome).join(', ') ||
+        n.categoria?.nome ||
+        'Categoria não informada',
+      cidade: endereco?.cidade || 'Cidade não informada',
+      status: 'Ativo',
+      aberto: abertoFinal,
+      cep: endereco?.cep || '',
+      endereco: endereco ? `${endereco.rua || ''}, ${endereco.numero || ''}`.trim() : '',
+      contato: n.telefone || n.whatsapp || 'Contato não informado',
+      descricao: n.descricao || '',
+      imagens,
+      horarios: horarios.length
+        ? horarios
+        : [
+            { dia: 'Seg', abre: '09:00', fecha: '18:00', atende: true },
+            { dia: 'Ter', abre: '09:00', fecha: '18:00', atende: true },
+            { dia: 'Qua', abre: '09:00', fecha: '18:00', atende: true },
+            { dia: 'Qui', abre: '09:00', fecha: '18:00', atende: true },
+            { dia: 'Sex', abre: '09:00', fecha: '18:00', atende: true },
+            { dia: 'Sáb', abre: '09:00', fecha: '13:00', atende: true },
+            { dia: 'Dom', abre: 'Fechado', fecha: '', atende: false },
+          ],
+    };
+  }
+
+  private carregarAvaliacoes(negocioId: number) {
+    this.avaliacaoService.listarPorNegocio(negocioId).subscribe({
+      next: (avaliacoes) => {
+        this.comentariosClientes = this.mapearComentarios(avaliacoes);
+        this.atualizarIndicadores(avaliacoes);
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar avaliações', erro);
+        this.comentariosClientes = [];
+        this.atualizarIndicadores([]);
+      },
+    });
+  }
+
+  private mapearComentarios(avaliacoes: AvaliacaoApi[]): ComentarioCliente[] {
+    return avaliacoes.map((a) => {
+      const dataFmt = a.data ? new Date(a.data).toLocaleString('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }) : 'Data não informada';
+      return {
+        cliente: (a as any).usuario?.nome || 'Cliente',
+        cidade: this.negocioAtivo?.cidade || '',
+        data: dataFmt,
+        nota: a.nota || 0,
+        titulo: a.titulo || 'Sem título',
+        texto: a.comentario || '',
+      };
+    });
+  }
+
+  private atualizarIndicadores(avaliacoes: AvaliacaoApi[]) {
+    const total = avaliacoes.length;
+    const media = total ? avaliacoes.reduce((acc, a) => acc + (a.nota || 0), 0) / total : 0;
+    const recentes = avaliacoes.slice(0, 5).length;
+    const acessos = total; // proxy de acessos: total de avaliações recebidas
+
+    this.avaliacaoGeral = {
+      nota: Number(media.toFixed(1)),
+      totalAvaliacoes: total,
+      comentariosRecentes: recentes,
+      nps: this.avaliacaoGeral.nps,
+    };
+
+    this.indicadores = [
+      { label: 'Comentários', valor: `${total}`, descricao: 'Total de feedbacks' },
+      { label: 'Média de notas', valor: media ? media.toFixed(1) : '0.0', descricao: 'Avaliações recebidas' },
+      { label: 'Acessos', valor: `${acessos}`, descricao: 'Interações registradas' },
+      { label: 'NPS estimado', valor: `${this.avaliacaoGeral.nps}`, descricao: 'Clientes promotores' },
+    ];
+  }
+
+  private salvarStatusManual(negocioId: number, aberto: boolean) {
+    const raw = localStorage.getItem('negociosStatusManual');
+    const data = raw ? (JSON.parse(raw) as Record<string, { aberto: boolean; data: string }>) : {};
+    data[negocioId] = { aberto, data: new Date().toISOString() };
+    localStorage.setItem('negociosStatusManual', JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent('negocioStatusAtualizado'));
+  }
+
+  private obterStatusManual(negocioId: number): boolean | null {
+    const raw = localStorage.getItem('negociosStatusManual');
+    if (!raw) return null;
+    const data = JSON.parse(raw) as Record<string, { aberto: boolean; data: string }>;
+    const registro = data[negocioId];
+    if (!registro) return null;
+
+    // Se o registro é de outra data, ignora (novo dia volta ao horário automático)
+    const hoje = new Date().toDateString();
+    const dataRegistro = new Date(registro.data).toDateString();
+    if (hoje !== dataRegistro) return null;
+
+    if (typeof registro.aberto === 'boolean') return registro.aberto;
+    return null;
+  }
+
+  private normalizarDia(dia: string): string {
+    const mapa: Record<string, string> = {
+      Domingo: 'Dom',
+      Segunda: 'Seg',
+      'Segunda-feira': 'Seg',
+      Terca: 'Ter',
+      Terça: 'Ter',
+      'Terça-feira': 'Ter',
+      Quarta: 'Qua',
+      'Quarta-feira': 'Qua',
+      Quinta: 'Qui',
+      'Quinta-feira': 'Qui',
+      Sexta: 'Sex',
+      'Sexta-feira': 'Sex',
+      Sabado: 'Sab',
+      Sábado: 'Sab',
+    };
+    return mapa[dia] || dia;
+  }
+
+  private converterParaMinutos(hora: string): number | null {
+    if (!hora) return null;
+    const str = hora.toString();
+    if (str.toLowerCase() === 'fechado') return null;
+    const [h, m] = str.split(':').map((v: string) => parseInt(v, 10));
+    if (Number.isNaN(h) || Number.isNaN(m)) return null;
+    return h * 60 + m;
+  }
+
+  private estaAbertoAgora(horarios: HorarioDia[]): boolean {
+    if (!horarios.length) return false;
+    const agora = new Date();
+    const diaAtual = this.normalizarDia(
+      ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'][agora.getDay()]
+    );
+    const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
+
+    return horarios
+      .filter((h) => h.atende && this.normalizarDia(h.dia) === diaAtual)
+      .some((h) => {
+        const abre = this.converterParaMinutos(h.abre);
+        const fecha = this.converterParaMinutos(h.fecha);
+        if (abre === null || fecha === null) return false;
+        return minutosAgora >= abre && minutosAgora < fecha;
+      });
   }
 }

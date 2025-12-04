@@ -266,7 +266,17 @@
 .link-endereco {
   color: #2f3f6c;
   font-weight: 600;
-  text-decoration: underline;
+  text-decoration: none;
+}
+.valor-info a,
+.link-endereco a {
+  color: #2f3f6c;
+  text-decoration: none;
+}
+.valor-info a:hover,
+.link-endereco a:hover {
+  color: #1f2b4c;
+  text-decoration: none;
 }
 
 .cards-meio .card-servicos {
@@ -328,6 +338,15 @@
 .card-avaliacoes h3 {
   margin-bottom: 10px;
 }
+
+.avaliacoes-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .nota-avaliacao {
   margin: 0;
   padding: 12px 14px;
@@ -375,6 +394,21 @@
 .data-avaliacao { font-size: 0.95rem; color: #7a8295; }
 .estrelas { color: #f4b400; font-weight: 700; display: flex; gap: 4px; }
 .estrela.off { color: #c3cad5; }
+.estrela.metade {
+  position: relative;
+  display: inline-flex;
+  color: #f4b400;
+}
+.estrela.metade::after {
+  content: '★';
+  color: #c3cad5;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
 .texto-avaliacao {
   margin-top: 12px;
   color: #1e2430;
@@ -382,6 +416,49 @@
   font-family: var(--texto_secundario);
   font-size: 1.02rem;
 }
+
+.form-avaliacao { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.form-avaliacao .linha-form { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.form-avaliacao .campo { flex: 1; display: flex; flex-direction: column; gap: 0.35rem; min-width: 200px; }
+.form-avaliacao input,
+.form-avaliacao textarea {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  outline: none;
+  font-family: var(--texto_secundario);
+  background: #f8fafc;
+}
+.form-avaliacao input:focus,
+.form-avaliacao textarea:focus {
+  border-color: #ff7a00;
+  box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.12);
+  background: #fff;
+}
+.acoes-form { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.btn-avaliar {
+  background: #ff7a00;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.65rem 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  box-shadow: 0 8px 16px rgba(255,122,0,0.18);
+}
+.btn-avaliar-outline {
+  background: #fff;
+  color: #ff7a00;
+  border: 1px solid #ff7a00;
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.erro { color: #dc2626; font-weight: 700; margin: 0; }
+.sucesso { color: #16a34a; font-weight: 700; margin: 0; }
 
 @media (max-width: 1100px) {
   .detalhes { padding: 20px 18px 40px; }

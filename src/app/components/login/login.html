@@ -84,28 +84,25 @@
                     </div>
                 </div>
 
-                <button routerLink="/comerciante" (click)="realizarCadastro()" [disabled]="!formEmpresa.valid" class="submit" type="submit">Entrar</button>
+                <button [disabled]="!formEmpresa.valid" class="submit" type="submit">Entrar</button>
             </form>
             }
         </div>
-        <p>Não possui conta? <a class="registerLink" href="/register">Cadastre-se</a></p>
-    </div>
-    
-        <hr>
-    @if (cadastroSucesso) {
-    <div class="modal-sucesso">
-        <div class="modal-content">
-            <button class="close-btn" (click)="fecharModal()">×</button>
-            <div class="icon-container">
-                <span style="font-size: 40px; color: white;">&#10003;</span> 
-            </div>
-            <h2>Login feito com sucesso!</h2>
+        <p>Não possui conta? <a class="registerLink" routerLink="/register">Cadastre-se</a></p>
+        @if (mensagemErro) {
+        <div class="mensagem-erro">
+            <p>{{ mensagemErro }}</p>
         </div>
+        }
+        @if (isSuccessVisible) {
+        <div class="modal-sucesso">
+            <div class="modal-content">
+                <div class="icon-container">
+                    <span style="font-size: 40px; color: white;">&#10003;</span> 
+                </div>
+                <h2>{{ successMessage }}</h2>
+            </div>
+        </div>
+        }
     </div>
-} @else if (mensagemErro) {
-    <div class="mensagem-erro">
-        <p>**Erro:** {{ mensagemErro }}</p>
-        <button class="entendi-botao" (click)="fecharModal()">Entendi</button>
-    </div>
-}
 </body>
