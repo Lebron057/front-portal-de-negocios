@@ -85,7 +85,7 @@ export class RegisterDetalhesEmpresa implements OnInit {
     private negocioService: NegocioApiService,
     private authService: AuthService,
     private el: ElementRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.empresaDraft = this.obterDraft();
@@ -328,10 +328,29 @@ export class RegisterDetalhesEmpresa implements OnInit {
   private finalizarComSucesso() {
     this.carregando = false;
     this.cadastroSucesso = true;
-    this.limparDraft();
-    setTimeout(() => {
-      this.router.navigate(['/comerciante']);
-    }, 1200);
+
+    if (this.empresaDraft) {
+      this.authService.login(this.empresaDraft.email, this.empresaDraft.senha, 'empresa').subscribe({
+        next: () => {
+          this.limparDraft();
+          setTimeout(() => {
+            this.router.navigate(['/comerciante']);
+          }, 1200);
+        },
+        error: (err) => {
+          console.error('Erro ao logar como empresa após cadastro', err);
+          this.limparDraft();
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1200);
+        },
+      });
+    } else {
+      this.limparDraft();
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 1200);
+    }
   }
 
   private mapErro(contexto: string, erro: any): string {

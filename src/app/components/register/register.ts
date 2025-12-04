@@ -117,7 +117,7 @@ export class Register {
           };
           localStorage.setItem('empresaRegistro', JSON.stringify(draft));
 
-          this.authService.login(this.empresaModel.email, this.empresaModel.senha, 'empresa').subscribe({
+          this.authService.login(this.empresaModel.email, this.empresaModel.senha, 'usuario').subscribe({
             next: () => this.router.navigate(['/register-detalhes-empresa']),
             error: () => {
               this.mensagemErro = 'Não foi possível autenticar. Escolha o tipo de acesso e tente novamente.';
