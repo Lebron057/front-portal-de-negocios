@@ -45,23 +45,23 @@
             <form #formConsumidor="ngForm" (ngSubmit)="loginConsumidor()">
                 <div class="infoConsumidorEmpresa">
                     <label for="emailTelefoneConsumidor">Email ou Telefone</label>
-                    <input ngModel required #emailTelefoneConsumidor="ngModel"  id="emailTelefoneConsumidor" name="emailTelefone" type="text"
-                        [(ngModel)]="consumidorModel.emailTelefone">
-                    
+                    <input ngModel required #emailTelefoneConsumidor="ngModel" id="emailTelefoneConsumidor"
+                        name="emailTelefone" type="text" [(ngModel)]="consumidorModel.emailTelefone">
+
                 </div>
 
                 <div class="senha">
                     <label for="senhaConsumidor">Senha</label>
                     <div class="password-container">
-                        <input ngModel required="true" #senhaConsumidor="ngModel" id="senhaConsumidor" name="senha" [type]="showPassword ? 'text' : 'password'"
-                            [(ngModel)]="consumidorModel.senha">
+                        <input ngModel required="true" #senhaConsumidor="ngModel" id="senhaConsumidor" name="senha"
+                            [type]="showPassword ? 'text' : 'password'" [(ngModel)]="consumidorModel.senha">
                         <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                             <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                         </button>
                     </div>
                 </div>
 
-                <button routerLink="/usuario" [disabled]="!formConsumidor.valid" class="submit" type="submit">Entrar</button>
+                <button [disabled]="!formConsumidor.valid" class="submit" type="submit">Entrar</button>
             </form>
             }
 
@@ -70,14 +70,15 @@
 
                 <div class="infoConsumidorEmpresa">
                     <label for="cnpjEmail">CNPJ ou Email</label>
-                    <input ngModel required #cnpjEmail="ngModel" id="cnpjEmail" name="cnpjEmail" type="text" [(ngModel)]="empresaModel.cnpjEmail">
+                    <input ngModel required #cnpjEmail="ngModel" id="cnpjEmail" name="cnpjEmail" type="text"
+                        [(ngModel)]="empresaModel.cnpjEmail">
                 </div>
 
                 <div class="senha">
                     <label for="senhaEmpresa">Senha</label>
                     <div class="password-container">
-                        <input ngModel required #senhaEmpresa="ngModel" id="senhaEmpresa" name="senha" [type]="showPassword ? 'text' : 'password'"
-                            [(ngModel)]="empresaModel.senha">
+                        <input ngModel required #senhaEmpresa="ngModel" id="senhaEmpresa" name="senha"
+                            [type]="showPassword ? 'text' : 'password'" [(ngModel)]="empresaModel.senha">
                         <button type="button" (click)="togglePasswordVisibility()" class="olhoSenha">
                             <img src="{{ showPassword ? '/ocultarSenha.svg' : '/verSenha.svg' }}" alt="Toggle Password">
                         </button>
@@ -98,7 +99,7 @@
         <div class="modal-sucesso">
             <div class="modal-content">
                 <div class="icon-container">
-                    <span style="font-size: 40px; color: white;">&#10003;</span> 
+                    <span style="font-size: 40px; color: white;">&#10003;</span>
                 </div>
                 <h2>{{ successMessage }}</h2>
             </div>

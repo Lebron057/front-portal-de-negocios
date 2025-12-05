@@ -50,7 +50,7 @@ export class Usuario implements OnInit {
     private usuarioService: UsuarioService,
     private avaliacaoService: AvaliacaoService,
     private negocioService: NegocioApiService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const perfil = this.authService.obterPerfilDoToken() || this.authService.obterPerfil();
