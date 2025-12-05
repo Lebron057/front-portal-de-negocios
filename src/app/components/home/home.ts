@@ -3,7 +3,7 @@ import { Navbar } from '../navbar/navbar';
 import { CardEmpresa } from '../card-empresa/card-empresa';
 import { CommonModule } from '@angular/common';
 import { NegocioApiService, NegocioApi } from '../../services/negocio.service';
-
+import { Footer } from '../footer/footer';
 
 interface Empresa {
   id: number;
@@ -27,7 +27,7 @@ interface SecaoCategoria {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Navbar, CardEmpresa, CommonModule],
+  imports: [Navbar, CardEmpresa, CommonModule, Footer],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })

@@ -30,7 +30,7 @@ export interface NegocioApi {
     horario_fecha: string;
     aberto: boolean;
   }[];
-  fotos?: { url: string }[];
+  fotos?: { id: number; url: string }[];
 }
 
 @Injectable({
@@ -39,7 +39,7 @@ export interface NegocioApi {
 export class NegocioApiService {
   readonly baseUrl = 'http://localhost:8000';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   listarNegocios(filtros?: { usuarioId?: number; negocioId?: number }): Observable<NegocioApi[]> {
     let params = new HttpParams();
@@ -104,7 +104,9 @@ export class NegocioApiService {
   enviarFotos(negocioId: number, arquivos: File[]) {
     const formData = new FormData();
     arquivos.forEach((file) => formData.append('arquivos', file));
-    const headers = this.buildAuthHeaders();
+    // Não usar o buildAuthHeaders padrão porque não podemos definir Content-Type para FormData
+    const token = this.authService.obterToken();
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : undefined;
     return this.http.post(`${this.baseUrl}/negocios/${negocioId}/fotos`, formData, { headers });
   }
 
@@ -117,6 +119,52 @@ export class NegocioApiService {
   }) {
     const headers = this.buildAuthHeaders();
     return this.http.post(`${this.baseUrl}/horarios`, payload, { headers });
+  }
+
+  atualizarNegocio(negocioId: number, payload: {
+    nome_dono?: string;
+    email?: string;
+    cnpj?: string;
+    nome_estabelecimento?: string;
+    descricao?: string;
+    faixa_preco?: number;
+    telefone?: string;
+    whatsapp?: string;
+    url_instagram?: string;
+    url_site?: string;
+    categoria_nomes?: string[];
+  }) {
+    const headers = this.buildAuthHeaders();
+    return this.http.put<NegocioApi>(`${this.baseUrl}/negocios/${negocioId}`, payload, { headers });
+  }
+
+  atualizarEndereco(enderecoId: number, payload: {
+    rua?: string;
+    numero?: string;
+    bairro?: string;
+    cidade?: string;
+    estado?: string;
+    cep?: string;
+  }) {
+    const headers = this.buildAuthHeaders();
+    return this.http.put<{ id: number }>(`${this.baseUrl}/enderecos/${enderecoId}`, payload, { headers });
+  }
+
+  listarHorarios(negocioId: number) {
+    const headers = this.buildAuthHeaders();
+    return this.http.get<{ id: number; dia_semana: string; horario_abre: string; horario_fecha: string; aberto: boolean }[]>(
+      `${this.baseUrl}/horarios?negocio_id=${negocioId}`, { headers }
+    );
+  }
+
+  deletarHorario(horarioId: number) {
+    const headers = this.buildAuthHeaders();
+    return this.http.delete(`${this.baseUrl}/horarios/${horarioId}`, { headers });
+  }
+
+  deletarFoto(negocioId: number, fotoId: number) {
+    const headers = this.buildAuthHeaders();
+    return this.http.delete(`${this.baseUrl}/negocios/${negocioId}/fotos/${fotoId}`, { headers });
   }
 
   private buildAuthHeaders(): HttpHeaders | undefined {

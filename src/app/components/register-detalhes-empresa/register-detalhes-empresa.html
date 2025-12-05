@@ -13,102 +13,100 @@
                     </div>
                     <div class="cep">
                         <label for="cepEmpresa">CEP</label>
-                        <input [(ngModel)]="detalhesEmpresa.cep" (ngModelChange)="detalhesEmpresa.cep = formatarCep($event)"
-                            maxlength="9" type="text" id="cepEmpresa" name="cepEmpresa" placeholder="01001-000">
+                        <input [(ngModel)]="detalhesEmpresa.cep"
+                            (ngModelChange)="detalhesEmpresa.cep = formatarCep($event)" maxlength="9" type="text"
+                            id="cepEmpresa" name="cepEmpresa" placeholder="01001-000">
                     </div>
                     <div class="endereco">
                         <label for="ruaEmpresa">Rua</label>
-                        <input [(ngModel)]="detalhesEmpresa.rua" type="text" id="ruaEmpresa" name="ruaEmpresa" placeholder="Rua Imaginária">
+                        <input [(ngModel)]="detalhesEmpresa.rua" type="text" id="ruaEmpresa" name="ruaEmpresa"
+                            placeholder="Rua Imaginária">
                     </div>
                     <div class="numero">
                         <label for="numeroEmpresa">Número</label>
-                        <input [(ngModel)]="detalhesEmpresa.numero" type="text" id="numeroEmpresa" name="numeroEmpresa" placeholder="123">
+                        <input [(ngModel)]="detalhesEmpresa.numero" type="text" id="numeroEmpresa" name="numeroEmpresa"
+                            placeholder="123">
                     </div>
                     <div class="bairro">
                         <label for="bairroEmpresa">Bairro</label>
-                        <input [(ngModel)]="detalhesEmpresa.bairro" type="text" id="bairroEmpresa" name="bairroEmpresa" placeholder="Centro">
+                        <input [(ngModel)]="detalhesEmpresa.bairro" type="text" id="bairroEmpresa" name="bairroEmpresa"
+                            placeholder="Centro">
                     </div>
                 </div>
                 <div class="segunda_linha">
                     <div class="cidade">
                         <label for="cidadeEmpresa">Cidade</label>
-                        <input [(ngModel)]="detalhesEmpresa.cidade" type="text" id="cidadeEmpresa" name="cidadeEmpresa" placeholder="São Paulo">
+                        <input [(ngModel)]="detalhesEmpresa.cidade" type="text" id="cidadeEmpresa" name="cidadeEmpresa"
+                            placeholder="São Paulo">
                     </div>
                     <div class="estado">
                         <label for="estadoEmpresa">Estado</label>
-                        <input [(ngModel)]="detalhesEmpresa.estado" type="text" id="estadoEmpresa" name="estadoEmpresa" placeholder="SP">
+                        <input [(ngModel)]="detalhesEmpresa.estado" type="text" id="estadoEmpresa" name="estadoEmpresa"
+                            placeholder="SP">
                     </div>
                     <div class="contatoWhatsapp">
                         <label for="contatoEmpresa">Contato(Whatsapp)</label>
-                        <input maxlength="15" [(ngModel)]="detalhesEmpresa.contato" (ngModelChange)="formatarContato($event)"
-                            type="text" id="contatoEmpresa" name="contatoEmpresa" placeholder="(99) 99999-9999">
+                        <input maxlength="15" [(ngModel)]="detalhesEmpresa.contato"
+                            (ngModelChange)="formatarContato($event)" type="text" id="contatoEmpresa"
+                            name="contatoEmpresa" placeholder="(99) 99999-9999">
                     </div>
                     <div class="site">
                         <label for="siteEmpresa">Site (opcional)</label>
-                        <input
-                            type="text"
-                            id="siteEmpresa"
-                            name="siteEmpresa"
-                            placeholder="https://seusite.com"
-                            [(ngModel)]="detalhesEmpresa.site"
-                        />
+                        <input type="text" id="siteEmpresa" name="siteEmpresa" placeholder="https://seusite.com"
+                            [(ngModel)]="detalhesEmpresa.site" />
                     </div>
                 </div>
                 <div class="terceira_linha_info">
                     <div class="descricao">
                         <label for="descricaoEmpresa">Descrição</label>
                         <input maxlength="255" class="descricao_input" type="text" id="descricaoEmpresa"
-                            name="descricaoEmpresa" placeholder="Descreva seu trabalho" [(ngModel)]="detalhesEmpresa.descricao">
+                            name="descricaoEmpresa" placeholder="Descreva seu trabalho"
+                            [(ngModel)]="detalhesEmpresa.descricao">
                     </div>
                     <div class="categoria">
                         <label for="categoriaEmpresa">Categoria</label>
                         <div class="multi-select" (click)="toggleDropdownCategorias()">
                             <div class="multi-select__control">
                                 @if (detalhesEmpresa.categorias.length === 0) {
-                                    <span class="placeholder">Selecione categorias</span>
+                                <span class="placeholder">Selecione categorias</span>
                                 } @else {
-                                    <div class="chips">
-                                        @for (cat of detalhesEmpresa.categorias; track cat) {
-                                            <span class="chip chip--ativo">{{ cat }}</span>
-                                        }
-                                    </div>
+                                <div class="chips">
+                                    @for (cat of detalhesEmpresa.categorias; track cat) {
+                                    <span class="chip chip--ativo">{{ cat }}</span>
+                                    }
+                                </div>
                                 }
                                 <span class="seta">&#9662;</span>
                             </div>
                             <div class="multi-select__dropdown" *ngIf="dropdownCategoriasAberto">
                                 <div class="dropdown__search">
-                                    <input
-                                        type="text"
-                                        placeholder="Pesquisar..."
-                                        [(ngModel)]="termoCategoria"
-                                        (click)="$event.stopPropagation()"
-                                    />
-                                    <button type="button" class="btn-all" (click)="selecionarTodasFiltradas()">Selecionar/limpar filtradas</button>
+                                    <input type="text" placeholder="Pesquisar..." [(ngModel)]="termoCategoria"
+                                        (click)="$event.stopPropagation()" />
+                                    <button type="button" class="btn-all"
+                                        (click)="selecionarTodasFiltradas()">Selecionar/limpar filtradas</button>
                                 </div>
                                 <div class="dropdown__lista">
                                     @for (cat of categoriasFiltradas; track cat) {
-                                        <label class="dropdown__item" (click)="$event.stopPropagation()">
-                                            <input
-                                                type="checkbox"
-                                                [checked]="categoriaSelecionada(cat)"
-                                                (change)="selecionarCategoria(cat)"
-                                            />
-                                            <span>{{ cat }}</span>
-                                            @if (categoriaSelecionada(cat)) {
-                                                <button class="btn-remover" type="button" (click)="removerCategoria(cat); $event.stopPropagation()">✕</button>
-                                            }
-                                        </label>
+                                    <label class="dropdown__item" (click)="$event.stopPropagation()">
+                                        <input type="checkbox" [checked]="categoriaSelecionada(cat)"
+                                            (change)="selecionarCategoria(cat)" />
+                                        <span>{{ cat }}</span>
+                                        @if (categoriaSelecionada(cat)) {
+                                        <button class="btn-remover" type="button"
+                                            (click)="removerCategoria(cat); $event.stopPropagation()">✕</button>
+                                        }
+                                    </label>
                                     }
                                 </div>
                             </div>
                         </div>
                         <div class="selecionadas">
                             @if (detalhesEmpresa.categorias.length === 0) {
-                                <span class="hint">Nenhuma categoria selecionada.</span>
+                            <span class="hint">Nenhuma categoria selecionada.</span>
                             } @else {
-                                @for (cat of detalhesEmpresa.categorias; track cat) {
-                                    <span class="pill pill--categoria">{{ cat }}</span>
-                                }
+                            @for (cat of detalhesEmpresa.categorias; track cat) {
+                            <span class="pill pill--categoria">{{ cat }}</span>
+                            }
                             }
                         </div>
                         <small class="hint">Use Ctrl/Cmd para selecionar mais de uma categoria.</small>
@@ -139,17 +137,35 @@
                                         @for (nome of nomesArquivos; track nome; let i = $index) {
                                         <li class="arquivo-item">
                                             <span class="arquivo-nome">{{ nome }}</span>
-                                            <button type="button" class="remove-btn" (click)="removerArquivo(i, $event)">×</button>
+                                            <button type="button" class="remove-btn"
+                                                (click)="removerArquivo(i, $event)">×</button>
                                         </li>
                                         }
                                     </ul>
-                                    <span class="upload-hint" style="margin-top: 0.5rem;">Clique para adicionar mais</span>
+                                    <span class="upload-hint" style="margin-top: 0.5rem;">Clique para adicionar
+                                        mais</span>
                                 </div>
                                 }
                             </label>
                         </div>
 
-                        <p class="upload-info">Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de 10
+                        @if (modoEdicao && fotosExistentes.length > 0) {
+                        <div class="fotos-existentes">
+                            <p class="fotos-existentes-titulo">Imagens atuais do negócio:</p>
+                            <div class="fotos-grid">
+                                @for (foto of fotosExistentes; track foto.id) {
+                                <div class="foto-item">
+                                    <img [src]="foto.url" alt="Foto do negócio" class="foto-preview">
+                                    <button type="button" class="foto-remove-btn"
+                                        (click)="excluirFotoExistente(foto)">×</button>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        }
+
+                        <p class="upload-info">Formatos permitidos: .png, .jpg, .jpeg | Tamanho maximo: 5MB | Maximo de
+                            10
                             imagens</p>
                     </div>
                     <div class="terceira_linha2">
@@ -158,9 +174,11 @@
                             @for (h of horarios.slice(0,4); track h.dia; let i = $index) {
                             <p class="horario-dia">
                                 <span>{{ h.dia }}</span>
-                                <input style="width: 5rem;" class="horario-input" type="time" name="abre{{ i }}" [(ngModel)]="h.abre">
+                                <input style="width: 5rem;" class="horario-input" type="time" name="abre{{ i }}"
+                                    [(ngModel)]="h.abre">
                                 -
-                                <input style="width: 5rem;" class="horario-input" type="time" name="fecha{{ i }}" [(ngModel)]="h.fecha">
+                                <input style="width: 5rem;" class="horario-input" type="time" name="fecha{{ i }}"
+                                    [(ngModel)]="h.fecha">
                             </p>
                             }
                         </div>
@@ -168,9 +186,11 @@
                             @for (h of horarios.slice(4); track h.dia; let j = $index) {
                             <p class="horario-dia">
                                 <span>{{ h.dia }}</span>
-                                <input style="width: 5rem;" class="horario-input" type="time" name="abre{{ j + 4 }}" [(ngModel)]="h.abre">
+                                <input style="width: 5rem;" class="horario-input" type="time" name="abre{{ j + 4 }}"
+                                    [(ngModel)]="h.abre">
                                 -
-                                <input style="width: 5rem;" class="horario-input" type="time" name="fecha{{ j + 4 }}" [(ngModel)]="h.fecha">
+                                <input style="width: 5rem;" class="horario-input" type="time" name="fecha{{ j + 4 }}"
+                                    [(ngModel)]="h.fecha">
                             </p>
                             }
                         </div>

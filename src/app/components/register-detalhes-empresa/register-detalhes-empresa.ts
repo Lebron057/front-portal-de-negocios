@@ -1,10 +1,10 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { forkJoin, of, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, of, Observable, switchMap } from 'rxjs';
 import { NavbarVoltar } from "../navbar-voltar/navbar-voltar";
-import { NegocioApiService } from '../../services/negocio.service';
+import { NegocioApiService, NegocioApi } from '../../services/negocio.service';
 import { AuthService } from '../../services/auth.service';
 
 interface EmpresaDraft {
@@ -34,6 +34,13 @@ export class RegisterDetalhesEmpresa implements OnInit {
   cadastroSucesso = false;
   mensagemErro = '';
   carregando = false;
+
+  // Modo edição
+  modoEdicao = false;
+  negocioIdEdicao: number | null = null;
+  enderecoIdEdicao: number | null = null;
+  fotosExistentes: { id: number; url: string }[] = [];
+  baseUrl = 'http://localhost:8000';
 
   detalhesEmpresa = {
     nomeResponsavel: '',
@@ -82,20 +89,113 @@ export class RegisterDetalhesEmpresa implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private negocioService: NegocioApiService,
     private authService: AuthService,
     private el: ElementRef,
   ) { }
 
   ngOnInit(): void {
-    this.empresaDraft = this.obterDraft();
-    if (this.empresaDraft) {
-      this.detalhesEmpresa.nomeResponsavel = this.empresaDraft.nomeResponsavel || '';
-      this.detalhesEmpresa.contato = this.empresaDraft.telefone || '';
-    }
+    this.route.queryParams.subscribe(params => {
+      const negocioId = params['negocioId'];
+      if (negocioId) {
+        this.modoEdicao = true;
+        this.negocioIdEdicao = Number(negocioId);
+        this.carregarDadosNegocio(this.negocioIdEdicao);
+      } else {
+        this.empresaDraft = this.obterDraft();
+        if (this.empresaDraft) {
+          this.detalhesEmpresa.nomeResponsavel = this.empresaDraft.nomeResponsavel || '';
+          this.detalhesEmpresa.contato = this.empresaDraft.telefone || '';
+        }
+      }
+    });
+  }
+
+  private carregarDadosNegocio(negocioId: number): void {
+    this.carregando = true;
+    this.negocioService.obterNegocio(negocioId).subscribe({
+      next: (negocio) => {
+        // Preencher dados do formulário com os dados existentes
+        this.detalhesEmpresa.nomeResponsavel = negocio.nome_dono || '';
+        this.detalhesEmpresa.descricao = negocio.descricao || '';
+        this.detalhesEmpresa.contato = negocio.whatsapp || negocio.telefone || '';
+        this.detalhesEmpresa.site = negocio.url_site || '';
+
+        // Carregar categorias
+        if (negocio.categorias && negocio.categorias.length > 0) {
+          this.detalhesEmpresa.categorias = negocio.categorias.map(c => c.nome);
+        } else if (negocio.categoria) {
+          this.detalhesEmpresa.categorias = [negocio.categoria.nome];
+        }
+
+        // Carregar endereço
+        if (negocio.endereco) {
+          this.enderecoIdEdicao = (negocio.endereco as any).id || null;
+          this.detalhesEmpresa.cep = negocio.endereco.cep || '';
+          this.detalhesEmpresa.rua = negocio.endereco.rua || '';
+          this.detalhesEmpresa.numero = negocio.endereco.numero || '';
+          this.detalhesEmpresa.bairro = negocio.endereco.bairro || '';
+          this.detalhesEmpresa.cidade = negocio.endereco.cidade || '';
+          this.detalhesEmpresa.estado = negocio.endereco.estado || '';
+        }
+
+        // Carregar horários
+        if (negocio.horarios && negocio.horarios.length > 0) {
+          this.horarios = this.horarios.map(h => {
+            const horarioApi = negocio.horarios?.find(ha => ha.dia_semana === h.dia);
+            if (horarioApi) {
+              return {
+                dia: h.dia,
+                abre: horarioApi.horario_abre || '',
+                fecha: horarioApi.horario_fecha || '',
+                atende: horarioApi.aberto
+              };
+            }
+            return h;
+          });
+        }
+
+        // Carregar fotos existentes
+        if (negocio.fotos && negocio.fotos.length > 0) {
+          this.fotosExistentes = negocio.fotos.map(f => ({
+            id: f.id,
+            url: `${this.baseUrl}${f.url}`
+          }));
+        }
+
+        this.carregando = false;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar negócio para edição', erro);
+        this.mensagemErro = 'Não foi possível carregar os dados do negócio.';
+        this.carregando = false;
+      }
+    });
+  }
+
+  excluirFotoExistente(foto: { id: number; url: string }): void {
+    if (!this.negocioIdEdicao) return;
+
+    this.negocioService.deletarFoto(this.negocioIdEdicao, foto.id).subscribe({
+      next: () => {
+        this.fotosExistentes = this.fotosExistentes.filter(f => f.id !== foto.id);
+      },
+      error: (erro) => {
+        console.error('Erro ao excluir foto', erro);
+        this.mensagemErro = 'Não foi possível excluir a foto.';
+      }
+    });
   }
 
   realizarCadastro(): void {
+    // Modo edição: atualizar dados existentes
+    if (this.modoEdicao && this.negocioIdEdicao) {
+      this.atualizarNegocioExistente();
+      return;
+    }
+
+    // Modo cadastro: criar novo negócio
     if (!this.empresaDraft) {
       this.mensagemErro = 'Finalize primeiro o cadastro da empresa.';
       return;
@@ -113,6 +213,93 @@ export class RegisterDetalhesEmpresa implements OnInit {
       },
       error: (erro: any) => this.tratarErro(this.mapErro('endereço', erro)),
     });
+  }
+
+  private atualizarNegocioExistente(): void {
+    if (!this.negocioIdEdicao) return;
+
+    this.cadastroSucesso = false;
+    this.mensagemErro = '';
+    this.carregando = true;
+
+    // Primeiro, atualizar o endereço se temos o ID
+    if (this.enderecoIdEdicao) {
+      const enderecoPayload = this.montarEnderecoPayload();
+      this.negocioService.atualizarEndereco(this.enderecoIdEdicao, enderecoPayload).subscribe({
+        next: () => this.atualizarDadosNegocio(),
+        error: (erro: any) => {
+          console.error('Erro ao atualizar endereço', erro);
+          // Continua para atualizar o negócio mesmo se o endereço falhar
+          this.atualizarDadosNegocio();
+        }
+      });
+    } else {
+      this.atualizarDadosNegocio();
+    }
+  }
+
+  private atualizarDadosNegocio(): void {
+    if (!this.negocioIdEdicao) return;
+
+    const payload = {
+      nome_dono: this.detalhesEmpresa.nomeResponsavel,
+      descricao: this.detalhesEmpresa.descricao,
+      whatsapp: this.detalhesEmpresa.contato,
+      url_site: this.detalhesEmpresa.site || undefined,
+      categoria_nomes: this.detalhesEmpresa.categorias?.length ? this.detalhesEmpresa.categorias : ['Geral'],
+    };
+
+    this.negocioService.atualizarNegocio(this.negocioIdEdicao, payload).subscribe({
+      next: (negocioAtualizado) => {
+        // Atualizar horários (deletar os antigos e criar novos)
+        this.atualizarHorarios(negocioAtualizado.id).subscribe({
+          next: () => this.enviarFotosEdicao(negocioAtualizado.id),
+          error: (erro: any) => {
+            console.error('Erro ao atualizar horários', erro);
+            this.enviarFotosEdicao(negocioAtualizado.id);
+          }
+        });
+      },
+      error: (erro: any) => this.tratarErro(this.mapErro('negócio', erro)),
+    });
+  }
+
+  private atualizarHorarios(negocioId: number): Observable<any> {
+    // Primeiro listar os horários existentes e deletá-los
+    return this.negocioService.listarHorarios(negocioId).pipe(
+      switchMap(horariosExistentes => {
+        if (horariosExistentes.length === 0) {
+          return this.salvarHorarios(negocioId);
+        }
+        // Deletar todos os horários existentes
+        const deletar$ = horariosExistentes.map(h => this.negocioService.deletarHorario(h.id));
+        return forkJoin(deletar$).pipe(
+          switchMap(() => this.salvarHorarios(negocioId))
+        );
+      })
+    );
+  }
+
+  private enviarFotosEdicao(negocioId: number): void {
+    if (this.arquivosSelecionados.length > 0) {
+      this.negocioService.enviarFotos(negocioId, this.arquivosSelecionados).subscribe({
+        next: () => this.finalizarEdicaoComSucesso(),
+        error: (erro: any) => {
+          console.error('Erro ao enviar fotos', erro);
+          this.finalizarEdicaoComSucesso();
+        },
+      });
+    } else {
+      this.finalizarEdicaoComSucesso();
+    }
+  }
+
+  private finalizarEdicaoComSucesso(): void {
+    this.carregando = false;
+    this.cadastroSucesso = true;
+    setTimeout(() => {
+      this.router.navigate(['/comerciante']);
+    }, 1200);
   }
 
 
@@ -155,6 +342,11 @@ export class RegisterDetalhesEmpresa implements OnInit {
   }
 
   cancelar(): void {
+    if (this.modoEdicao) {
+      // Em modo edição, voltar para a página do comerciante sem fazer logout
+      this.router.navigate(['/comerciante']);
+      return;
+    }
     this.limparDraft();
     this.authService.limparSessao();
     this.router.navigate(['/login']);
@@ -262,20 +454,22 @@ export class RegisterDetalhesEmpresa implements OnInit {
   }
 
   private salvarHorarios(negocioId: number): Observable<any> {
-    const payloads = this.horarios
-      .filter((h) => h.abre || h.fecha || h.atende)
-      .map((h) => {
-        const horario_abre = this.normalizarHora(h.abre) || '09:00';
-        const horario_fecha = this.normalizarHora(h.fecha) || '18:00';
-        const aberto = !!(h.atende ?? (h.abre || h.fecha));
-        return {
-          dia_semana: h.dia,
-          horario_abre,
-          horario_fecha,
-          aberto,
-          negocio_id: negocioId,
-        };
-      });
+    // Salvar todos os dias da semana
+    // Dias sem horário inserido serão considerados como FECHADO
+    const payloads = this.horarios.map((h) => {
+      const temHorario = !!(h.abre && h.fecha);
+      const horario_abre = this.normalizarHora(h.abre) || '00:00';
+      const horario_fecha = this.normalizarHora(h.fecha) || '00:00';
+      // Se não tem horário de abertura e fechamento, está fechado
+      const aberto = temHorario && h.atende !== false;
+      return {
+        dia_semana: h.dia,
+        horario_abre,
+        horario_fecha,
+        aberto,
+        negocio_id: negocioId,
+      };
+    });
 
     if (!payloads.length) {
       return of(null);
